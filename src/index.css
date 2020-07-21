@@ -54,6 +54,14 @@ button{
   }
 }
 
+@media only screen and (max-width: 400px) {
+  .megaminxSmallInterfaceScramble {
+    font-size: 9px;
+    min-width: 0px;
+    /* display: none; */
+  }
+}
+
 /* @media only screen and (max-width: 400px) {
   .megaminxSmall {
     font-size: 5px;
