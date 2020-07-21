@@ -1,0 +1,148 @@
+  body{
+    background-color: whitesmoke;
+  }
+  
+  * {
+    font-family: 'Lato', sans-serif, 'Courier New', Courier, monospace, Helvetica Neue;
+  }
+  
+  body,
+  html {
+    width: 100%;
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding-top: 1%;
+    /* padding-left: 5%; */
+  }
+  
+  .App {
+    text-align: center;
+  }
+  
+  h1 {
+    left: 50%;
+  }
+  
+  #average {
+    padding-left: 1em;
+  }
+  
+  
+  .button2{
+    display:inline-block;
+    padding:0.3em .5em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.1em 0.13em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:'Lato',sans-serif;
+    font-weight:400;
+    text-align:center;
+    transition: all 0.15s;
+    font-size: .5em;
+    }
+    .button2:hover{
+    color:#DDDDDD;
+    border-color:#DDDDDD;
+    }
+    .button2:active{
+    border-color:#BBBBBB;
+    }
+    @media all and (max-width:30em){
+     .button2{
+    display:block;
+    margin:0.4em auto;
+    }
+  }
+  
+  table {
+    margin: 0 0 1.5rem 0; 
+    border-collapse: collapse;
+    padding-left: 1%;
+  }
+  
+  td {
+    padding-right: .5em;
+  }
+  
+  .tableIndex{
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  
+  #light{
+    padding-left: 1em;
+  }
+  
+  .button3{
+    padding:0.3em .5em;
+    border:0.05em solid #FFFFFF;
+    margin:0 0.1em 0.13em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:'Lato',sans-serif;
+    font-weight:400;
+    text-align:center;
+    transition: all 0.15s;
+    font-size: 3em;
+    }
+    .button3:hover{
+    color:#DDDDDD;
+    border-color:#DDDDDD;
+    }
+    .button3:active{
+    border-color:#BBBBBB;
+    }
+    @media all and (max-width:30em){
+     .button3{
+    display:block;
+    margin:0.4em auto;
+    }
+  }
+
+  #padRight{
+    padding-right: 5%;
+  }
+  
+  #buttonHide{
+    display: none;
+  }
+  
+  .scroll {
+    height: 300px;
+  }
+  
+  h3{
+    font-size: 2em;
+  }
+  
+
+  input[class="form-input"]{
+    width: 240px;
+    height: 50px;
+  
+    margin-top: 2%;
+    padding: 15px;
+    
+    font-size: 16px;
+    font-family: 'Lato', sans-serif;
+    color: #5E6472;
+  
+    outline: none;
+    border: none;
+  
+    border-radius: 0px 5px 5px 0px;
+    transition: 0.2s linear;   
+}
+
+.center {
+  text-align: center;
+}
+  
+  
+  

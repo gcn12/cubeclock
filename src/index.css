@@ -1,3 +1,8 @@
+* {
+  font-family: 'Lato', sans-serif, 'Courier New', Courier, monospace, Helvetica Neue;
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,45 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button{
+  cursor: pointer;
+}
+
+.display-linebreak {
+  /* used to create new line */
+  white-space: pre-line;
+}
+
+.megaminx {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.min-width{
+  min-width: 450px;
+}
+
+.min-width2{
+  min-width: 40px;
+}
+
+@media only screen and (max-width: 720px) {
+  .megaminxSmall {
+    font-size: 9px;
+    min-width: 0px;
+    display: none;
+  }
+}
+
+/* @media only screen and (max-width: 400) {
+  .min-width {
+    min-width: 200px;
+  }
+} */
+
+.summary-center {
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
 }

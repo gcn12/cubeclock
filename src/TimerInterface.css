@@ -1,0 +1,168 @@
+body{
+  background-color: whitesmoke;
+}
+
+h5 {
+  font-family:'Lato',sans-serif;
+}
+
+* {
+  font-family: 'Lato', sans-serif, 'Courier New', Courier, monospace, Helvetica Neue;
+}
+
+h5 {
+  font-size: 15em;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 1%;
+}
+
+.App {
+  text-align: center;
+}
+
+h1 {
+  left: 50%;
+}
+
+#average {
+  padding-left: 1em;
+}
+
+
+
+.button2{
+  display:inline-block;
+  padding:0.3em .5em;
+  border:0.1em solid #FFFFFF;
+  margin:0 0.1em 0.13em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-family:'Lato',sans-serif;
+  font-weight:400;
+  text-align:center;
+  transition: all 0.15s;
+  font-size: .5em;
+  }
+  .button2:hover{
+  color:#DDDDDD;
+  border-color:#DDDDDD;
+  }
+  .button2:active{
+  border-color:#BBBBBB;
+  }
+  @media all and (max-width:30em){
+   .button2{
+  display:block;
+  margin:0.4em auto;
+  }
+}
+
+table {
+  margin: 0 0 1.5rem 0; 
+  border-collapse: collapse;
+  padding-left: 1%;
+}
+
+td {
+  padding-right: .5em;
+}
+
+.tableIndex{
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+#light{
+  padding-left: 5%;
+}
+
+#padRight{
+  padding-right: 5%;
+}
+
+.button3{
+  padding:0.3em .5em;
+  border:0.05em solid #FFFFFF;
+  margin:0 0.1em 0.13em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-family:'Lato',sans-serif;
+  font-weight:400;
+  text-align:center;
+  transition: all 0.15s;
+  font-size: 3em;
+  }
+  .button3:hover{
+  color:#DDDDDD;
+  border-color:#DDDDDD;
+  }
+  .button3:active{
+  border-color:#BBBBBB;
+  }
+  @media all and (max-width:30em){
+   .button3{
+  display:block;
+  margin:0.4em auto;
+  }
+}
+
+#buttonHide{
+  display: none;
+}
+
+h3{
+  font-size: 2em;
+}
+ 
+.absolute-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+
+.display-linebreak {
+  /* used to create new line */
+  white-space: pre-line;
+}
+
+@media only screen and (min-width: 900px) {
+  .timerButton {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  #scroll {
+    height: 300px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #scroll {
+    height: 200px;
+  }
+}
+
+
+
+
+
+
+
+
