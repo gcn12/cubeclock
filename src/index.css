@@ -56,7 +56,8 @@ button{
 
 @media only screen and (max-width: 400px) {
   .megaminxSmallInterfaceScramble {
-    font-size: 9px;
+    /* may need to be 9px */
+    font-size: 10px;
     min-width: 0px;
     /* display: none; */
   }
@@ -72,7 +73,7 @@ button{
 
 @media only screen and (max-width: 400px) {
   .megaminxSmallCardListScramble {
-    font-size: 8px;
+    font-size: 7px;
     min-width: 0px;
     /* display: none; */
   }

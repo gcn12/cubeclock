@@ -265,7 +265,11 @@ class TimerInterface extends Component {
         await this.stopMobile2()
         await this.stopMobile3()
     };
+    if(this.state.going===true) {
+      if(this.state.preventStartLoopMobile % 2!==0){
     doAll();
+      }
+    }
 };
 
   stopMobile2 = () => {
@@ -1094,6 +1098,12 @@ class TimerInterface extends Component {
     return (
       <div>
         {
+          this.state.isMobileGoing ?
+          <div >
+            <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
+          </div>
+          :
+          (
           this.state.isCountDownGoing ? 
           <div className="center absolute-center">
             <h5 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{this.state.countDown}</h5>
@@ -1174,6 +1184,7 @@ class TimerInterface extends Component {
               <h1> </h1>
             }
         </div>
+        )
         }
       </div>
     )
@@ -1191,6 +1202,7 @@ class TimerInterface extends Component {
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
+    document.addEventListener("mousedown", this.stopMobile)
     setTimeout(()=>this.rand(this.props.puzzleType),750)
   }
 }
