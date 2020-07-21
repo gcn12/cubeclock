@@ -111,7 +111,7 @@ class CardList extends Component {
                                     }
                                 </td>
                                 {solve2.scramble ? 
-                                (solve2.scramble.includes("+")? 
+                                (solve2.scramble.includes("++")? 
                                 <td>
                                     <h4 className="megaminx min-width">
                                     {solve2.scramble}

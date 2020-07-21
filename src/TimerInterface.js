@@ -1169,7 +1169,7 @@ class TimerInterface extends Component {
           </div>
             {
               this.props.id ? 
-              <h1 id="light"><button onClick={this.newSession} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">New Session</button></h1>
+              <h1 id="average"><button onClick={this.newSession} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">New Session</button></h1>
               :
               <h1> </h1>
             }
@@ -1191,7 +1191,7 @@ class TimerInterface extends Component {
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
-    setTimeout(()=>this.rand(this.props.puzzleType),300)
+    setTimeout(()=>this.rand(this.props.puzzleType),500)
   }
 }
 
