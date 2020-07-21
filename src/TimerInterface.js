@@ -1184,14 +1184,14 @@ class TimerInterface extends Component {
   componentDidMount() {
     this.props.getInspectionTimeOnMount()
     setTimeout(()=>this.getCountDownNumber(),1)
-    setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),500)
+    setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),700)
     setTimeout(()=>this.props.getTheme(),1)
     document.addEventListener('mouseup', this.colorRegular)
     document.addEventListener('keyup', this.begin)
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
-    setTimeout(()=>this.rand(this.props.puzzleType),500)
+    setTimeout(()=>this.rand(this.props.puzzleType),750)
   }
 }
 

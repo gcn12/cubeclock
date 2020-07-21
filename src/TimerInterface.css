@@ -159,6 +159,12 @@ h3{
   }
 }
 
+@media only screen and (max-width: 400px) {
+  #scroll {
+    height: 120px;
+  }
+}
+
 
 .timer-text-start:after {
   content: "START";

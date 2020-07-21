@@ -62,6 +62,22 @@ button{
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .megaminxSmallCardListScramble {
+    font-size: 9px;
+    min-width: 0px;
+    /* display: none; */
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .megaminxSmallCardListScramble {
+    font-size: 8px;
+    min-width: 0px;
+    /* display: none; */
+  }
+}
+
 /* @media only screen and (max-width: 400px) {
   .megaminxSmall {
     font-size: 5px;
