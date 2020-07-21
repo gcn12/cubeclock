@@ -260,38 +260,7 @@ class TimerInterface extends Component {
     })
   }
 
-  stopMobile = () => {
-    const doAll = async () => {
-        await this.stopMobile2()
-        await this.stopMobile3()
-    };
-    if(this.state.going===true) {
-      if(this.state.preventStartLoopMobile % 2!==0){
-    doAll();
-      }
-    }
-};
-
-  stopMobile2 = () => {
-    if(this.state.going===true) {
-      if(this.state.preventStartLoopMobile % 2!==0){
-        let endMS = Date.now() - this.state.start
-        this.setState({
-          endMS: endMS
-        })
-        if (this.state.isDisableSpacebar){
-          this.isDisableSpacebar()
-        }
-        if (JSON.parse(localStorage.getItem("countDown")) === true){
-          clearInterval(this.countdownInterval)
-          this.getCountDownNumber()
-        }
-        clearInterval(this.interval4)
-        clearInterval(this.interval5)
-        clearInterval(this.interval6)
-      }
-    }
-  }
+  
 
   countDownRunMobile = () => {
     //function runs if count down is activated 
@@ -327,6 +296,45 @@ class TimerInterface extends Component {
     this.interval4 = setInterval(()=>this.time(), 1)
     this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
     this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+  }
+
+  stopMobileRoute = () => {
+    this.setState({
+      isMobileGoing: false,
+    })
+  }
+
+  stopMobile = () => {
+    const doAll = async () => {
+        await this.stopMobile2()
+        await this.stopMobile3()
+    };
+    if(this.state.going===true) {
+      if(this.state.preventStartLoopMobile % 2!==0){
+    doAll();
+      }
+    }
+};
+
+  stopMobile2 = () => {
+    if(this.state.going===true) {
+      if(this.state.preventStartLoopMobile % 2!==0){
+        let endMS = Date.now() - this.state.start
+        this.setState({
+          endMS: endMS
+        })
+        if (this.state.isDisableSpacebar){
+          this.isDisableSpacebar()
+        }
+        if (JSON.parse(localStorage.getItem("countDown")) === true){
+          clearInterval(this.countdownInterval)
+          this.getCountDownNumber()
+        }
+        clearInterval(this.interval4)
+        clearInterval(this.interval5)
+        clearInterval(this.interval6)
+      }
+    }
   }
 
   stopMobile3 = () => {
@@ -429,7 +437,7 @@ class TimerInterface extends Component {
       this.setState({
         // solves: [solveData, ...this.state.solves],
         going: false,
-        isMobileGoing: false,
+        // isMobileGoing: false,
       })
       this.props.getInterfaceSolvesSingle(solveData)
       const finalSolve = {}
@@ -1180,7 +1188,7 @@ class TimerInterface extends Component {
             
             (
               this.state.isMobileGoing ?
-          <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} className="height-width">
+          <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} onTouchEnd={this.stopMobileRoute} onMouseUp={this.stopMobileRoute} className="height-width">
             <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
           </div>
           
