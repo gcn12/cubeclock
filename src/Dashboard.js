@@ -672,7 +672,7 @@ class Dashboard extends Component{
 
     changeUsername = () => {
         if (this.state.username.length>0){
-            fetch("http://localhost:3003/updateusername", {
+            fetch("https://blooming-hollows-98248.herokuapp.com/updateusername", {
                 method: "put",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
@@ -707,7 +707,7 @@ class Dashboard extends Component{
 
     changePassword = () => {
         if (this.state.newPassword===this.state.newPasswordReenter){
-            fetch("http://localhost:3003/updatepassword",{
+            fetch("https://blooming-hollows-98248.herokuapp.com/updatepassword",{
                 method: "put",
                 headers: {"Content-Type":"application/json"},
                 body: JSON.stringify({
@@ -742,7 +742,7 @@ class Dashboard extends Component{
     }  
 
     deleteAccount = () => {
-        fetch("http://localhost:3003/deleteaccount", {
+        fetch("https://blooming-hollows-98248.herokuapp.com/deleteaccount", {
             method: "delete",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -781,7 +781,7 @@ class Dashboard extends Component{
         }else {
             this.props.light()
         }
-        fetch("http://localhost:3003/theme", {
+        fetch("https://blooming-hollows-98248.herokuapp.com/theme", {
             method: "put",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

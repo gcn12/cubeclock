@@ -42,7 +42,7 @@ class App extends Component {
   aoLocalStorage = () => {
     if(localStorage.ao){
       this.setState({
-        aoNum: JSON.parse(localStorage.getItem("ao"))
+        // aoNum: JSON.parse(localStorage.getItem("ao"))
       })
     }
   }
@@ -55,11 +55,13 @@ class App extends Component {
   }
 
   getConfirmSessionAndSolveOnMount = () => {
-    this.setState({
-      isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
-      isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
-      inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
-    })
+    if(localStorage.solveconfirm && localStorage.sessionconfirm && localStorage.inspectionTime){
+      this.setState({
+        // isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
+        // isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
+        // inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
+      })
+    }
   }
 
   confirmSessionDelete = () => {
@@ -67,7 +69,8 @@ class App extends Component {
     this.setState({
       isConfirmSessionDelete: !this.state.isConfirmSessionDelete
     })
-    fetch("http://localhost:3003/confirmsession", {
+    fetch("https://blooming-hollows-98248.herokuapp.com/confirmsession", {
+    // fetch("http://localhost:3003/confirmsession", {
       method: "post",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -80,7 +83,8 @@ class App extends Component {
   confirmSolveDelete = () => {
     //Toggles solve delete confirm in database
     //If on, user is asked if they want to delete solves
-    fetch("http://localhost:3003/confirmsolve", {
+    fetch("https://blooming-hollows-98248.herokuapp.com/confirmsolve", {
+    // fetch("http://localhost:3003/confirmsolve", {
       method: "post",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -106,7 +110,7 @@ class App extends Component {
 
   inspection = () => {
     //Toggles when inspection time runs or not
-    fetch("http://localhost:3003/inspection", {
+    fetch("https://blooming-hollows-98248.herokuapp.com/inspection", {
       method: "post",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -124,7 +128,7 @@ class App extends Component {
   getSolves = () => {
     //gets all solves and sessions from database
     if (this.state.user.id){
-      fetch("http://localhost:3003/getsolves", {
+      fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
         method: "post",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -172,7 +176,7 @@ class App extends Component {
     //Lowers inspection time 
     if (this.state.inspectionTime>0){
       localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime - 1))
-      fetch("http://localhost:3003/inspectiontime", {
+      fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
         method: "put",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -190,7 +194,7 @@ class App extends Component {
     //increases inspection time
     if (this.state.inspectionTime<30){
       localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime +1))
-      fetch("http://localhost:3003/inspectiontime", {
+      fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
         method: "put",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -414,7 +418,7 @@ class App extends Component {
     //saves scramble quantity to database in settings page
     if (this.state.scrambleQuantity < 30) {
       localStorage.setItem("scrambleLength", String(this.state.scrambleQuantity + 1))
-      fetch("http://localhost:3003/putscramblelength", {
+      fetch("https://blooming-hollows-98248.herokuapp.com/putscramblelength", {
         method: "put",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -434,7 +438,7 @@ class App extends Component {
     //saves scramble quantity to database in settings page
     if (this.state.scrambleQuantity > 5) {
       localStorage.setItem("scrambleLength", String(this.state.scrambleQuantity - 1))
-      fetch("http://localhost:3003/putscramblelength", {
+      fetch("https://blooming-hollows-98248.herokuapp.com/putscramblelength", {
         method: "put",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -593,7 +597,7 @@ class App extends Component {
   componentDidMount() {
     // console.log(Object.keys(localStorage))
     this.getConfirmSessionAndSolveOnMount()
-    setTimeout(()=>this.getSolves(),10)
+    setTimeout(()=>this.getSolves(),3)
     this.getInspectionTimeOnMount()
     this.aoLocalStorage()
     this.setScrambleLength()
@@ -623,7 +627,7 @@ class App extends Component {
       if (solve.solveid === input){
         let x = !solve.isplustwo
         solve["isplustwo"] = x
-        fetch("http://localhost:3003/plustwo",{
+        fetch("https://blooming-hollows-98248.herokuapp.com/plustwo",{
           method: "post",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
@@ -666,7 +670,7 @@ class App extends Component {
   }
 
   test = () => {
-    console.log(this.state.uniqueSessionsDB)
+    console.log(this.state.solves)
   }
       
     render() {   
@@ -692,6 +696,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            getSolves={this.getSolves}
             uniqueSessionsDB={this.state.uniqueSessionsDB}
             isNewSessionFunction={this.isNewSessionFunction}
             confettiLaunch={this.confettiLaunch}

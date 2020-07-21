@@ -32,7 +32,7 @@ class Settings extends Component{
     aoNumChange = (input) => {
         if (input>3 && input<301){
             localStorage.setItem("ao", JSON.stringify(input))
-            fetch("http://localhost:3003/ao", {
+            fetch("https://blooming-hollows-98248.herokuapp.com/ao", {
                 method: "put",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({

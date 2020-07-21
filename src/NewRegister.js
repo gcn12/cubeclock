@@ -22,7 +22,7 @@ class Register extends Component {
     }
 
     submit = () => {
-        fetch("http://localhost:3003/register", {
+        fetch("https://blooming-hollows-98248.herokuapp.com/register", {
             method: "post",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

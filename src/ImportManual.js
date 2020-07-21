@@ -220,7 +220,7 @@ class ImportManual extends Component{
                     console.log(solvesToAppState)
                     this.props.getSolvesFromImportManual(solvesToAppState)
             
-                    fetch("http://localhost:3003/importmanual",{
+                    fetch("https://blooming-hollows-98248.herokuapp.com/importmanual",{
                         method: "post",
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify({

@@ -2,7 +2,7 @@
   "name": "cubeclock",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gcn12.github.io/clock-test-2/",
+  "homepage": "https://gcn12.github.io/clock3/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

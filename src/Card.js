@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Card extends Component {
     deleteSession=()=>{
         this.props.removeSessionFromState(this.props.session)
-        fetch("http://localhost:3003/deletesession", {
+        fetch("https://blooming-hollows-98248.herokuapp.com/deletesession", {
             method: "delete",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify({

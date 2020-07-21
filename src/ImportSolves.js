@@ -258,7 +258,7 @@ class ImportSolves extends Component{
     
     importResults = (input) => {
         // sends each solve to db when called
-        fetch("http://localhost:3003/import",{
+        fetch("https://blooming-hollows-98248.herokuapp.com/import",{
           method: "post",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({

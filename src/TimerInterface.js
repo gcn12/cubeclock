@@ -651,7 +651,7 @@ class TimerInterface extends Component {
     if (this.state.multiBLDScramble) {
       submitScramble = this.state.multiBLDScramble
     }
-    fetch("http://localhost:3003/results",{
+    fetch("https://blooming-hollows-98248.herokuapp.com/results",{
       method: "post",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -676,7 +676,7 @@ class TimerInterface extends Component {
 
   deleteDB = (index) => {
     //removes individual solves from database
-    fetch("http://localhost:3003/deletedb", {
+    fetch("https://blooming-hollows-98248.herokuapp.com/deletedb", {
       method: "delete",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -1052,7 +1052,7 @@ class TimerInterface extends Component {
           let x = !solve.isdnf
         solve["isdnf"] = x
         }
-        fetch("http://localhost:3003/dnf", {
+        fetch("https://blooming-hollows-98248.herokuapp.com/dnf", {
           method: "post",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
@@ -1186,7 +1186,7 @@ class TimerInterface extends Component {
   componentDidMount() {
     this.props.getInspectionTimeOnMount()
     setTimeout(()=>this.getCountDownNumber(),1)
-    setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),200)
+    setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),500)
     setTimeout(()=>this.props.getTheme(),1)
     document.addEventListener('mouseup', this.colorRegular)
     document.addEventListener('keyup', this.begin)
