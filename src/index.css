@@ -46,6 +46,22 @@ button{
   }
 }
 
+@media only screen and (max-width: 720px) {
+  .megaminxSmallInterfaceScramble {
+    font-size: 13px;
+    min-width: 0px;
+    /* display: none; */
+  }
+}
+
+/* @media only screen and (max-width: 400px) {
+  .megaminxSmall {
+    font-size: 5px;
+    min-width: 0px;
+    display: none;
+  }
+} */
+
 @media only screen and (max-width: 600px) {
   .mobileNoScramble {
     font-size: 9px;

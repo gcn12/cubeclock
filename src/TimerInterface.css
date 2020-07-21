@@ -160,7 +160,13 @@ h3{
 }
 
 
+.timer-text-start:after {
+  content: "START";
+}
 
+.timer-text-stop:after {
+  content: "STOP";
+}
 
 
 
