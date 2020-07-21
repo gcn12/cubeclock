@@ -615,9 +615,10 @@ class TimerInterface extends Component {
         if(!this.state.isDisableSpacebar){
           if (!this.state.going) {
             if(this.state.preventStartLoop % 2===0){
-              this.setState((prevState)=>({
-                preventStartLoop: prevState.preventStartLoop+1
-              }))
+              this.setState({
+                preventStartLoop: this.state.preventStartLoop+1,
+                going: true
+              })
               this.isDisableSpacebar()
               this.isCountDownGoing()
               setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
@@ -1098,19 +1099,21 @@ class TimerInterface extends Component {
     return (
       <div>
         {
-          this.state.isMobileGoing ?
-          <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} className="height-width">
-            {/* <span > */}
-            <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
-            {/* </span> */}
-          </div>
-          :
-          (
-          this.state.isCountDownGoing ? 
+          
+            this.state.isCountDownGoing ? 
           <div className="center absolute-center">
             <h5 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{this.state.countDown}</h5>
           </div>
+            :
+            
+            (
+              this.state.isMobileGoing ?
+          <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} className="height-width">
+            <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
+          </div>
+          
           :
+
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
           <h1 id="light">
             <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
