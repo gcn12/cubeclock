@@ -201,7 +201,6 @@ export default class Graph extends Component {
     render() {
         return (
             <div >
-                {/* <h1>{this.state.indexNumber}</h1> */}
                 <div className="center">
                     {this.props.isBackgroundLight ? 
                     <select className="pa1 ba b--green bg-white" style={{color: "black"}}  onChange={this.changeIndexNumber} id="categories"></select>

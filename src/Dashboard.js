@@ -243,6 +243,7 @@ class Dashboard extends Component{
                 let totalMSYear = 0
                 let countYear = 0
                 for (const solve of this.props.solves) {
+                    // console.log(solve)
                     if (solve.date===date && solve.sessionname===category){
                         totalMS += Number(solve.milliseconds)
                         count ++
@@ -309,7 +310,7 @@ class Dashboard extends Component{
             if(solvesYear.length>0){
                 categorySolvesYear = [...categorySolvesYear, solvesYear]
             }
-        
+            
             this.setState({
                 averagesYear: [...this.state.averagesYear, categorySolvesYear],
                 datesYear: [...this.state.datesYear, categoryDatesYear],
@@ -933,7 +934,7 @@ class Dashboard extends Component{
     render() {
         return(
             <div>
-                <button onClick={this.test}>push</button>
+                {/* <button onClick={this.test}>push</button> */}
                 <h1 id="light">
                     <nav id="padRight" style={{display: 'flex', justifyContent: 'flex-end'}}>
                         <button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Home</button> 

@@ -351,7 +351,7 @@ class TimerInterface extends Component {
         fullDate += "0"
       }
       fullDate += d.getDate()
-      fullDate += "T07:00:00.000Z"
+      fullDate += "T00:00:00.000Z"
       halfDate += d.getFullYear() + "-"
       if ((d.getMonth() + 1) < 10){
         halfDate += "0"
@@ -480,7 +480,7 @@ class TimerInterface extends Component {
           fullDate += "0"
         }
         fullDate += d.getDate()
-        fullDate += "T07:00:00.000Z"
+        fullDate += "T00:00:00.000Z"
         halfDate += d.getFullYear() + "-"
         if ((d.getMonth() + 1) < 10){
           halfDate += "0"
