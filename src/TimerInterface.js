@@ -1099,7 +1099,7 @@ class TimerInterface extends Component {
       <div>
         {
           this.state.isMobileGoing ?
-          <div onPointerDown={this.stopMobile} onMouseDown={this.stopMobile} className="height-width">
+          <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} className="height-width">
             {/* <span > */}
             <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
             {/* </span> */}
