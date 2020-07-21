@@ -427,10 +427,11 @@ class TimerInterface extends Component {
       solveData["sessionname"]=this.props.sessionName
       solveData["temporary"] = true
       this.setState({
-        solves: [solveData, ...this.state.solves],
+        // solves: [solveData, ...this.state.solves],
         going: false,
         isMobileGoing: false,
       })
+      this.props.getInterfaceSolvesSingle(solveData)
       const finalSolve = {}
       finalSolve["id"] = this.props.id
       finalSolve["solve"] = this.state.displayTimeFormatted
@@ -563,6 +564,7 @@ class TimerInterface extends Component {
           going: false,
           endMS: endMS,
         })
+        this.props.getInterfaceSolvesSingle(solveData)
 
         const finalSolve = {}
         finalSolve["id"] = this.props.id
@@ -679,14 +681,27 @@ class TimerInterface extends Component {
     .then(response => response.json())
   }
 
+  // deleteDB = (index) => {
+  //   //removes individual solves from database
+  //   fetch("https://blooming-hollows-98248.herokuapp.com/deletedb", {
+  //     method: "delete",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       solveid: this.state.solves[index].solveid,
+  //       solve: this.state.solves[index].solve
+  //     })
+  //   }) 
+  //   .then(response=>response.json())
+  // }
+
   deleteDB = (index) => {
     //removes individual solves from database
     fetch("https://blooming-hollows-98248.herokuapp.com/deletedb", {
       method: "delete",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        solveid: this.state.solves[index].solveid,
-        solve: this.state.solves[index].solve
+        solveid: this.props.solvesInterface[index].solveid,
+        solve: this.props.solvesInterface[index].solve
       })
     }) 
     .then(response=>response.json())
@@ -963,23 +978,23 @@ class TimerInterface extends Component {
     if (this.props.isConfirmSolveDelete) {
       let confirm = window.confirm("Are you sure you would like to remove this solve? Action cannot be undone.")
       if (confirm){
-        const { solves } = this.state;
+        // const { solves } = this.state;
         this.props.removeSolveFromState(solveid, milliseconds)
-        this.setState({
-          solves: solves.filter((solve, i) => { 
-            return i !== index;
-          })
-        });
+        // this.setState({
+        //   solves: solves.filter((solve, i) => { 
+        //     return i !== index;
+        //   })
+        // });
         this.deleteDB(index)
       }
     }else{
-      const { solves } = this.state;
+      // const { solves } = this.state;
         this.props.removeSolveFromState(solveid, milliseconds)
-        this.setState({
-          solves: solves.filter((solve, i) => { 
-            return i !== index;
-          })
-        });
+        // this.setState({
+        //   solves: solves.filter((solve, i) => { 
+        //     return i !== index;
+        //   })
+        // });
         this.deleteDB(index)
     }
     this.removeButtonFocus()
@@ -989,9 +1004,6 @@ class TimerInterface extends Component {
   loadPastSessionSolveData = (session) => {
     //when component mounts, session saved on local storage is displayed
     if(this.props.id){
-      this.setState({
-        solves: []
-      })
       let allSolves = []
       for (const solve of this.props.solves){
         if (session === solve.session){
@@ -1000,9 +1012,10 @@ class TimerInterface extends Component {
           this.props.isSessionNameFunc(solve.sessionname)
         }
       }
-      this.setState({
-        solves: allSolves
-      })
+      this.props.getInterfaceSolves(allSolves)
+      // this.setState({
+      //   solves: allSolves
+      // })
     }
   }
 
@@ -1030,24 +1043,40 @@ class TimerInterface extends Component {
   togglePlusTwoInterface = (input) => {
     this.props.togglePlusTwo(input)
     let xyz = []
-    this.state.solves.map(solve=>{
+    for (const solve of this.props.solvesInterface){
       let x = solve.isplustwo
       if (solve.solveid === input && solve.temporary){
         solve["isplustwo"] = !x
       }
       xyz = [...xyz, solve]
-      return(null)
-    })
-    this.setState({
-      solves: xyz
-    })
+    }
+    this.props.getInterfaceSolves(xyz)
+    // this.setState({
+    //   solves: xyz
+    // })
     this.removeButtonFocusPlusTwo()
   }
+
+  // togglePlusTwoInterface = (input) => {
+  //   this.props.togglePlusTwo(input)
+  //   let xyz = []
+  //   for (const solve of this.state.solves){
+  //     let x = solve.isplustwo
+  //     if (solve.solveid === input && solve.temporary){
+  //       solve["isplustwo"] = !x
+  //     }
+  //     xyz = [...xyz, solve]
+  //   }
+  //   this.setState({
+  //     solves: xyz
+  //   })
+  //   this.removeButtonFocusPlusTwo()
+  // }
 
   toggleDNFInterface = (input) => {
     this.props.toggleDNF(input)
     let xyz = []
-    for (const solve of this.state.solves){
+    for (const solve of this.props.solvesInterface){
       if (solve.solveid === input){
         let x = !solve.isdnf
         solve["isdnf"] = !x
@@ -1064,16 +1093,59 @@ class TimerInterface extends Component {
             solveid: solve.solveid,
           })
         }).then(response=>response.json())
-        .then(
-          
-        )
       }
       xyz = [...xyz, solve]
     }
-    this.setState({
-      solves: xyz
-    })
+    // this.setState({
+    //   solves: xyz
+    // })
+    this.props.getInterfaceSolves(xyz)
     this.removeButtonFocusDNF()
+  }
+
+  // toggleDNFInterface = (input) => {
+  //   this.props.toggleDNF(input)
+  //   let xyz = []
+  //   for (const solve of this.state.solves){
+  //     if (solve.solveid === input){
+  //       let x = !solve.isdnf
+  //       solve["isdnf"] = !x
+  //       if (solve.temporary){
+  //         let x = !solve.isdnf
+  //       solve["isdnf"] = x
+  //       }
+  //       fetch("https://blooming-hollows-98248.herokuapp.com/dnf", {
+  //         method: "post",
+  //         headers: {"Content-Type": "application/json"},
+  //         body: JSON.stringify({
+  //           id: this.props.id,
+  //           isdnf: !x,
+  //           solveid: solve.solveid,
+  //         })
+  //       }).then(response=>response.json())
+  //       .then(
+          
+  //       )
+  //     }
+  //     xyz = [...xyz, solve]
+  //   }
+  //   this.setState({
+  //     solves: xyz
+  //   })
+  //   this.removeButtonFocusDNF()
+  // }
+
+  randOnMount = (input) => {
+    if(!this.props.randPrevent){
+      this.props.randPreventFunction()
+      this.rand(input)
+    }
+  }
+
+  randOther = (input) => {
+    if(this.props.randPrevent){
+      this.rand(input)
+    }
   }
 
   color = () => {
@@ -1147,7 +1219,8 @@ class TimerInterface extends Component {
             toggleDNFInterface={this.toggleDNFInterface}
             togglePlusTwo={this.togglePlusTwoInterface}
             plusTwo={this.plusTwo} 
-            solves={this.state.solves} 
+            // solves={this.state.solves} 
+            solves={this.props.solvesInterface} 
             removeTime={this.removeTime} 
             styles={this.props.isBackgroundLight}/>
             </Scroll >
@@ -1178,9 +1251,14 @@ class TimerInterface extends Component {
               <h2> </h2>)
             }
             <Average 
-            solves={this.state.solves} 
+            // solves={this.state.solves} 
+            solves={this.props.solvesInterface} 
             /> 
-            <CustomAverage  aoNum={this.props.aoNum} solves={this.state.solves} />
+            <CustomAverage  
+            aoNum={this.props.aoNum} 
+            // solves={this.state.solves} 
+            solves={this.props.solvesInterface} 
+            />
           </div>
             {
               this.props.id ? 
@@ -1200,7 +1278,7 @@ class TimerInterface extends Component {
   componentDidMount() {
     this.props.getInspectionTimeOnMount()
     setTimeout(()=>this.getCountDownNumber(),1)
-    setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),700)
+    setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),10)
     setTimeout(()=>this.props.getTheme(),1)
     document.addEventListener('mouseup', this.colorRegular)
     document.addEventListener('keyup', this.begin)
@@ -1208,7 +1286,9 @@ class TimerInterface extends Component {
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
     // document.addEventListener("click", this.stopMobile)
-    setTimeout(()=>this.rand(this.props.puzzleType),750)
+    // setTimeout(()=>this.rand(this.props.puzzleType),400)
+    setTimeout(()=>this.randOther(this.props.puzzleType),10)
+    setTimeout(()=>this.randOnMount(this.props.puzzleType),400)
   }
 }
 

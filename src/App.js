@@ -37,14 +37,80 @@ class App extends Component {
     solves: [],
     interfaceSolvesCount: 0,
     isNewSession: false,
+    solvesInterface: [],
+    randPrevent: false,
+  }
+
+  randPreventFunction = () => {
+    this.setState({
+      randPrevent: true,
+    })
+  }
+
+  
+  getSolves = () => {
+    //gets all solves and sessions from database
+    if (this.state.user.id){
+      fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id
+        })
+      })
+      .then(response=>response.json())
+      .then(data=>{
+        this.setState({
+          solves: data
+        })
+        let sessions = data.map(solves => solves.session)
+        if (sessions.length === 0) {
+          this.setState({
+            uniqueSessionsDB: [1],
+            sessions: 1,
+            sessionInterface: 1,
+          })
+        } else{
+          this.setState({
+            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+            sessions: Math.max.apply(Math,sessions),
+            sessionInterface: Array.from(new Set(sessions)).length,
+            solvesInterface: []
+          })
+          let allSolves = []
+          for (const solve of data){
+            if (Math.max.apply(Math,sessions) === solve.session){
+              allSolves = [solve, ...allSolves]
+              this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+              this.isSessionName(solve.sessionname)
+            }
+          }
+          this.setState({
+            solvesInterface: allSolves
+          })
+        }
+      })
+    }
   }
 
   aoLocalStorage = () => {
     if(localStorage.ao){
       this.setState({
-        // aoNum: JSON.parse(localStorage.getItem("ao"))
+        aoNum: JSON.parse(localStorage.getItem("ao"))
       })
     }
+  }
+
+  getInterfaceSolves = (input) => {
+    this.setState({
+      solvesInterface: input
+    })
+  }
+
+  getInterfaceSolvesSingle = (input) => {
+    this.setState({
+      solvesInterface: [...this.state.solvesInterface, input]
+    })
   }
 
   isNewSessionFunction = (input) => {
@@ -57,9 +123,9 @@ class App extends Component {
   getConfirmSessionAndSolveOnMount = () => {
     if(localStorage.solveconfirm && localStorage.sessionconfirm && localStorage.inspectionTime){
       this.setState({
-        // isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
-        // isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
-        // inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
+        isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
+        isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
+        inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
       })
     }
   }
@@ -125,38 +191,13 @@ class App extends Component {
     )
   }
 
-  getSolves = () => {
-    //gets all solves and sessions from database
-    if (this.state.user.id){
-      fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
-        method: "post",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id
-        })
-      })
-      .then(response=>response.json())
-      .then(data=>{
-        this.setState({
-          solves: data
-        })
-        let sessions = data.map(solves => solves.session)
-        if (sessions.length === 0) {
-          this.setState({
-            uniqueSessionsDB: [1],
-            sessions: 1,
-            sessionInterface: 1,
-          })
-        } else{
-          this.setState({
-            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-            sessions: Math.max.apply(Math,sessions),
-            sessionInterface: Array.from(new Set(sessions)).length,
-          })
-        }
-      }) 
-    }
-  }
+//   manageSolveData = () => {
+//     const doAll = async () => {
+//       await this.getSolves()
+//       await this.loadPastSessionSolveData(this.state.sessions)
+//     };
+//     doAll();
+// };
 
   isSessionName = (input) => {
     //updates state so that timer interface know whether 
@@ -598,6 +639,7 @@ class App extends Component {
     // console.log(Object.keys(localStorage))
     this.getConfirmSessionAndSolveOnMount()
     setTimeout(()=>this.getSolves(),3)
+    // setTimeout(()=>this.manageSolveData,10)
     this.getInspectionTimeOnMount()
     this.aoLocalStorage()
     this.setScrambleLength()
@@ -615,7 +657,7 @@ class App extends Component {
     //removes solve when user clicks "remove"
     //on interface page 
     this.setState({
-      solves: this.state.solves.filter(solve=>{
+      solvesInterface: this.state.solvesInterface.filter(solve=>{
         return solveid !== solve.solveid && milliseconds !== solve.milliseconds
       })
     })
@@ -696,6 +738,11 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            getInterfaceSolvesSingle={this.getInterfaceSolvesSingle}
+            randPreventFunction={this.randPreventFunction}
+            randPrevent={this.state.randPrevent}
+            getInterfaceSolves={this.getInterfaceSolves}
+            solvesInterface={this.state.solvesInterface}
             getSolves={this.getSolves}
             uniqueSessionsDB={this.state.uniqueSessionsDB}
             isNewSessionFunction={this.isNewSessionFunction}
