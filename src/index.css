@@ -46,6 +46,14 @@ button{
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .mobileNoScramble {
+    font-size: 9px;
+    min-width: 0px;
+    display: none;
+  }
+}
+
 /* @media only screen and (max-width: 400) {
   .min-width {
     min-width: 200px;

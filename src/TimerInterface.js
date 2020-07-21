@@ -987,16 +987,14 @@ class TimerInterface extends Component {
       this.setState({
         solves: []
       })
-
       let allSolves = []
-      this.props.solves.map(solve=>{
+      for (const solve of this.props.solves){
         if (session === solve.session){
           allSolves = [solve, ...allSolves]
           this.props.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
           this.props.isSessionNameFunc(solve.sessionname)
         }
-        return(null)
-      })
+      }
       this.setState({
         solves: allSolves
       })

@@ -42,7 +42,7 @@ const Body = (props) => {
                     className="button2 remove" onClick={()=>props.removeTime(index, row.solveid, row.ms)}>Remove</button>
                 </h2></td>
                 {isRegular ? 
-                <td className="small-scramble display-linebreak"><h2>{row.scramble}</h2></td>
+                <td className="small-scramble display-linebreak"><h2 className="mobileNoScramble">{row.scramble}</h2></td>
                 :
                 <td className="small-scramble display-linebreak"><h4> </h4></td>
                 }
@@ -54,9 +54,9 @@ const Body = (props) => {
                 <td className="small-scramble display-linebreak"><h2> </h2></td>
                 }
                 {isMultiBLD ? 
-                <td className="small-scramble display-linebreak"><h4>{row.scramble + "\n"}</h4></td>
+                <td className="small-scramble display-linebreak"><h4 className="mobileNoScramble">{row.scramble + "\n"}</h4></td>
                 :
-                <td className="small-scramble display-linebreak"><h2> </h2></td>
+                <td className="small-scramble display-linebreak mobileNoScramble"><h2> </h2></td>
                 }
                 <td><h2>
                     <button type="button" style={{color: 

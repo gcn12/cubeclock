@@ -243,7 +243,6 @@ class Dashboard extends Component{
                 let totalMSYear = 0
                 let countYear = 0
                 for (const solve of this.props.solves) {
-                    // console.log(solve)
                     if (solve.date===date && solve.sessionname===category){
                         totalMS += Number(solve.milliseconds)
                         count ++
