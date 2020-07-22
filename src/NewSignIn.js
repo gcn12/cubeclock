@@ -44,6 +44,7 @@ class SignIn extends Component {
                 this.props.getSolves()
                 if(this.state.confirm){
                     localStorage.setItem("user", JSON.stringify(this.props.user))
+                    localStorage.setItem("key", JSON.stringify(data.key))
                 }
             }
         })

@@ -42,10 +42,67 @@ class App extends Component {
     isMobile: false
   }
 
+  aoLocalStorage = () => {
+    if(localStorage.ao){
+      this.setState({
+        // aoNum: JSON.parse(localStorage.getItem("ao"))
+      })
+    }
+  }
+
+  getConfirmSessionAndSolveOnMount = () => {
+    if(localStorage.solveconfirm && localStorage.sessionconfirm && localStorage.inspectionTime && localStorage.mobile){
+      this.setState({
+        // isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
+        // isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
+        // inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
+        // isMobile: JSON.parse(localStorage.getItem("mobile")), 
+      })
+    }
+  }
+
   randPreventFunction = () => {
     this.setState({
       randPrevent: true,
     })
+  }
+
+  getUserInfo = () => {
+    if (this.state.user.id){
+      fetch("https://blooming-hollows-98248.herokuapp.com/getuserinfo", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id
+        })
+      })
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data)
+        this.setState({
+          isConfirmSolveDelete: data.confirmsolve,
+          isConfirmSessionDelete: data.confirmsession,
+          inspectionTime: data.inspectionTime,
+          isMobile: data.mobile,
+          isCountDownActivated: data.inspection,
+          isBackgroundLight: data.theme,
+          scrambleQuantity: data.scramblelength,
+          aoNum: data.aonumber, 
+        })
+        let theme = JSON.parse(localStorage.getItem("theme"))
+        if (data.theme !== theme){
+          this.setState({
+            isBackgroundLight: data.theme,
+          })
+          if (theme){
+            this.dark()
+          }else{
+            this.light()
+          }
+          localStorage.setItem("theme", JSON.stringify(data.theme))
+        }
+      })
+    }
   }
 
   
@@ -94,13 +151,7 @@ class App extends Component {
     }
   }
 
-  aoLocalStorage = () => {
-    if(localStorage.ao){
-      this.setState({
-        aoNum: JSON.parse(localStorage.getItem("ao"))
-      })
-    }
-  }
+  
 
   getInterfaceSolves = (input) => {
     this.setState({
@@ -121,16 +172,7 @@ class App extends Component {
     })
   }
 
-  getConfirmSessionAndSolveOnMount = () => {
-    if(localStorage.solveconfirm && localStorage.sessionconfirm && localStorage.inspectionTime){
-      this.setState({
-        isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
-        isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
-        inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
-        isMobile: JSON.parse(localStorage.getItem("mobile")), 
-      })
-    }
-  }
+ 
 
   confirmSessionDelete = () => {
     //Toggles session delete confirm in database
@@ -274,7 +316,7 @@ class App extends Component {
     if (this.state.user.id){
       if(localStorage.inspectionTime){
         this.setState({
-          inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
+          // inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
         })
       }
     }
@@ -395,15 +437,15 @@ class App extends Component {
     // loads user data when sign in successful
     this.setState ({ 
       user:{
-      username: data.username,
-      id: data.id,
-    },
-    scrambleQuantity: data.scramblelength,
-    isBackgroundLight: data.theme,
-    aoNum: data.aonumber,
-    isCountDownActivated: data.inspection, 
-    inspectionTime: data.inspectiontime,
-  })
+        username: data.username,
+        id: data.id,
+      },
+      scrambleQuantity: data.scramblelength,
+      isBackgroundLight: data.theme,
+      aoNum: data.aonumber,
+      isCountDownActivated: data.inspection, 
+      inspectionTime: data.inspectiontime,
+    })
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
     localStorage.setItem("countDown", JSON.stringify(data.inspection))
     localStorage.setItem("scrambleLength", data.scramblelength)
@@ -416,7 +458,7 @@ class App extends Component {
 
   getTheme = () => {
     // gets theme from local storage
-    if(this.state.user.id>0){
+    if(this.state.user.id.length){
       if(localStorage.theme){
         let x = JSON.parse(localStorage.getItem("theme"))
         if (x !== true) {
@@ -449,6 +491,7 @@ class App extends Component {
       isCountDownActivated: false,
       inspectionTime: 0,
       solvesInterface: [],
+      mobile: false,
     })
     document.body.style.backgroundColor = "whitesmoke"
     localStorage.removeItem("mobile")
@@ -663,10 +706,11 @@ class App extends Component {
     // console.log(Object.keys(localStorage))
     this.getConfirmSessionAndSolveOnMount()
     setTimeout(()=>this.getSolves(),3)
+    setTimeout(()=>this.getUserInfo(),3)
     // setTimeout(()=>this.manageSolveData,10)
-    this.getInspectionTimeOnMount()
-    this.aoLocalStorage()
-    this.setScrambleLength()
+    // this.getInspectionTimeOnMount()
+    // this.aoLocalStorage()
+    // this.setScrambleLength()
     if (localStorage.user){
       let y = JSON.parse(localStorage.getItem("user"))
       this.setState({
@@ -736,7 +780,7 @@ class App extends Component {
   }
 
   test = () => {
-    console.log(this.state.solves)
+    
   }
       
     render() {   

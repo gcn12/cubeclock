@@ -7,6 +7,7 @@ class Register extends Component {
         name: "",
         password: "",
         isUserExist: false,
+        key: "",
     }
 
     name = (event) => {
@@ -21,6 +22,31 @@ class Register extends Component {
         })
     }
 
+    componentDidMount(){
+        this.key()
+    }
+ 
+    key = () => {
+        let key = ""
+        const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNNOPQRSTUVWXYZ"
+        const numbers = "123456789"
+        const characters = "!@#$%^&*()_+=-{}|;"
+        let length = 10 + Math.ceil(Math.random()*8)
+        for (let i =length; i--; i>0){
+            let typeCharacter = Math.round(Math.random()*2)
+            if (typeCharacter===0){
+                key += letters[Math.round(Math.random()*51)]
+            }else if (typeCharacter===1){
+                key += numbers[Math.round(Math.random()*8)]
+            }else{
+                key += characters[Math.round(Math.random()*17)]
+            }
+        }
+        this.setState({
+            id: key,
+        })
+    }
+
     submit = () => {
         fetch("https://blooming-hollows-98248.herokuapp.com/register", {
             method: "post",
@@ -28,6 +54,7 @@ class Register extends Component {
             body: JSON.stringify({
                 username: this.state.name,
                 password: this.state.password,
+                id: this.state.id,
             })
         })
         .then(response => response.json())
