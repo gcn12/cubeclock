@@ -1209,7 +1209,7 @@ class TimerInterface extends Component {
           :
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
-          <h1 id="light">
+          <h1 >
             <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
               {this.props.isSignedIn 
               ? <div id="padRight">
