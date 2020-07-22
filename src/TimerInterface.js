@@ -1236,7 +1236,7 @@ class TimerInterface extends Component {
             <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
           </div>
           <div style={{borderTop: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid",  borderBottom: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid"}}>
-            <Scroll >
+            <Scroll isMobile={this.props.isMobile}>
             <Table 
             toggleDNFInterface={this.toggleDNFInterface}
             togglePlusTwo={this.togglePlusTwoInterface}
