@@ -34,8 +34,15 @@ h1 {
 }
 
 #average {
-  padding-left: 1em;
+  /* padding-left: 10em; */
+  margin-left: 1em;
 }
+
+#average2 {
+  /* padding-left: 10em; */
+  margin-left: 2em;
+}
+
 
 
 
