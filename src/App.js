@@ -89,6 +89,7 @@ class App extends Component {
           scrambleQuantity: data.scramblelength,
           aoNum: data.aonumber, 
         })
+        localStorage.setItem("countDown", JSON.stringify(data.inspection))
         localStorage.setItem("mobile", JSON.stringify(data.mobile))
         localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
         localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
