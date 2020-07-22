@@ -257,8 +257,6 @@ class Settings extends Component{
                         :
                         <input style={{width: "100px", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-black form-input"  onChange={this.aoNumInput} type="number"></input>
                         }
-                        <br></br>
-                        <br></br>
                         {this.state.isAoSubmitted ? 
                         <h4 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Number has been updated</h4>
                         :

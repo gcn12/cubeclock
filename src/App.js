@@ -82,7 +82,7 @@ class App extends Component {
         this.setState({
           isConfirmSolveDelete: data.confirmsolve,
           isConfirmSessionDelete: data.confirmsession,
-          inspectionTime: data.inspectionTime,
+          inspectionTime: data.inspectiontime,
           isMobile: data.mobile,
           isCountDownActivated: data.inspection,
           isBackgroundLight: data.theme,
