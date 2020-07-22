@@ -89,6 +89,9 @@ class App extends Component {
           scrambleQuantity: data.scramblelength,
           aoNum: data.aonumber, 
         })
+        localStorage.setItem("mobile", JSON.stringify(data.mobile))
+        localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
+        localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
         let theme = JSON.parse(localStorage.getItem("theme"))
         if (data.theme !== theme){
           this.setState({

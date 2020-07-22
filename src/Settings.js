@@ -94,6 +94,7 @@ class Settings extends Component{
     }
 
     getMobileOnMount = () => {
+        console.log("x")
         if(localStorage.mobile) {
             let x = JSON.parse(localStorage.getItem("mobile"))
             document.getElementById("mobile").checked=x
