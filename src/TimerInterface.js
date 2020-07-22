@@ -310,10 +310,12 @@ class TimerInterface extends Component {
   // }
 
   stopMobileRoute = () => {
+    const route2 = () => {
       this.setState({
         isMobileGoing: false,
       })
-    console.log("heled")
+    }
+    setTimeout(()=>this.route2,1)
   }
 
   stopMobile = () => {
