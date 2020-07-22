@@ -268,6 +268,7 @@ class TimerInterface extends Component {
     if(!this.state.isDisableSpacebar){
       if (!this.state.isMobileGoing) {
         if(this.state.preventStartLoopMobile % 2===0){
+          this.getCountDownNumber()
           this.setState({
             isMobileGoing: true,
             // going: true,
@@ -636,6 +637,7 @@ class TimerInterface extends Component {
         if(!this.state.isDisableSpacebar){
           if (!this.state.going) {
             if(this.state.preventStartLoop % 2===0){
+              this.getCountDownNumber()
               this.setState({
                 preventStartLoop: this.state.preventStartLoop+1,
                 going: true
