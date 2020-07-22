@@ -315,7 +315,7 @@ class TimerInterface extends Component {
         isMobileGoing: false,
       })
     }
-    setTimeout(()=>this.route2,1)
+    setTimeout(()=>route2,1)
   }
 
   stopMobile = () => {
