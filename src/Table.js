@@ -13,18 +13,18 @@ const compare = (a, b) => {
 const Body = (props) => {
     var solveNumber = props.solves.length 
     const rows = props.solves.sort(compare).map((row, index) => {
-        let isMegaminx = false
-        let isMultiBLD = false
-        let isRegular = false
-        if (row.scramble){
-            if (row.scramble.includes("--")||row.scramble.includes("++")){
-                isMegaminx=true
-            }else if (row.puzzle==="Multi-BLD"){
-                isMultiBLD=true
-            }else{
-                isRegular=true
-            }
-        }
+        // let isMegaminx = false
+        // let isMultiBLD = false
+        // let isRegular = false
+        // if (row.scramble){
+        //     if (row.scramble.includes("--")||row.scramble.includes("++")){
+        //         isMegaminx=true
+        //     }else if (row.puzzle==="Multi-BLD"){
+        //         isMultiBLD=true
+        //     }else{
+        //         isRegular=true
+        //     }
+        // }
         solveNumber --
         return (
             <tr key={index}>
@@ -41,7 +41,7 @@ const Body = (props) => {
                     borderColor: props.styles ?  "rgb(23, 23, 23)" : "whitesmoke"}} 
                     className="button2 remove" onClick={()=>props.removeTime(index, row.solveid, row.ms)}>Remove</button>
                 </h2></td>
-                {isRegular ? 
+                {/* {isRegular ? 
                 <td className="small-scramble display-linebreak"><h2 className="mobileNoScramble">{row.scramble}</h2></td>
                 :
                 <td className="small-scramble display-linebreak"><h4> </h4></td>
@@ -57,7 +57,7 @@ const Body = (props) => {
                 <td className="small-scramble display-linebreak"><h4 className="mobileNoScramble">{row.scramble + "\n"}</h4></td>
                 :
                 <td className="small-scramble display-linebreak mobileNoScramble"><h2> </h2></td>
-                }
+                } */}
                 <td><h2>
                     <button type="button" style={{color: 
                     props.styles 

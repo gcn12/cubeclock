@@ -268,7 +268,7 @@ class Settings extends Component{
                         }
                         <h1><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Confirm</button></h1>
                     </div>
-                    <div className="center">
+                    {/* <div className="center">
                         <h4>Scramble Length</h4>
                         <br></br>
                         <nav style={{display: 'flex', justifyContent: "center"}}>
@@ -276,7 +276,7 @@ class Settings extends Component{
                         <h4>{this.props.scrambleQuantity}</h4>
                         <h1><button onClick={this.props.scrambleQuantityPlus} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>+1</button></h1>
                         </nav>
-                    </div>
+                    </div> */}
 
 
                     <h4 className="center">Mobile Start/Stop</h4>

@@ -764,17 +764,43 @@ class TimerInterface extends Component {
     //generates scramble
     if (input){
       let scramble = ""
-      let x = this.props.scrambleQuantity
+      // let x = this.props.scrambleQuantity
+      let scrambleLength 
+      if (input==="3x3"){
+        scrambleLength=23
+      }else if (input==="3x3 BLD"){
+        scrambleLength=23
+      }else if (input==="2x2"){
+        scrambleLength=9
+      }else if (input==="4x4"){
+        scrambleLength=45
+      }else if (input==="4x4 BLD"){
+        scrambleLength=45
+      }else if (input==="5x5"){
+        scrambleLength=60
+      }else if (input==="5x5 BLD"){
+        scrambleLength=60
+      }else if (input==="6x6"){
+        scrambleLength=80
+      }else if (input==="7x7"){
+        scrambleLength=100
+      }else if (input==="Skewb"){
+        scrambleLength=8
+      }else if (input==="Square-1"){
+        scrambleLength=10
+      }else if (input==="Pyraminx"){
+        scrambleLength=12
+      }
       let pastScrambles = {
         pastScramble: null,
         pastScramble2: null,
       }
-      while (x > 0) {
+      while (scrambleLength > 0) {
           const onefour = [0,1,2,3,4,5]
           const fourfour = [0,1,2,3]
           const fivefour = [0,1,2,3,4]
           const sixfour = [0,1,2,3,4,5,6,7,8,9,10,11,12]
-          x--
+          scrambleLength--
           let first =  onefour[Math.floor(Math.random()*onefour.length)]
           let second = Math.floor(Math.random()*3)
           if (input==="2x2"||input==="3x3" || input==="3x3 BLD" ||input==="3x3 OH"){
@@ -787,7 +813,7 @@ class TimerInterface extends Component {
               onefour.splice(ind, 1)
             }
             first =  onefour[Math.floor(Math.random()*onefour.length)]
-            scramble += twothree[first][second]
+            scramble += twothree[first][second] 
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
             pastScrambles["pastScramble"] = first
           }
@@ -803,6 +829,7 @@ class TimerInterface extends Component {
             first =  onefour[Math.floor(Math.random()*onefour.length)]
             second = Math.floor(Math.random()*6)
             scramble += fourfive[first][second]
+            scramble += " "
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
             pastScrambles["pastScramble"] = first
           }
@@ -863,7 +890,7 @@ class TimerInterface extends Component {
             first =  sixfour[Math.floor(Math.random()*sixfour.length)]
             second = Math.floor(Math.random()*12)
             scramble += sq1[first][second]
-            if (x>0){
+            if (scrambleLength>0){
               scramble+="/"
             }
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
@@ -940,7 +967,7 @@ class TimerInterface extends Component {
           }
           let countMultiBLD = 1
           while (countMultiBLD < 6) {
-            let y = this.props.scrambleQuantity
+            let y = 23
             multiBLD += countMultiBLD + ")"
             multiBLD += " "
             while(y>0){
@@ -1317,7 +1344,7 @@ class TimerInterface extends Component {
     // document.addEventListener("click", this.stopMobile)
     // setTimeout(()=>this.rand(this.props.puzzleType),400)
     setTimeout(()=>this.randOther(this.props.puzzleType),10)
-    setTimeout(()=>this.randOnMount(this.props.puzzleType),400)
+    setTimeout(()=>this.randOnMount(this.props.puzzleType),500)
   }
 }
 
