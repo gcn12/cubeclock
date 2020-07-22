@@ -1210,7 +1210,7 @@ class TimerInterface extends Component {
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
           <h1 id="light">
-            <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
               {this.props.isSignedIn 
               ? <div id="padRight">
                 <button onClick={this.props.dashboard} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username}</button>
