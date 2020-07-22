@@ -1247,8 +1247,8 @@ class TimerInterface extends Component {
             styles={this.props.isBackgroundLight}/>
             </Scroll >
           </div>
-          {this.state.isMobileGoing ? 
-          <h5 className="timerButton summary-center"><button onMouseDown={this.stopMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-stop"></button></h5>
+          {this.props.isMobile ? 
+          <h5 className="summary-center "><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
           <h5 className="timerButton summary-center "><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           }

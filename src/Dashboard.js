@@ -1010,6 +1010,7 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
+                mobileStartStop={this.props.mobileStartStop}
                 isPasswordChanged={this.state.isPasswordChanged}
                 newPasswordReenter={this.newPasswordReenter}
                 isPasswordMatch={this.state.isPasswordMatch}

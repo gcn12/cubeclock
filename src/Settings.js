@@ -73,6 +73,16 @@ class Settings extends Component{
         }
     }
 
+    isMobile = () => {
+        this.props.mobileStartStop()
+        if(document.getElementById("mobile").checked===true){
+            localStorage.setItem("mobile", JSON.stringify(true))
+        }
+        if(document.getElementById("mobile").checked===false){
+            localStorage.setItem("mobile", JSON.stringify(false))
+        }
+    }
+
     isConfirmSession = () => {
         this.props.confirmSessionDelete()
         if(document.getElementById("sessionconfirm").checked===true){
@@ -83,19 +93,24 @@ class Settings extends Component{
         }
     }
 
+    getMobileOnMount = () => {
+        if(localStorage.mobile) {
+            let x = JSON.parse(localStorage.getItem("mobile"))
+            document.getElementById("mobile").checked=x
+        }
+    }
+
     getConfirmSessionOnMount = () => {
         if(localStorage.solveconfirm) {
-            let x = localStorage.getItem("sessionconfirm")
-            let y = JSON.parse(x)
-            document.getElementById("sessionconfirm").checked=y
+            let x = JSON.parse(localStorage.getItem("sessionconfirm"))
+            document.getElementById("sessionconfirm").checked=x
         }
     }
 
     getConfirmSolveOnMount = () => {
         if(localStorage.solveconfirm) {
-            let x = localStorage.getItem("solveconfirm")
-            let y = JSON.parse(x)
-            document.getElementById("solveconfirm").checked=y
+            let x = JSON.parse(localStorage.getItem("solveconfirm"))
+            document.getElementById("solveconfirm").checked=x
         }
     }
 
@@ -180,6 +195,7 @@ class Settings extends Component{
         this.GetCountDownOnMount()
         this.getConfirmSolveOnMount()
         this.getConfirmSessionOnMount()
+        this.getMobileOnMount()
     }
 
     getPuzzleType = () => {
@@ -264,6 +280,13 @@ class Settings extends Component{
                         </nav>
                     </div>
 
+
+                    <h4 className="center">Mobile Start/Stop</h4>
+                    <br></br>
+                    <div className="center">
+                        <input type="checkbox" id="mobile" className="checkbox" onClick={this.isMobile} />  
+                        <label htmlFor="mobile" className="switch"></label>
+                    </div>
 
 
                     <h4 className="center">Confirm Before Deleting Solve</h4>

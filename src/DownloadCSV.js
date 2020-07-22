@@ -31,11 +31,10 @@ class DownloadSolves extends Component{
     }
 
     getSolvesFromDashboard = () => {
-        var sortedSolves = []
-        this.props.solves.map(solve=>{
+        let sortedSolves = []
+        for (const solve of this.props.solves){
             sortedSolves = [solve, ...sortedSolves]
-            return(null)
-        })
+        }
         this.setState({
             solves: sortedSolves
         })
@@ -62,7 +61,10 @@ class DownloadSolves extends Component{
                 solveArray.push(solve.sessionname)
                 solveArray.push(i + 1)
                 solveArray.push(solve.solve)
-                solveArray.push(solve.scramble)
+                let scramble = "\""
+                scramble+=solve.scramble + "\""
+                // solveArray.push(solve.scramble)
+                solveArray.push(scramble)
                 if (solve.date){
                     var date = solve.date
                     var date2 = date.substring(5,7) + "-" + date.substring(8,10) + "-" + date.substring(0,4)
@@ -76,7 +78,6 @@ class DownloadSolves extends Component{
         })
         this.setState({
             finalOutput: session
-            // finalOutput: [...this.state.finalOutput, session]
         })
     }
     

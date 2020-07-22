@@ -39,6 +39,7 @@ class App extends Component {
     isNewSession: false,
     solvesInterface: [],
     randPrevent: false,
+    isMobile: false
   }
 
   randPreventFunction = () => {
@@ -126,6 +127,7 @@ class App extends Component {
         isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
         isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
         inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
+        isMobile: JSON.parse(localStorage.getItem("mobile")), 
       })
     }
   }
@@ -144,6 +146,25 @@ class App extends Component {
         confirmSession: !this.state.isConfirmSessionDelete,
       })
     }).then(response=>response.json())
+  }
+
+  mobileStartStop = () => {
+    //Toggles mobile in database
+    //If on, there is clickable start button
+    fetch("https://blooming-hollows-98248.herokuapp.com/mobile", {
+    // fetch("http://localhost:3003/confirmsolve", {
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.user.id,
+        mobile: !this.state.isMobile,
+      })
+    }).then(response=>response.json())
+    .then(
+      this.setState({
+        isMobile: !this.state.isMobile
+      })
+    )
   }
 
   confirmSolveDelete = () => {
@@ -390,6 +411,7 @@ class App extends Component {
     localStorage.setItem("ao", JSON.stringify(data.aonumber))
     localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
     localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
+    localStorage.setItem("mobile", JSON.stringify(data.mobile))
   }
 
   getTheme = () => {
@@ -426,8 +448,10 @@ class App extends Component {
       solves: [],
       isCountDownActivated: false,
       inspectionTime: 0,
+      solvesInterface: [],
     })
     document.body.style.backgroundColor = "whitesmoke"
+    localStorage.removeItem("mobile")
     localStorage.removeItem("sessionconfirm")
     localStorage.removeItem("theme")
     localStorage.removeItem("user")
@@ -738,6 +762,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            isMobile={this.state.isMobile}
             getInterfaceSession={this.getInterfaceSession}
             getInterfaceSolvesSingle={this.getInterfaceSolvesSingle}
             randPreventFunction={this.randPreventFunction}
@@ -781,6 +806,7 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          mobileStartStop={this.mobileStartStop}
           aoNumChange={this.aoNumChange}
           getNewUsername={this.getNewUsername}
           addToUniqueSessionsDB={this.addToUniqueSessionsDB}
