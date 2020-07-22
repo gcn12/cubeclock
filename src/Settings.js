@@ -94,7 +94,6 @@ class Settings extends Component{
     }
 
     getMobileOnMount = () => {
-        console.log("x")
         if(localStorage.mobile) {
             let x = JSON.parse(localStorage.getItem("mobile"))
             document.getElementById("mobile").checked=x
@@ -537,6 +536,8 @@ class Settings extends Component{
                         }
                         <h1><button onClick={this.deleteAccountConfirm} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Account</button></h1>
                     </div>
+                    <br></br>
+                    <br></br>
                 </div>
         )
     }

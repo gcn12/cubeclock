@@ -132,7 +132,11 @@ class App extends Component {
             sessions: 1,
             sessionInterface: 1,
           })
-        } else{
+        } else if (data.length===0){
+          this.setState({
+            sessionInterface: 1,
+          })
+        }else{
           this.setState({
             uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
             sessions: Math.max.apply(Math,sessions),
@@ -495,7 +499,7 @@ class App extends Component {
       isCountDownActivated: false,
       inspectionTime: 0,
       solvesInterface: [],
-      mobile: false,
+      isMobile: false,
     })
     document.body.style.backgroundColor = "whitesmoke"
     localStorage.removeItem("mobile")

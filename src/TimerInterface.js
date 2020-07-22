@@ -1295,7 +1295,6 @@ class TimerInterface extends Component {
               <h1> </h1>
             }
         <br></br>
-        <br></br>
         </div>
         )
         }
