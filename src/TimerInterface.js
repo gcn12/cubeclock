@@ -298,10 +298,21 @@ class TimerInterface extends Component {
     this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
   }
 
+  // stopMobileRoute = () => {
+  //   const routeChange = () => {
+  //     this.setState({
+  //       isMobileGoing: false,
+  //     })
+  //   }
+  //   console.log("heled")
+  //   setTimeout(()=>routeChange, 1000)
+  // }
+
   stopMobileRoute = () => {
-    this.setState({
-      isMobileGoing: false,
-    })
+      this.setState({
+        isMobileGoing: false,
+      })
+    console.log("heled")
   }
 
   stopMobile = () => {
@@ -1022,8 +1033,11 @@ class TimerInterface extends Component {
       }
       this.props.getInterfaceSolves(allSolves)
       // this.setState({
-      //   solves: allSolves
-      // })
+        //   solves: allSolves
+        // })
+      // if (!session){
+      //   this.props.getInterfaceSession(1)
+      // }
     }
   }
 

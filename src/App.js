@@ -26,7 +26,7 @@ class App extends Component {
     aoNum: 5,
     isCountDownGoing: false,
     isCountDownActivated: false,
-    inspectionTime: 10,
+    inspectionTime: 0,
     puzzleType: "3x3",
     isCreateNewSession: false,
     sessionName: null,
@@ -738,6 +738,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            getInterfaceSession={this.getInterfaceSession}
             getInterfaceSolvesSingle={this.getInterfaceSolvesSingle}
             randPreventFunction={this.randPreventFunction}
             randPrevent={this.state.randPrevent}
