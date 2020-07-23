@@ -1261,18 +1261,18 @@ class TimerInterface extends Component {
 
   color = () => {
     if(this.props.isBackgroundLight){
-      document.getElementById("colorClick").style.backgroundColor="rgb(217, 217, 217)";
+      document.getElementById("colorClick").style.backgroundColor="rgb(224, 84, 74)";
     }else{
-      document.getElementById("colorClick").style.backgroundColor="rgb(51, 51, 50)";
+      document.getElementById("colorClick").style.backgroundColor="rgb(135, 47, 41)";
     }
   }
 
   colorRegular = () => {
     if(document.getElementById("colorClick")){
-      if(document.getElementById("colorClick").style.backgroundColor==="rgb(51, 51, 50)"){
+      if(document.getElementById("colorClick").style.backgroundColor==="rgb(135, 47, 41)"){
         document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
       }
-      if(document.getElementById("colorClick").style.backgroundColor==="rgb(217, 217, 217)"){
+      if(document.getElementById("colorClick").style.backgroundColor==="rgb(224, 84, 74)"){
         document.getElementById("colorClick").style.backgroundColor="whitesmoke";
       }
     }
@@ -1337,9 +1337,9 @@ class TimerInterface extends Component {
             </Scroll >
           </div>
           {this.props.isMobile ? 
-          <h5 className="summary-center button-no-select"><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
-          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           }
           <div id="light">
             {
@@ -1395,6 +1395,7 @@ class TimerInterface extends Component {
     setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),10)
     setTimeout(()=>this.props.getTheme(),1)
     document.addEventListener('mouseup', this.colorRegular)
+    document.addEventListener('touchend', this.colorRegular)
     document.addEventListener('keyup', this.begin)
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
