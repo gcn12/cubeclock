@@ -48,7 +48,7 @@ class Register extends Component {
     }
 
     submit = () => {
-        if (this.state.username.length>3){
+        if (this.state.name.length>3){
             fetch("https://blooming-hollows-98248.herokuapp.com/register", {
                 method: "post",
                 headers: {"Content-Type": "application/json"},
