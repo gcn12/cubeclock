@@ -1337,9 +1337,9 @@ class TimerInterface extends Component {
             </Scroll >
           </div>
           {this.props.isMobile ? 
-          <h5 className="summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
-          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           }
           <div id="light">
             {
