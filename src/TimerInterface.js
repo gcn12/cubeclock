@@ -108,6 +108,8 @@ class TimerInterface extends Component {
     endMS: 0,
     isMobileGoing: false,
     countingDown: false,
+    keyPressOne: false,
+    keyPressTwo: false,
   }
 
   converter(input, isFormat) {
@@ -193,7 +195,7 @@ class TimerInterface extends Component {
   } 
 
   begin = (e) => {
-    if(e.keyCode === 32){
+    if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
       if (JSON.parse(localStorage.getItem("countDown")) === false){
         if (!this.state.going) {
           if(this.state.preventStartLoop % 2===0){
@@ -501,7 +503,7 @@ class TimerInterface extends Component {
 
   stop = (e) => {
     if(this.state.going===true) {
-      if (e.keyCode===32) {
+      if (e.keyCode===32||(!this.state.keyPressOne && !this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
         if (!this.state.countingDown){
           let endMS = Date.now() - this.state.start
           let allSolves = []
@@ -648,31 +650,36 @@ class TimerInterface extends Component {
     })
   }
 
+  countDownRunFunction = () => {
+    if(!this.state.isDisableSpacebar){
+      if (!this.state.going) {
+        if(this.state.preventStartLoop % 2===0){
+          if (!this.state.countingDown){
+            this.getCountDownNumber()
+            this.setState({
+              preventStartLoop: this.state.preventStartLoop+1,
+              going: true,
+              countingDown: true,
+            })
+            this.isDisableSpacebar()
+            this.isCountDownGoing()
+            this.countDownGoing =  setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
+            this.countdownInterval = setInterval(()=>this.countDown(), 1000)
+            this.startTimer =  setTimeout(()=>this.timerStart(),this.props.inspectionTime * 1000)
+            this.runCountingDown =  setTimeout(()=>this.countingDown(),this.props.inspectionTime * 1000)
+          }
+        }    
+      }
+    }
+  }
+
   countDownRun = (e) => {
     //function runs if count down is activated 
     //runs count down
-    if(e.keyCode === 32){
+    // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
+      if(e.keyCode === 32){
       if (JSON.parse(localStorage.getItem("countDown")) === true){
-        if(!this.state.isDisableSpacebar){
-          if (!this.state.going) {
-            if(this.state.preventStartLoop % 2===0){
-              if (!this.state.countingDown){
-                this.getCountDownNumber()
-                this.setState({
-                  preventStartLoop: this.state.preventStartLoop+1,
-                  going: true,
-                  countingDown: true,
-                })
-                this.isDisableSpacebar()
-                this.isCountDownGoing()
-                this.countDownGoing =  setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
-                this.countdownInterval = setInterval(()=>this.countDown(), 1000)
-                this.startTimer =  setTimeout(()=>this.timerStart(),this.props.inspectionTime * 1000)
-                this.runCountingDown =  setTimeout(()=>this.countingDown(),this.props.inspectionTime * 1000)
-              }
-            }    
-          }
-        }
+        this.countDownRunFunction()
       }
     }
   }
@@ -686,7 +693,7 @@ class TimerInterface extends Component {
   startTimerDuringCountDown = (e) => {
     //function runs if count down is activated 
     //runs count down
-    if(e.keyCode === 32){
+    if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
       // if (JSON.parse(localStorage.getItem("countDown")) === true){
         //   if(!this.state.isCountDownGoing){
           if (this.state.countingDown) {
@@ -957,6 +964,8 @@ class TimerInterface extends Component {
           scramble += " " 
         }
         if (input==="Clock") {
+          let end = Math.round(Math.random()*4)
+          let endOptions = ["UR", "DR", "DL", "UL"]
           scramble += "UR"
           scramble+= this.clockPuzzle()
           scramble += "DR"
@@ -977,8 +986,7 @@ class TimerInterface extends Component {
           scramble+= this.clockPuzzle()
           scramble += "ALL"
           scramble+= this.clockPuzzle()
-          scramble += "y"
-          scramble+= this.clockPuzzle()
+          scramble += "y2 "
           scramble += "U"
           scramble+= this.clockPuzzle()
           scramble += "R"
@@ -989,6 +997,27 @@ class TimerInterface extends Component {
           scramble+= this.clockPuzzle()
           scramble += "ALL"
           scramble+= this.clockPuzzle()
+          if (end===3){
+            for (const letter of endOptions){
+              scramble+= letter
+              scramble += " "
+            }
+          }
+          if (end===2){
+            endOptions.splice(Math.round(Math.random()*3))
+            for (const letter of endOptions){
+              scramble+= letter
+              scramble += " "
+            }
+          }
+          if (end===1){
+            endOptions.splice(Math.round(Math.random()*3))
+            endOptions.splice(Math.round(Math.random()*2))
+            for (const letter of endOptions){
+              scramble+= letter
+              scramble += " "
+            }
+          }
         }
 
         let megaminxScramble = ""
@@ -1278,6 +1307,112 @@ class TimerInterface extends Component {
     }
   }
 
+  keyPressSafetyUndo = (e) => {
+    if (e.keyCode===93 || e.keyCode===91){
+      if(!this.state.keyPressOne||!this.state.keyPressTwo){
+        this.setState({
+          keyPressOne: false,
+          keyPressTwo: false,
+        })
+      }
+    }
+    if (e.keyCode===17){
+      if(!this.state.keyPressOne||!this.state.keyPressTwo){
+        this.setState({
+          keyPressOne: false,
+          keyPressTwo: false,
+        })
+      }
+    }
+  }
+
+  keyPressSafety = (e) => {
+  if (!this.state.going){
+    // console.log(this.state.preventStartLoop )
+    if(this.state.preventStartLoop % 2===0){
+      if (e.keyCode===91){
+        this.setState({
+          keyPressOne: true
+        })
+      }
+      if (e.keyCode===93){
+        this.setState({
+          keyPressTwo: true
+        })
+      }
+      if(e.keyCode===17){
+        if(!this.state.keyPressOne){
+          this.setState({
+            keyPressOne: true
+          })
+        }else{
+          this.setState({
+            keyPressTwo: true
+          })
+        }
+      }
+    }
+  }
+  }
+
+  keyPressStart = (e) => {
+    if(e.keyCode===93||e.keyCode===91||e.keyCode===17)
+    if (!this.state.going){
+      if (this.state.keyPressOne && this.state.keyPressTwo){
+        if(this.state.preventStartLoop % 2===0){
+          if (JSON.parse(localStorage.getItem("countDown")) === false){
+            this.beginFunction()
+          }else{
+            this.countDownRunFunction()
+          }
+        }
+      }
+    }
+  }
+
+  keyPressSafetyStop = (e) => {
+    if (this.state.going){
+      if (e.keyCode===91){
+        this.setState({
+          keyPressOne: false,
+          keyPressTwo: false,
+        })
+      }
+      if (e.keyCode===93){
+        this.setState({
+          keyPressTwo: false,
+          keyPressOne: false,
+        })
+      }
+      if (e.keyCode===17){
+        this.setState({
+          keyPressTwo: false,
+          keyPressOne: false,
+        })
+      }
+    }
+  }
+
+  keyPressStop = (e) => {
+    if (this.state.going){
+      if (e.keyCode===91 || e.keyCode===93){
+        if (!this.state.keyPressOne || !this.state.keyPressOne){
+          this.stop()
+        }
+      }
+      //ee
+      if (e.keyCode===17){
+        if (!this.state.keyPressOne || !this.state.keyPressOne){
+          this.stop()
+        }
+      }
+    }
+  }
+
+  test = () => {
+    console.log(this.state.preventStartLoop)
+  }
+
   render() {   
     return (
       <div>
@@ -1298,6 +1433,7 @@ class TimerInterface extends Component {
           :
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
+          {/* <button onClick={this.test}>test</button> */}
           <h1 >
             <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
               {this.props.isSignedIn 
@@ -1401,8 +1537,11 @@ class TimerInterface extends Component {
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
     document.addEventListener('keydown', this.startTimerDuringCountDown)
-    // document.addEventListener("click", this.stopMobile)
-    // setTimeout(()=>this.rand(this.props.puzzleType),400)
+    // document.addEventListener('keydown', this.keyPressStop)
+    // document.addEventListener('keydown', this.keyPressSafetyStop)
+    // document.addEventListener('keydown', this.keyPressSafety)
+    // document.addEventListener('keyup', this.keyPressStart)
+    // document.addEventListener('keyup', this.keyPressSafetyUndo)
     setTimeout(()=>this.randOther(this.props.puzzleType),10)
     setTimeout(()=>this.randOnMount(this.props.puzzleType),700)
   }
