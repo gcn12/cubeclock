@@ -39,10 +39,17 @@ const sixseven = [
 ]
 
 const pyraminxNotation = [
-  ["U", "U'", "u", "u'"],
-  ["L", "L'", "l", "l'"],
-  ["R", "R'", "r", "r'"],
-  ["B", "B'", "b", "b'"]
+  ["U", "U'"],
+  ["L", "L'"],
+  ["R", "R'"],
+  ["B", "B'"]
+]
+
+const pyraminxNotationEnd = [
+  ["u", "u'"],
+  ["l", "l'"],
+  ["r", "r'"],
+  ["b", "b'"]
 ]
 
 const skewb = [
@@ -854,12 +861,31 @@ class TimerInterface extends Component {
       }else if (input==="Square-1"){
         scrambleLength=10
       }else if (input==="Pyraminx"){
-        scrambleLength=12
+        scrambleLength=9
       }
       let pastScrambles = {
         pastScramble: null,
         pastScramble2: null,
       }
+      let pyraminxEnd = ""
+        let pyraminxNumber = Math.round(Math.random()*4)
+        for (let i = pyraminxNumber;i>0;i--){
+          const fourfour = [0,1,2,3]
+          if (pastScrambles.pastScramble !== null){
+            let i = fourfour.indexOf(pastScrambles.pastScramble)
+            fourfour.splice(i, 1)
+          }
+          if (pastScrambles.pastScramble2 !== 7){
+            let ind = fourfour.indexOf(pastScrambles.pastScramble2)
+            fourfour.splice(ind, 1)
+          }
+          let first2 =  fourfour[Math.floor(Math.random()*fourfour.length)]
+          let second2 = Math.floor(Math.random()*2)
+          pyraminxEnd  += pyraminxNotationEnd[first2][second2]
+          pyraminxEnd  += " "
+          pastScrambles["pastScramble2"] = pastScrambles.pastScramble
+          pastScrambles["pastScramble"] = first2
+        }
       while (scrambleLength > 0) {
           const onefour = [0,1,2,3,4,5]
           const fourfour = [0,1,2,3]
@@ -923,7 +949,7 @@ class TimerInterface extends Component {
               fourfour.splice(f, 1)
             }
             first =  fourfour[Math.floor(Math.random()*fourfour.length)]
-            second = Math.floor(Math.random()*4)
+            second = Math.floor(Math.random()*2)
             scramble += pyraminxNotation[first][second]
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
             pastScrambles["pastScramble"] = first
@@ -1045,6 +1071,9 @@ class TimerInterface extends Component {
             }
             megaminxScramble += "\n"
           }
+        }
+        if (input==="Pyraminx"){
+          scramble+=pyraminxEnd
         }
         let multiBLD = ""
         if (input==="Multi-BLD"){
