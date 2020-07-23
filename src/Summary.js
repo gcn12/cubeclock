@@ -4,6 +4,7 @@ import React, { Component } from "react";
 
 class Summary extends Component{
   render(){
+    console.log(this.props.data)
       return(
           <Grid
           data={this.props.data}

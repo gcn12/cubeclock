@@ -52,7 +52,7 @@ class ImportSolves extends Component{
                 }
             }
             
-            propertiesArray.reverse()
+            // propertiesArray.reverse()
             values1.map((solve1,index)=>{
                 session++
                 sessionArray.push(session)
@@ -65,12 +65,13 @@ class ImportSolves extends Component{
                         puzzleType = ""
                     }
                     if (propertiesArray[index]["name"]){
+                        // console.log(propertiesArray[index]["name"])
                         sessionName = propertiesArray[index]["name"]
                     }else{
                         sessionName = ""
                     }
                 }
-                solve1.map(solve=>{
+                for (const solve of solve1){
                     let solveToDB = {}
                     if (puzzleType === ""){
                         solveToDB["puzzle"]= "3x3"
@@ -93,7 +94,7 @@ class ImportSolves extends Component{
                     if (puzzleType === "sqrs"){
                         solveToDB["puzzle"] = "Square-1"
                     }
-                    if (puzzleType === "skbso"){
+                    if (puzzleType === "skbo"){
                         solveToDB["puzzle"] = "Skewb"
                     }
                     if (puzzleType === "pyrso"){
@@ -190,7 +191,7 @@ class ImportSolves extends Component{
                     }
                     solveToDB["solve"]=time
                     solveToDB["plustwo"] = String(timeTwo)
-                    solveToDB["milliseconds"]=solve[0][1]
+                    solveToDB["milliseconds"]=String(solve[0][1])
                     solveToDB["millisecondstwo"] = String(Number(solve[0][1]) + 2000)
                     if (solve[1]===null){
                         solveToDB["scramble"]=null
@@ -214,19 +215,20 @@ class ImportSolves extends Component{
                         solveToDB["unix"]=solve[3]
                     }
                     solveToDB["sessionname"]=sessionName
-                    if (solve[4]!==null){
+                    if (solve[4]){
                         solveToDB["sessionname"]=solve[4]
-                    }else{
-                        solveToDB["sessionname"]=null
+                        // console.log(solve[4])
                     }
+                    // }else{
+                    //     solveToDB["sessionname"]=null
+                    // }
                     if (solve[5]){
                         solveToDB["puzzle"] = solve[5]
                     }
                     solveToDB["solveid"] = solveid
                     solvesArray.push(solveToDB)
                     this.importResults(solveToDB)
-                    return(null)
-                })
+                }
                 return(null)
             }) 
             this.props.getSolvesFromImport(solvesArray)

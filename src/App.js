@@ -714,7 +714,7 @@ class App extends Component {
     // console.log(Object.keys(localStorage))
     this.getConfirmSessionAndSolveOnMount()
     setTimeout(()=>this.getSolves(),3)
-    setTimeout(()=>this.getUserInfo(),3)
+    setTimeout(()=>this.getUserInfo(),10)
     // setTimeout(()=>this.manageSolveData,10)
     // this.getInspectionTimeOnMount()
     // this.aoLocalStorage()
@@ -788,7 +788,7 @@ class App extends Component {
   }
 
   test = () => {
-    
+    console.log(this.state.solves)
   }
       
     render() {   
