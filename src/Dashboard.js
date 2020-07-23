@@ -1013,6 +1013,7 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
+                disableTimer={this.props.disableTimer}
                 mobileStartStop={this.props.mobileStartStop}
                 isPasswordChanged={this.state.isPasswordChanged}
                 newPasswordReenter={this.newPasswordReenter}

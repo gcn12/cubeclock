@@ -39,7 +39,8 @@ class App extends Component {
     isNewSession: false,
     solvesInterface: [],
     randPrevent: false,
-    isMobile: false
+    isMobile: false,
+    isTimerDisabled: false,
   }
 
   aoLocalStorage = () => {
@@ -78,7 +79,6 @@ class App extends Component {
       })
       .then(response=>response.json())
       .then(data=>{
-        // console.log(data)
         this.setState({
           isConfirmSolveDelete: data.confirmsolve,
           isConfirmSessionDelete: data.confirmsession,
@@ -88,11 +88,14 @@ class App extends Component {
           isBackgroundLight: data.theme,
           scrambleQuantity: data.scramblelength,
           aoNum: data.aonumber, 
+          isTimerDisabled: data.disabletimer,
         })
         localStorage.setItem("countDown", JSON.stringify(data.inspection))
         localStorage.setItem("mobile", JSON.stringify(data.mobile))
         localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
         localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
+        // console.log(data.disabletimer !== true )
+        localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
         let theme = JSON.parse(localStorage.getItem("theme"))
         if (data.theme !== theme){
           this.setState({
@@ -180,6 +183,21 @@ class App extends Component {
     })
   }
 
+  disableTimer = () => {
+    //Toggles timer disable in database
+    this.setState({
+      isTimerDisabled: !this.state.isTimerDisabled
+    })
+    fetch("https://blooming-hollows-98248.herokuapp.com/disabletimer", {
+    // fetch("http://localhost:3003/confirmsession", {
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.user.id,
+        disabletimer: !this.state.isTimerDisabled,
+      })
+    }).then(response=>response.json())
+  }
  
 
   confirmSessionDelete = () => {
@@ -788,7 +806,7 @@ class App extends Component {
   }
 
   test = () => {
-    console.log(this.state.solves)
+
   }
       
     render() {   
@@ -814,6 +832,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            isTimerDisabled={this.state.isTimerDisabled}
             isMobile={this.state.isMobile}
             getInterfaceSession={this.getInterfaceSession}
             getInterfaceSolvesSingle={this.getInterfaceSolvesSingle}
@@ -858,6 +877,7 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          disableTimer={this.disableTimer}
           mobileStartStop={this.mobileStartStop}
           aoNumChange={this.aoNumChange}
           getNewUsername={this.getNewUsername}

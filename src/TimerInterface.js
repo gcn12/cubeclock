@@ -219,7 +219,9 @@ class TimerInterface extends Component {
     })
     this.interval = setInterval(()=>this.time(), 1)
     this.interval2 = setInterval(()=>this.converter(this.state.final) ,1)
-  this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    if (!this.props.isTimerDisabled){
+      this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    }
   }
 
   preventStartLoopMobile = () => {
@@ -250,7 +252,11 @@ class TimerInterface extends Component {
           })
           this.interval4 = setInterval(()=>this.time(), 1)
           this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
-          this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+          if (!this.props.isTimerDisabled){
+            this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+          }else{
+            this.timerFormatted("timerFormatted")
+          }
           this.setState({
             isMobileGoing: true
           })
@@ -303,7 +309,9 @@ class TimerInterface extends Component {
     })
     this.interval4 = setInterval(()=>this.time(), 1)
     this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
-    this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    if (!this.props.isTimerDisabled){
+      this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    }
   }
 
   // stopMobileRoute = () => {
@@ -790,7 +798,9 @@ class TimerInterface extends Component {
     })
     this.interval = setInterval(()=>this.time(), 1)
     this.interval2 = setInterval(()=>this.converter(this.state.final) ,1)
-    this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    if (!this.props.isTimerDisabled){
+      this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    }
   }
 
   resetCountDown = () => {

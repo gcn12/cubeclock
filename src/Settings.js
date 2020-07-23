@@ -93,6 +93,16 @@ class Settings extends Component{
         }
     }
 
+    isDisableTimer = () => {
+        this.props.disableTimer()
+        if(document.getElementById("disabletimer").checked===true){
+            localStorage.setItem("disabletimer", JSON.stringify(true))
+        }
+        if(document.getElementById("disabletimer").checked===false){
+            localStorage.setItem("disabletimer", JSON.stringify(false))
+        }
+    }
+
     getMobileOnMount = () => {
         if(localStorage.mobile) {
             let x = JSON.parse(localStorage.getItem("mobile"))
@@ -107,6 +117,13 @@ class Settings extends Component{
         }
     }
 
+    getDisableTimerOnMount= () => {
+        if(localStorage.disabletimer) {
+            let x = JSON.parse(localStorage.getItem("disabletimer"))
+            document.getElementById("disabletimer").checked=x
+        }
+    }
+
     getConfirmSolveOnMount = () => {
         if(localStorage.solveconfirm) {
             let x = JSON.parse(localStorage.getItem("solveconfirm"))
@@ -114,7 +131,7 @@ class Settings extends Component{
         }
     }
 
-    GetCountDownOnMount = () => {
+    getCountDownOnMount = () => {
         if(localStorage.countDown) {
             var x = localStorage.getItem("countDown")
             var y = JSON.parse(x)
@@ -192,10 +209,11 @@ class Settings extends Component{
     }
 
     componentDidMount() {
-        this.GetCountDownOnMount()
+        this.getCountDownOnMount()
         this.getConfirmSolveOnMount()
         this.getConfirmSessionOnMount()
         this.getMobileOnMount()
+        this.getDisableTimerOnMount()
     }
 
     getPuzzleType = () => {
@@ -300,6 +318,13 @@ class Settings extends Component{
                     <div className="center">
                         <input type="checkbox" id="sessionconfirm" className="checkbox" onClick={this.isConfirmSession} />  
                         <label htmlFor="sessionconfirm" className="switch"></label>
+                    </div>
+
+                    <h4 className="center">Deactivate timer during solve</h4>
+                    <br></br>
+                    <div className="center">
+                        <input type="checkbox" id="disabletimer" className="checkbox" onClick={this.isDisableTimer} />  
+                        <label htmlFor="disabletimer" className="switch"></label>
                     </div>
 
 
