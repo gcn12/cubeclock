@@ -1337,9 +1337,9 @@ class TimerInterface extends Component {
             </Scroll >
           </div>
           {this.props.isMobile ? 
-          <h5 className="summary-center "><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="summary-center button-no-select"><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
-          <h5 className="timerButton summary-center "><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onMouseDown={()=>this.color("RGB(51, 51, 50)")} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           }
           <div id="light">
             {
@@ -1403,7 +1403,7 @@ class TimerInterface extends Component {
     // document.addEventListener("click", this.stopMobile)
     // setTimeout(()=>this.rand(this.props.puzzleType),400)
     setTimeout(()=>this.randOther(this.props.puzzleType),10)
-    setTimeout(()=>this.randOnMount(this.props.puzzleType),500)
+    setTimeout(()=>this.randOnMount(this.props.puzzleType),700)
   }
 }
 

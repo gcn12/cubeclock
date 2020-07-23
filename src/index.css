@@ -112,3 +112,7 @@ button{
   width: 100%;
   position: absolute;
 }
+
+.button-no-select {
+  user-select: none;
+}
