@@ -757,6 +757,16 @@ class App extends Component {
     })
   }
 
+  removeSolveFromSolvesState = (solveid, milliseconds) => {
+    //removes solve when user clicks "remove"
+    //on interface page 
+    this.setState({
+      solves: this.state.solves.filter(solve=>{
+        return solveid !== solve.solveid && milliseconds !== solve.milliseconds
+      })
+    })
+  }
+
   togglePlusTwo = (input) => {
     let solves = []
     this.state.solves.map(solve=>{
@@ -806,7 +816,7 @@ class App extends Component {
   }
 
   test = () => {
-
+    // console.log(this.state.solves)
   }
       
     render() {   
@@ -832,6 +842,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            removeSolveFromSolvesState={this.removeSolveFromSolvesState}
             isTimerDisabled={this.state.isTimerDisabled}
             isMobile={this.state.isMobile}
             getInterfaceSession={this.getInterfaceSession}

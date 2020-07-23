@@ -447,7 +447,7 @@ class Settings extends Component{
                         time={this.state.importManualTextAreaTime}/>
                         {this.state.isImportFromFile ? 
                         <div>
-                            <h4>Copy and paste from .txt file</h4>
+                            <h4>Copy and paste .json data from .txt file</h4>
                             {this.props.isBackgroundLight ? 
                             <textarea style={{color: "rgb(25, 25, 25)"}} id="importSolves" className="pa2 ba b--green bg-white" onChange={this.handleImportSolvesChange} rows="13" cols="80"></textarea>
                             :

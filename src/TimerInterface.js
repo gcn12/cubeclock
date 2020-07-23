@@ -783,6 +783,7 @@ class TimerInterface extends Component {
       })
     }) 
     .then(response=>response.json())
+    this.props.removeSolveFromSolvesState(this.props.solvesInterface[index].solveid, this.props.solvesInterface[index].milliseconds)
   }
 
   timerStart = () => {
@@ -1301,7 +1302,7 @@ class TimerInterface extends Component {
             <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
               {this.props.isSignedIn 
               ? <div id="padRight">
-                <button onClick={this.props.dashboard} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username}</button>
+                <button onClick={this.props.dashboard} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button>
               </div>
               :
               <div id="padRight" >
