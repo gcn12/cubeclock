@@ -47,7 +47,7 @@ const pyraminxNotation = [
 
 const skewb = [
   ["U", "U'"],
-  ["F", "F'"],
+  // ["F", "F'"],
   ["B", "B'"],
   ["L", "L'"],
   ["R", "R'"],
@@ -798,7 +798,7 @@ class TimerInterface extends Component {
       while (scrambleLength > 0) {
           const onefour = [0,1,2,3,4,5]
           const fourfour = [0,1,2,3]
-          const fivefour = [0,1,2,3,4]
+          // const fivefour = [0,1,2,3,4]
           const sixfour = [0,1,2,3,4,5,6,7,8,9,10,11,12]
           scrambleLength--
           let first =  onefour[Math.floor(Math.random()*onefour.length)]
@@ -865,14 +865,14 @@ class TimerInterface extends Component {
           }
           if(input === "Skewb"){
             if (pastScrambles.pastScramble !== null){
-              let g = fivefour.indexOf(pastScrambles.pastScramble)
-              fivefour.splice(g, 1)
+              let g = fourfour.indexOf(pastScrambles.pastScramble)
+              fourfour.splice(g, 1)
             }
             if (pastScrambles.pastScramble2 !== 7){
-              let h = fivefour.indexOf(pastScrambles.pastScramble2)
-              fivefour.splice(h, 1)
+              let h = fourfour.indexOf(pastScrambles.pastScramble2)
+              fourfour.splice(h, 1)
             }
-            first =  fivefour[Math.floor(Math.random()*fivefour.length)]
+            first =  fourfour[Math.floor(Math.random()*fourfour.length)]
             second = Math.floor(Math.random()*2)
             scramble += skewb[first][second]
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
