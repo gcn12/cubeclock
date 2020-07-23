@@ -30,7 +30,7 @@ class Settings extends Component{
     }
 
     aoNumChange = (input) => {
-        if (input>3 && input<301){
+        if (input>3 && input<1001){
             localStorage.setItem("ao", JSON.stringify(input))
             fetch("https://blooming-hollows-98248.herokuapp.com/ao", {
                 method: "put",
@@ -262,7 +262,7 @@ class Settings extends Component{
                         <h4> </h4>
                         }
                         {this.state.isInvalidAoNum ? 
-                        <h4 style={{color: "red"}}>Number must be between 4 and 300</h4>
+                        <h4 style={{color: "red"}}>Number must be between 4 and 1000</h4>
                         :
                         <h4> </h4>
                         }

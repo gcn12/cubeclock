@@ -26,7 +26,7 @@ class App extends Component {
     aoNum: 5,
     isCountDownGoing: false,
     isCountDownActivated: false,
-    inspectionTime: 0,
+    inspectionTime: 2,
     puzzleType: "3x3",
     isCreateNewSession: false,
     sessionName: null,

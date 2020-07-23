@@ -48,27 +48,33 @@ class Register extends Component {
     }
 
     submit = () => {
-        fetch("https://blooming-hollows-98248.herokuapp.com/register", {
-            method: "post",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                username: this.state.name,
-                password: this.state.password,
-                id: this.state.id,
-            })
-        })
-        .then(response => response.json())
-        .then (data => {
-            if (data === "user exists"){
-                this.setState({
-                    isUserExist: true,
+        if (this.state.username.length>3){
+            fetch("https://blooming-hollows-98248.herokuapp.com/register", {
+                method: "post",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: this.state.name,
+                    password: this.state.password,
+                    id: this.state.id,
                 })
-            } else{
-                this.props.signIn()
-                this.props.signedIn()
-                this.props.loadUser(data)
-            }
-        })
+            })
+            .then(response => response.json())
+            .then (data => {
+                if (data === "user exists"){
+                    this.setState({
+                        isUserExist: true,
+                    })
+                } else{
+                    this.props.signIn()
+                    this.props.signedIn()
+                    this.props.loadUser(data)
+                }
+            })
+        }else{
+            this.setState({
+                isUserExist: true,
+            })
+        }
     }
 
     render() {
