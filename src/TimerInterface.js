@@ -541,7 +541,7 @@ class TimerInterface extends Component {
           if ((d.getDate) < 10){
             halfDate += "0"
           }
-          halfDate += d.getDate()
+          halfDate += d.getDate() 
           this.timerFormatted("timerFormatted")
           if (this.state.isDisableSpacebar){
             this.isDisableSpacebar()
@@ -1492,6 +1492,8 @@ class TimerInterface extends Component {
           <div style={{borderTop: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid",  borderBottom: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid"}}>
             <Scroll isMobile={this.props.isMobile}>
             <Table 
+            aoNum2={this.props.aoNum2} 
+            aoNum={this.props.aoNum} 
             toggleDNFInterface={this.toggleDNFInterface}
             togglePlusTwo={this.togglePlusTwoInterface}
             plusTwo={this.plusTwo} 
@@ -1502,9 +1504,9 @@ class TimerInterface extends Component {
             </Scroll >
           </div>
           {this.props.isMobile ? 
-          <h5 className="summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
-          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onMouseUp={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           }
           <div id="light">
             {
@@ -1572,7 +1574,7 @@ class TimerInterface extends Component {
     // document.addEventListener('keyup', this.keyPressStart)
     // document.addEventListener('keyup', this.keyPressSafetyUndo)
     setTimeout(()=>this.randOther(this.props.puzzleType),10)
-    setTimeout(()=>this.randOnMount(this.props.puzzleType),700)
+    setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
   }
 }
 

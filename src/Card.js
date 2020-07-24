@@ -17,7 +17,7 @@ class Card extends Component {
             x.splice(x.indexOf(this.props.uniqueSession), 1)
         if (x.length===0){
             this.props.getSessionNumber(1)
-            this.props.getInterfaceSessionAfterDelete(1)
+            this.props.getInterfaceSession(1)
             this.props.getSessionNameOnLoad(null, "3x3")
         }else if (this.props.uniqueSession===this.props.sessions) {
             let c = x.length 
@@ -25,7 +25,7 @@ class Card extends Component {
             this.props.getInterfaceSession(c)
         } else {
             let a = [...x].sort(this.compare).indexOf(this.props.sessions)
-            this.props.getInterfaceSessionAfterDelete(a+1)
+            this.props.getInterfaceSession(a+1)
         }
     }
 

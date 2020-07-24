@@ -24,6 +24,7 @@ class App extends Component {
     uniqueSessionsDB: [],
     sessionInterface: "",
     aoNum: 5,
+    aoNum2: 12,
     isCountDownGoing: false,
     isCountDownActivated: false,
     inspectionTime: 2,
@@ -815,14 +816,45 @@ class App extends Component {
     localStorage.setItem("user", JSON.stringify(this.state.user))
   }
 
-  test = () => {
-    // console.log(this.state.solves)
-  }
+  // send = () => {
+  //   //testing storing all solves in one cell
+  //   fetch("https://blooming-hollows-98248.herokuapp.com/test",{
+  //     method: "post",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       id: this.state.user.id,
+  //       test: JSON.stringify(this.state.solves),
+  //     })
+  //   }).then(response=>response.json())
+  // }
+
+  // receive = () => {
+  //   //testing storing all solves in one cell
+  //   fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+  //     method: "post",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       id: this.state.user.id,
+  //     })
+  //   }).then(response=>response.json())
+  //   .then(data=>{
+  //     console.log(data)
+  //     this.setState({
+  //       solves: data
+  //     })
+  //   })
+  // }
+
+    test = () => {
+      console.log(this.state.solves)
+    }
       
     render() {   
       return (
       <div> 
-      {/* <button onClick={this.test}>push</button> */}
+        {/* <button onClick={this.test}>push</button> */}
+        {/* <button onClick={this.send}>send</button>
+      <button onClick={this.receive}>receive</button> */}
         { this.state.isHome 
         ? 
         (this.state.isCreateNewSession ? 
@@ -871,6 +903,7 @@ class App extends Component {
             isCountDownActivated={this.state.isCountDownActivated} 
             isCountDownGoing={this.state.isCountDownGoing} 
             aoNum={this.state.aoNum} 
+            aoNum2={this.state.aoNum2} 
             sessionInterface={this.state.sessionInterface} 
             getTheme={this.getTheme} 
             newSessionApp={this.newSessionApp} 
