@@ -264,7 +264,7 @@ const Body = (props) => {
 const Table = props => {
     const {solves, removeTime, plusTwo} = props
     return(
-        <table id="hello">
+        <table id="hello" className="light">
             <thead>
                 <tr>
                     <th></th>
@@ -273,16 +273,26 @@ const Table = props => {
                     <th></th>
                     <th></th>
                     {props.id.length ? 
+                    (
+                    props.solves.length > props.aoNum-1 ? 
                     <th>
                         <h2>ao{props.aoNum}</h2>
                     </th>
                     :
                     <th></th>
+                    )
+                    :
+                    <th></th>
                     }
                     {props.id.length ? 
+                    (
+                    props.solves.length>props.aoNum2-1 ? 
                     <th>
                         <h2>ao{props.aoNum2}</h2>
                     </th>
+                    :
+                    <th></th>
+                    )
                     :
                     <th></th>
                     }

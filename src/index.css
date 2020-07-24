@@ -116,3 +116,11 @@ button{
 .button-no-select {
   user-select: none;
 }
+
+.light{
+  margin-left: 2%;
+}
+
+.light2{
+  margin-left: 3%;
+}
