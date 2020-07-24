@@ -202,11 +202,17 @@ class TimerInterface extends Component {
   } 
 
   begin = (e) => {
-    if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
-      if (JSON.parse(localStorage.getItem("countDown")) === false){
-        if (!this.state.going) {
-          if(this.state.preventStartLoop % 2===0){
-            if (!this.state.countingDown){
+    // if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
+    if(e.keyCode === 32){
+      if (!this.state.going) {
+        if(this.state.preventStartLoop % 2===0){
+          if (!this.state.countingDown){
+            if(localStorage.countDown){
+              if (JSON.parse(localStorage.getItem("countDown")) === false){
+                this.beginFunction()
+              }
+            }else{
+              console.log("here")
               this.beginFunction()
             }
           }    
@@ -1492,6 +1498,7 @@ class TimerInterface extends Component {
           <div style={{borderTop: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid",  borderBottom: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid"}}>
             <Scroll isMobile={this.props.isMobile}>
             <Table 
+            id={this.props.id}
             aoNum2={this.props.aoNum2} 
             aoNum={this.props.aoNum} 
             toggleDNFInterface={this.toggleDNFInterface}

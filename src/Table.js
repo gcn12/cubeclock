@@ -20,6 +20,12 @@ const compare2 = (a,b) => {
 
 
 const Body = (props) => {
+    let id 
+    if (props.id.length){
+        id=true
+    }else{
+        id=false
+    }
     let finalAverages = []
     let solves = [...props.solves]
     let loopNumber = props.solves.length - (props.aoNum-1)
@@ -235,13 +241,20 @@ const Body = (props) => {
                     className="button2 remove3" onClick={()=>props.toggleDNFInterface(row.solveid)}>DNF</button>
                 </h2></td>
 
-
+                {id ? 
                 <td><h2>
                     {finalAverages[index]}
                 </h2></td>
+                :
+                <td> </td>
+                }
+                {id ? 
                 <td><h2>
                     {finalAverages2[index]}
                 </h2></td>
+                :
+                <td> </td>
+                }
             </tr>
         )
     })
@@ -259,15 +272,24 @@ const Table = props => {
                     <th></th>
                     <th></th>
                     <th></th>
+                    {props.id.length ? 
                     <th>
                         <h2>ao{props.aoNum}</h2>
                     </th>
+                    :
+                    <th></th>
+                    }
+                    {props.id.length ? 
                     <th>
                         <h2>ao{props.aoNum2}</h2>
                     </th>
+                    :
+                    <th></th>
+                    }
                     </tr>
             </thead>
             <Body 
+            id={props.id}
             aoNum={props.aoNum}
             aoNum2={props.aoNum2}
             toggleDNFInterface={props.toggleDNFInterface}
