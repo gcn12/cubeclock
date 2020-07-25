@@ -993,7 +993,7 @@ class TimerInterface extends Component {
           //   pastScrambles["pastScramble2"] = pastScrambles.pastScramble
           //   pastScrambles["pastScramble"] = first
           // }
-          // scramble += " " 
+          scramble += " " 
         }
         if (input==="Clock") {
           let end = Math.round(Math.random()*4)
