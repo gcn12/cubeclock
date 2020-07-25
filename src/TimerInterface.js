@@ -1079,15 +1079,15 @@ class TimerInterface extends Component {
         
         let valueTop3 = [0, 1, 3, 4, 6, -2, -3, -5]
         let valueTop4 = [0,2,3,5,6,-1,-3,-4] 
-        //top flush bottom not
-        let valueBottom = [0, 3, 6,-3]
-        //top and bottom not flush
-        let valueBottom2 = [1, 4, -2,-5]
-        //top and bottoma flush
-        let valueBottom3 = [-1, -4, 2, 5]
-        //top not flush bottom is
-        let valueBottom4 = [0, 3, 6,-3]
         for (let i = 5; i>0; i--){
+          //top flush bottom not
+          let valueBottom = [0, 3, 6,-3]
+          //top and bottom not flush
+          let valueBottom2 = [1, 4, -2,-5]
+          //top and bottoma flush
+          let valueBottom3 = [-1, -4, 2, 5]
+          //top not flush bottom is
+          let valueBottom4 = [0, 3,-3, 6]
           if (topRunningTotal%3===0){
             one = valueTop3[Math.floor(Math.random()*8)]
           }else if (topRunningTotal%3!==0){
@@ -1097,8 +1097,19 @@ class TimerInterface extends Component {
           arrayTop.push(one)
           if(bottomRunningTotal%3===0){
             if (topRunningTotal%3!==0){
-              two = valueBottom4[Math.floor(Math.random()*4)]
+              if (one===0){
+                valueBottom4.shift()
+                // console.log(indexOf(0))
+              }
+              if (one===6){
+                valueBottom4.pop()
+                // console.log(valueBottom4)
+              }
+              two = valueBottom4[Math.floor(Math.random()*valueBottom4.length)]
             }else if (topRunningTotal%3===0){
+              // if (one===0){
+              //   valueBottom3.splice(valueBottom4.indexOf(0))
+              // }
               two = valueBottom3[Math.floor(Math.random()*4)]
             }
           }else if(bottomRunningTotal%3!==0){
