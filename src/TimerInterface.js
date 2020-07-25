@@ -60,21 +60,21 @@ const skewb = [
   ["R", "R'"],
 ]
 
-const sq1 = [
-  ["(0,1)", "(0,2)","(0,3)","(0,4)","(0,5)","(0,6)","(0,-1)","(0,-2)","(0,-3)","(0,-4)","(0,-5)","(0,-6)"],
-  ["(1,1)", "(1,2)","(1,3)","(1,4)","(1,5)","(1,6)","(1,-1)","(1,-2)","(1,-3)","(1,-4)","(1,-5)","(1,-6)"],
-  ["(-1,1)", "(-1,2)","(-1,3)","(-1,4)","(-1,5)","(-1,6)","(-1,-1)","(-1,-2)","(-1,-3)","(-1,-4)","(-1,-5)","(-1,-6)"],
-  ["(2,1)", "(2,2)","(2,3)","(2,4)","(2,5)","(2,6)","(2,-1)","(2,-2)","(2,-3)","(2,-4)","(2,-5)","(2,-6)"],
-  ["(-2,1)", "(-2,2)","(-2,3)","(-2,4)","(-2,5)","(-2,6)","(-2,-1)","(-2,-2)","(-2,-3)","(-2,-4)","(-2,-5)","(-2,-6)"],
-  ["(3,1)", "(3,2)","(3,3)","(3,4)","(3,5)","(3,6)","(3,-1)","(3,-2)","(3,-3)","(3,-4)","(3,-5)","(3,-6)"],
-  ["(-3,1)", "(-3,2)","(-3,3)","(-3,4)","(-3,5)","(-3,6)","(-3,-1)","(-3,-2)","(-3,-3)","(-3,-4)","(-3,-5)","(-3,-6)"],
-  ["(4,1)", "(4,2)","(4,3)","(4,4)","(4,5)","(4,6)","(4,-1)","(4,-2)","(4,-3)","(4,-4)","(4,-5)","(4,-6)"],
-  ["(-4,1)", "(-4,2)","(-4,3)","(-4,4)","(-4,5)","(-4,6)","(-4,-1)","(-4,-2)","(-4,-3)","(-4,-4)","(-4,-5)","(-4,-6)"],
-  ["(5,1)", "(5,2)","(5,3)","(5,4)","(5,5)","(5,6)","(5,-1)","(5,-2)","(5,-3)","(5,-4)","(5,-5)","(5,-6)"],
-  ["(-5,1)", "(-5,2)","(-5,3)","(-5,4)","(-5,5)","(-5,6)","(-5,-1)","(-5,-2)","(-5,-3)","(-5,-4)","(-5,-5)","(-5,-6)"],
-  ["(6,1)", "(6,2)","(6,3)","(6,4)","(6,5)","(6,6)","(6,-1)","(6,-2)","(6,-3)","(6,-4)","(6,-5)","(6,-6)"],
-  ["(-6,1)", "(-6,2)","(-6,3)","(-6,4)","(-6,5)","(-6,6)","(-6,-1)","(-6,-2)","(-6,-3)","(-6,-4)","(-6,-5)","(-6,-6)"],
-]
+// const sq1 = [
+//   ["(0,1)", "(0,2)","(0,3)","(0,4)","(0,5)","(0,6)","(0,-1)","(0,-2)","(0,-3)","(0,-4)","(0,-5)","(0,-6)"],
+//   ["(1,1)", "(1,2)","(1,3)","(1,4)","(1,5)","(1,6)","(1,-1)","(1,-2)","(1,-3)","(1,-4)","(1,-5)","(1,-6)"],
+//   ["(-1,1)", "(-1,2)","(-1,3)","(-1,4)","(-1,5)","(-1,6)","(-1,-1)","(-1,-2)","(-1,-3)","(-1,-4)","(-1,-5)","(-1,-6)"],
+//   ["(2,1)", "(2,2)","(2,3)","(2,4)","(2,5)","(2,6)","(2,-1)","(2,-2)","(2,-3)","(2,-4)","(2,-5)","(2,-6)"],
+//   ["(-2,1)", "(-2,2)","(-2,3)","(-2,4)","(-2,5)","(-2,6)","(-2,-1)","(-2,-2)","(-2,-3)","(-2,-4)","(-2,-5)","(-2,-6)"],
+//   ["(3,1)", "(3,2)","(3,3)","(3,4)","(3,5)","(3,6)","(3,-1)","(3,-2)","(3,-3)","(3,-4)","(3,-5)","(3,-6)"],
+//   ["(-3,1)", "(-3,2)","(-3,3)","(-3,4)","(-3,5)","(-3,6)","(-3,-1)","(-3,-2)","(-3,-3)","(-3,-4)","(-3,-5)","(-3,-6)"],
+//   ["(4,1)", "(4,2)","(4,3)","(4,4)","(4,5)","(4,6)","(4,-1)","(4,-2)","(4,-3)","(4,-4)","(4,-5)","(4,-6)"],
+//   ["(-4,1)", "(-4,2)","(-4,3)","(-4,4)","(-4,5)","(-4,6)","(-4,-1)","(-4,-2)","(-4,-3)","(-4,-4)","(-4,-5)","(-4,-6)"],
+//   ["(5,1)", "(5,2)","(5,3)","(5,4)","(5,5)","(5,6)","(5,-1)","(5,-2)","(5,-3)","(5,-4)","(5,-5)","(5,-6)"],
+//   ["(-5,1)", "(-5,2)","(-5,3)","(-5,4)","(-5,5)","(-5,6)","(-5,-1)","(-5,-2)","(-5,-3)","(-5,-4)","(-5,-5)","(-5,-6)"],
+//   ["(6,1)", "(6,2)","(6,3)","(6,4)","(6,5)","(6,6)","(6,-1)","(6,-2)","(6,-3)","(6,-4)","(6,-5)","(6,-6)"],
+//   ["(-6,1)", "(-6,2)","(-6,3)","(-6,4)","(-6,5)","(-6,6)","(-6,-1)","(-6,-2)","(-6,-3)","(-6,-4)","(-6,-5)","(-6,-6)"],
+// ]
 
 const ScrambleTable = props => {
   return(
@@ -896,7 +896,7 @@ class TimerInterface extends Component {
           const onefour = [0,1,2,3,4,5]
           const fourfour = [0,1,2,3]
           // const fivefour = [0,1,2,3,4]
-          const sixfour = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+          // const sixfour = [0,1,2,3,4,5,6,7,8,9,10,11,12]
           scrambleLength--
           let first =  onefour[Math.floor(Math.random()*onefour.length)]
           let second = Math.floor(Math.random()*3)
@@ -975,25 +975,25 @@ class TimerInterface extends Component {
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
             pastScrambles["pastScramble"] = first
           }
-          if(input === "Square-1"){
-            if (pastScrambles.pastScramble !== null){
-              let k = sixfour.indexOf(pastScrambles.pastScramble)
-              sixfour.splice(k, 1)
-            }
-            if (pastScrambles.pastScramble2 !== 7){
-              let l = sixfour.indexOf(pastScrambles.pastScramble2)
-              sixfour.splice(l, 1)
-            }
-            first =  sixfour[Math.floor(Math.random()*sixfour.length)]
-            second = Math.floor(Math.random()*12)
-            scramble += sq1[first][second]
-            if (scrambleLength>0){
-              scramble+="/"
-            }
-            pastScrambles["pastScramble2"] = pastScrambles.pastScramble
-            pastScrambles["pastScramble"] = first
-          }
-          scramble += " " 
+          // if(input === "Square-1"){
+          //   if (pastScrambles.pastScramble !== null){
+          //     let k = sixfour.indexOf(pastScrambles.pastScramble)
+          //     sixfour.splice(k, 1)
+          //   }
+          //   if (pastScrambles.pastScramble2 !== 7){
+          //     let l = sixfour.indexOf(pastScrambles.pastScramble2)
+          //     sixfour.splice(l, 1)
+          //   }
+          //   first =  sixfour[Math.floor(Math.random()*sixfour.length)]
+          //   second = Math.floor(Math.random()*12)
+          //   scramble += sq1[first][second]
+          //   if (scrambleLength>0){
+          //     scramble+="/"
+          //   }
+          //   pastScrambles["pastScramble2"] = pastScrambles.pastScramble
+          //   pastScrambles["pastScramble"] = first
+          // }
+          // scramble += " " 
         }
         if (input==="Clock") {
           let end = Math.round(Math.random()*4)
@@ -1051,6 +1051,99 @@ class TimerInterface extends Component {
             }
           }
         }
+
+      
+      if (input==="Square-1"){
+
+        // let scramble = ""
+        let arrayTop = []
+        let arrayBottom = []
+        let topRunningTotal = 0
+        let bottomRunningTotal = 0
+        let firstValueTop= [0, 1, 3, 4, 6, -2, -3, -5]
+        let valueTop = [1, 4, -2, -5]
+        let valueTop2 = [0, 3, 6, -3]
+        let valueBottomA = [0, 3, 6, -3]
+        let valueBottomB= [2, 5, -1, -4]
+        let one = firstValueTop[Math.floor(Math.random()*8)]
+        topRunningTotal+=one
+        let two
+        if (valueTop.includes(one)){
+          two = valueBottomA[Math.floor(Math.random()*4)]
+        }else if (valueTop2.includes(one)){
+          two = valueBottomB[Math.floor(Math.random()*4)]
+        }
+        bottomRunningTotal+=two
+        arrayTop.push(one)
+        arrayBottom.push(two)
+        
+        let valueTop3 = [0, 1, 3, 4, 6, -2, -3, -5]
+        let valueTop4 = [0,2,3,5,6,-1,-3,-4] 
+        //top flush bottom not
+        let valueBottom = [0, 3, 6,-3]
+        //top and bottom not flush
+        let valueBottom2 = [1, 4, -2,-5]
+        //top and bottoma flush
+        let valueBottom3 = [-1, -4, 2, 5]
+        //top not flush bottom is
+        let valueBottom4 = [0, 3, 6,-3]
+        for (let i = 5; i>0; i--){
+          if (topRunningTotal%3===0){
+            one = valueTop3[Math.floor(Math.random()*8)]
+          }else if (topRunningTotal%3!==0){
+            one = valueTop4[Math.floor(Math.random()*7)]
+          }
+          topRunningTotal+=one
+          arrayTop.push(one)
+          if(bottomRunningTotal%3===0){
+            if (topRunningTotal%3!==0){
+              two = valueBottom4[Math.floor(Math.random()*4)]
+            }else if (topRunningTotal%3===0){
+              two = valueBottom3[Math.floor(Math.random()*4)]
+            }
+          }else if(bottomRunningTotal%3!==0){
+            if (topRunningTotal%3!==0){
+              two = valueBottom2[Math.floor(Math.random()*4)]
+            }else if (topRunningTotal%3===0){
+              two = valueBottom[Math.floor(Math.random()*4)]
+            }
+          }
+          arrayBottom.push(two)
+          bottomRunningTotal+=two
+        }
+  
+        let scrambleEnd = ""
+  
+        if(topRunningTotal%3!==0 && bottomRunningTotal%3===0){
+          arrayTop.push(-1)
+          arrayBottom.push(0)
+          topRunningTotal-=1
+          let scrambleOptions = ["(3,0)/ (2,-3)/ (4,-3)/ (3,-3)/ (1,-3)", "(-3,6)/ (0,1)/ (-4,0)/ (2,2)", "(-3,6)/ (0,1)/ (-4,0)/ (2,2)/ (2,-3)",
+          "(3,0)/ (2,-3)/ (4,-3)/ (3,-3)", "(3,-3)/ (-3,6)/ (-5,0)/ (-1,-3)/ (1,0)", "(3,-3)/ (-3,6)/ (-5,0)/ (-1,-3)", "(3,0)/ (1,0)/ (2,-1)/ (-3,4)/ (5,0)",
+          "(3,0)/ (1,0)/ (2,-1)/ (-3,4)", "(6,3)/ (3,0)/ (-2,2)/ (0,2)/ (-2,-2)", "(6,3)/ (3,0)/ (-2,2)/ (0,2)/ (-2,0)", "(-3,0)/ (-2,-1)/ (-4,0)/ (0,3)/ (2,6)",
+          "(6,3)/ (3,0)/ (-2,2)/ (0,2)/ (5,4)", "(6,3)/ (3,0)/ (-2,2)/ (0,2)", "(-3,0)/ (-2,-1)/ (-4,0)/ (0,3)", "(-3,0)/ (-2,-1)/ (-4,0)/ (0,3)/ (-2,3)",]
+          scrambleEnd+=scrambleOptions[Math.floor(Math.random()*scrambleOptions.length)]
+        }else if(bottomRunningTotal%3!==0 && topRunningTotal%3===0){
+          arrayTop.push(1)
+          arrayBottom.push(0)
+          topRunningTotal+=1
+          let scrambleOptions2 = ["(3,0)/ (2,-3)/ (0,-2)/ (6,-2)/ (2,-4)", "(3,0)/ (2,-3)/ (0,-2)/ (6,-2)", "(3,0)/ (2,-3)/ (4,-2)/ (2,0)/ (0,-2)",
+          "(0,3)/ (2,1)/ (3,-2)/ (1,-4)/ (2,0)", "(0,3)/ (2,1)/ (3,-2)/ (1,-4)", "(0,3)/ (-4,1)/ (2,-2)/ (-2,6)/ (-4,0)", "(3,3)/ (2,-3)/ (4,0)/ (-2,2)/ (-4,1)",
+          "(3,3)/ (2,-3)/ (4,0)/ (-2,2)", "(3,3)/ (-4,0)/ (1,5)/ (5,-1)/ (-3,0)", "(6,3)/ (-2,3)/ (2,2)/ (6,0)/ (2,1)", "(6,3)/ (-2,3)/ (2,2)/ (6,0)",
+          "(6,3)/ (-2,3)/ (-4,2)/ (0,1)/ (-4,0)", "(6,3)/ (-2,3)/ (-4,2)/ (0,1)", "(3,6)/ (-2,3)/ (5,-4)/ (1,-3)/ (-3,3)", "(3,6)/ (-2,3)/ (5,-4)/ (1,-3)",]
+          scrambleEnd+=scrambleOptions2[Math.floor(Math.random()*scrambleOptions2.length)]
+        }
+  
+  
+  
+        for (let i = 0;i<7;i++){
+          scramble+="("+ arrayTop[i] + "," + arrayBottom[i] + ")" 
+          // if (i < arrayTop.length-2){
+            scramble+= "/ "
+          // }
+        }
+        scramble+=scrambleEnd
+      }
 
         let megaminxScramble = ""
         if (input==="Megaminx"){
