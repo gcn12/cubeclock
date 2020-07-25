@@ -997,7 +997,7 @@ class App extends Component {
     render() {   
       return (
       <div> 
-        <button onClick={this.test}>push</button>
+        {/* <button onClick={this.test}>push</button> */}
         {/* <button onClick={this.send}>send</button>
       <button onClick={this.receive}>receive</button> */}
         { this.state.isHome 
