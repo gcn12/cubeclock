@@ -105,7 +105,7 @@ export default class Graph extends Component {
         this.optionsTimePeriod()
         setTimeout(()=>this.changeIndexNumber(),10)
         // setTimeout(()=>console.log(this.props.averages),100)
-        setTimeout(()=>console.log(this.props.dates),100)
+        // setTimeout(()=>console.log(this.props.dates),100)
         this.options()
         this.buildChart()
     }

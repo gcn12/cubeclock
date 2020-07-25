@@ -472,6 +472,7 @@ class App extends Component {
       aoNum: data.aonumber,
       isCountDownActivated: data.inspection, 
       inspectionTime: data.inspectiontime,
+      isMobile: data.mobile
     })
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
     localStorage.setItem("countDown", JSON.stringify(data.inspection))
@@ -731,6 +732,7 @@ class App extends Component {
   
   componentDidMount() {
     // console.log(Object.keys(localStorage))
+    // console.log(localStorage)
     this.getConfirmSessionAndSolveOnMount()
     setTimeout(()=>this.getSolves(),3)
     setTimeout(()=>this.getUserInfo(),10)
@@ -845,8 +847,156 @@ class App extends Component {
   //   })
   // }
 
+    // test = () => {
+      // let first = [1, 3, 4, 6, -1, -3, -4]
+      // let arrayTop = []
+      // let arrayBottom = []
+      // let runningTotalTop = 0
+      // let runningTotalBottom = 0
+      // let firstValueTop= [1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5]
+      // let firstValueBottom = [1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5]
+      // for (let i = 5; i>0; i--){
+      //   let index = firstValueTop.indexOf(2-runningTotalTop);
+      //   if (index!==0){
+      //     firstValueTop.splice(index, 1);
+      //   }
+      //   let index2 = firstValueTop.indexOf(5-runningTotalTop);
+      //   if (index!==0){
+      //     firstValueTop.splice(index2, 1);
+      //   }
+      //   let index3 = firstValueTop.indexOf(-runningTotalTop-1);
+      //   if (index!==0){
+      //     firstValueTop.splice(index3, 1);
+      //   }
+      //   let index4 = firstValueTop.indexOf(-runningTotalTop-4);
+      //   if (index!==0){
+      //     firstValueTop.splice(index4, 1);
+      //   }
+
+      //   let index5 = firstValueBottom.indexOf(1-runningTotalBottom);
+      //   if (index!==0){
+      //     firstValueBottom.splice(index5, 1);
+      //   }
+      //   let index6 = firstValueBottom.indexOf(4-runningTotalBottom);
+      //   if (index!==0){
+      //     firstValueBottom.splice(index6, 1);
+      //   }
+      //   let index7 = firstValueBottom.indexOf(-runningTotalBottom-2);
+      //   if (index!==0){
+      //     firstValueBottom.splice(index7, 1);
+      //   }
+      //   let index8 = firstValueBottom.indexOf(-runningTotalBottom-5);
+      //   if (index!==0){
+      //     firstValueBottom.splice(index8, 1);
+      //   }
+        
+      //   let top = firstValueTop[Math.ceil(Math.random()*6)]
+      //   let bottom = firstValueBottom[Math.ceil(Math.random()*6)]
+      //   arrayTop.push(top)
+      //   arrayBottom.push(bottom)
+      //   runningTotalTop+= top
+      //   runningTotalBottom+= bottom
+      // }
+    //   console.log(arrayTop)
+    //   console.log(arrayBottom)
+
+    // }
+
+
     test = () => {
-      console.log(this.state.solves)
+      let scramble = ""
+      let arrayTop = []
+      let arrayBottom = []
+      let topRunningTotal = 0
+      let bottomRunningTotal = 0
+      let firstValueTop= [0, 1, 3, 4, 6, -2, -3, -5]
+      let valueTop = [1, 4, -2, -5]
+      let valueTop2 = [0, 3, 6, -3]
+      let valueBottomA = [0, 3, 6, -3]
+      let valueBottomB= [2, 5, -1, -4]
+      let one = firstValueTop[Math.floor(Math.random()*8)]
+      topRunningTotal+=one
+      let two
+      if (valueTop.includes(one)){
+        two = valueBottomA[Math.floor(Math.random()*4)]
+      }else if (valueTop2.includes(one)){
+        two = valueBottomB[Math.floor(Math.random()*4)]
+      }
+      bottomRunningTotal+=two
+      arrayTop.push(one)
+      arrayBottom.push(two)
+      
+      let valueTop3 = [0, 1, 3, 4, 6, -2, -3, -5]
+      let valueTop4 = [0,2,3,5,6,-1,-3,-4] 
+      //top flush bottom not
+      let valueBottom = [0, 3, 6,-3]
+      //top and bottom not flush
+      let valueBottom2 = [1, 4, -2,-5]
+      //top and bottoma flush
+      let valueBottom3 = [-1, -4, 2, 5]
+      //top not flush bottom is
+      let valueBottom4 = [0, 3, 6,-3]
+      for (let i = 5; i>0; i--){
+        if (topRunningTotal%3===0){
+          one = valueTop3[Math.floor(Math.random()*8)]
+        }else if (topRunningTotal%3!==0){
+          one = valueTop4[Math.floor(Math.random()*7)]
+        }
+        topRunningTotal+=one
+        arrayTop.push(one)
+        if(bottomRunningTotal%3===0){
+          if (topRunningTotal%3!==0){
+            two = valueBottom4[Math.floor(Math.random()*4)]
+          }else if (topRunningTotal%3===0){
+            two = valueBottom3[Math.floor(Math.random()*4)]
+          }
+        }else if(bottomRunningTotal%3!==0){
+          if (topRunningTotal%3!==0){
+            two = valueBottom2[Math.floor(Math.random()*4)]
+          }else if (topRunningTotal%3===0){
+            two = valueBottom[Math.floor(Math.random()*4)]
+          }
+        }
+        arrayBottom.push(two)
+        bottomRunningTotal+=two
+      }
+
+
+      for (let i = 5; i>0; i--){
+        //top flush
+        let topChoices = [0,1,3,4,6,-2,-3,-5]
+        //top not flush
+        let topChoices2 = [0,2,3,5,6,-1,-3,-4]
+        //bottom flush
+        let bottomChoices = [0,2,3,5,6,-1,-3,-4]
+        //bottom not flush
+        let bottomChoices2 = [0,1,3,4,6,-2,-3,-5]
+
+        if (topRunningTotal % 3===0){
+          one = topChoices[Math.floor(Math.random()*8)]
+        }else if (topRunningTotal % 3!==0){
+          one = topChoices2[Math.floor(Math.random()*8)]
+        }
+        arrayTop.push(one)
+        topRunningTotal+=one
+        if (bottomRunningTotal % 3===0){
+          two = bottomChoices[Math.floor(Math.random()*8)]
+        }else if (bottomRunningTotal % 3!==0){
+          two = bottomChoices2[Math.floor(Math.random()*8)]
+        }
+        bottomRunningTotal+=two
+        arrayBottom.push(two)
+      }
+
+
+
+      for (let i = 0;i<10;i++){
+        scramble+="("+ arrayTop[i] + "," + arrayBottom[i] + ")" 
+        if (i < arrayTop.length-2){
+          scramble+= "/ "
+        }
+      }
+      console.log(scramble)
     }
       
     render() {   
