@@ -12,6 +12,8 @@ class CardList extends Component {
             <div>
                 {
                 this.props.solvesSorted.map((solve,i)=>{
+                    let puzzleBest = this.props.puzzleBest[i]
+                    let puzzleWorst = this.props.puzzleWorst[i]
                     let session = -1
                     let date = ""
                     let rawDate2 = ""
@@ -147,6 +149,8 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        puzzleBest={puzzleBest}
+                        puzzleWorst={puzzleWorst}
                         getSessionNameOnLoad={this.props.getSessionNameOnLoad}
                         isConfirmSessionDelete={this.props.isConfirmSessionDelete}
                         isConfirmSolveDelete={this.props.isConfirmSolveDelete}

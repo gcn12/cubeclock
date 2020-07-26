@@ -53,7 +53,9 @@ class Dashboard extends Component{
         newPasswordReenter: "",
         isPasswordMatch: true,
         isPasswordChanged: false,
-        solvesSortedCardList: []
+        solvesSortedCardList: [],
+        puzzleWorst: [],
+        puzzleBest: [],
     }
 
     manageSolveData = () => {
@@ -500,7 +502,9 @@ class Dashboard extends Component{
     }
 
     getBestTimes = () => {
-        let puzzleBestTimes = []
+        let puzzleBestTimesSummary = []
+        let puzzleWorst = []
+        let puzzleBest = []
         for (const puzzle of this.state.puzzlesSummary){
             let timesAndPuzzle = []
             let allTimesMS = []
@@ -517,13 +521,20 @@ class Dashboard extends Component{
                 }
             }
             let index = allTimesMS.indexOf(String(Math.min(...allTimesMS)))
+            let indexWorst = allTimesMS.indexOf(String(Math.max(...allTimesMS)))
             timesAndPuzzle.push(puzzle)
             timesAndPuzzle.push(allTimes[index])
+            puzzleBest.push(allTimes[index])
+            puzzleWorst.push(allTimes[indexWorst])
             timesAndPuzzle.push(allTimes.length)
-            puzzleBestTimes.push(timesAndPuzzle)
+            puzzleBestTimesSummary.push(timesAndPuzzle)
         }
+        puzzleBest.reverse()
+        puzzleWorst.reverse()
         this.setState({
-            puzzlesSummary: puzzleBestTimes
+            puzzlesSummary: puzzleBestTimesSummary,
+            puzzleWorst: puzzleWorst,
+            puzzleBest: puzzleBest,
         })
     }
 
@@ -961,6 +972,8 @@ class Dashboard extends Component{
                     <h1> </h1>
                     }
                     <CardList 
+                    puzzleBest={this.state.puzzleBest}
+                    puzzleWorst={this.state.puzzleWorst}
                     interfaceSession={this.state.interfaceSession}
                     getSessionNameOnLoad={this.props.getSessionNameOnLoad}
                     isConfirmSessionDelete={this.props.isConfirmSessionDelete}

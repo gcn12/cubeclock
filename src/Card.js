@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+
+
+
 class Card extends Component {
     deleteSession=()=>{
         this.props.removeSessionFromState(this.props.session)
@@ -72,6 +75,9 @@ class Card extends Component {
             <div className="summary-center">
                 {/* <button onClick={this.test}>Card</button> */}
                 <div className={this.props.isBackgroundLight ? " bg-white dib br3 pa3 ma2 bw2 shadow-5" : " bg-black dib br3 pa3 ma2 bw2 shadow-5"}>
+                    
+                    
+
                     {this.props.puzzle ? 
                     <h2 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Session: {this.props.sessionDisplayName} | {this.props.puzzle}</h2>
                     :
@@ -90,6 +96,34 @@ class Card extends Component {
                     }
                     <h4 className="display-linebreak" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>{this.props.row}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Average: {this.props.average}</h4>
+                    <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best: {this.props.puzzleBest}</h4>
+                    <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst: {this.props.puzzleWorst}</h4>
+                    {/* <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    <h2>
+
+                                Best time:
+                                    </h2>
+                                </td>
+                                <td>
+                                    <h2>
+                                    Worst time:
+                                    </h2>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                            <h2>
+                            {this.props.puzzleBest}
+                            </h2>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table> */}
                     <div className="tc">
                         <h1><button className="button2" onClick={()=>this.props.loadPastSessionSolveData(this.props.uniqueSession, this.props.ind)} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Resume Session</button></h1>
                         <button className="button2" onClick={this.deleteFunc} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Session</button>
