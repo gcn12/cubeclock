@@ -204,21 +204,23 @@ class TimerInterface extends Component {
   begin = (e) => {
     // if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
     if(e.keyCode === 32){
-      if (!this.state.going) {
-        if(this.state.preventStartLoop % 2===0){
-          if (!this.state.countingDown){
-            if(localStorage.countDown){
-              if (JSON.parse(localStorage.getItem("countDown")) === false){
+      if(!this.state.isDisableSpacebar){
+        if (!this.state.going) {
+          if(this.state.preventStartLoop % 2===0){
+            if (!this.state.countingDown){
+              if(localStorage.countDown){
+                if (JSON.parse(localStorage.getItem("countDown")) === false){
+                  this.beginFunction()
+                }
+              }else{
+                console.log("here")
                 this.beginFunction()
               }
-            }else{
-              console.log("here")
-              this.beginFunction()
-            }
-          }    
+            }    
+          }
         }
       }
-    }
+      }
   }
 
   beginFunction = () => {
@@ -264,13 +266,17 @@ class TimerInterface extends Component {
               milliseconds: 0,
               start: Date.now(),
               going: true,
+              isDisableSpacebar: true,
           })
           this.interval4 = setInterval(()=>this.time(), 1)
           this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
           if (!this.props.isTimerDisabled){
             this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
           }else{
-            this.timerFormatted("timerFormatted")
+            // this.timerFormatted("timerFormatted")
+                this.setState({
+                  timerFormatted: "TAP TO STOP"
+                })
           }
           this.setState({
             isMobileGoing: true
@@ -363,6 +369,7 @@ class TimerInterface extends Component {
   stopMobile2 = () => {
     if(this.state.going===true) {
       if(this.state.preventStartLoopMobile % 2!==0){
+        this.preventStartLoopMobile()
         let endMS = Date.now() - this.state.start
         this.setState({
           endMS: endMS
@@ -482,6 +489,7 @@ class TimerInterface extends Component {
         // solves: [solveData, ...this.state.solves],
         going: false,
         // isMobileGoing: false,
+        isDisableSpacebar: false,
       })
       this.props.getInterfaceSolvesSingle(solveData)
       const finalSolve = {}
@@ -518,133 +526,136 @@ class TimerInterface extends Component {
     if(this.state.going===true) {
       if (e.keyCode===32||(!this.state.keyPressOne && !this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
         if (!this.state.countingDown){
-          let endMS = Date.now() - this.state.start
-          let allSolves = []
-          for (const solve of this.props.solves){
-            if (solve.puzzle === this.props.puzzleType){
-              allSolves.push(solve.milliseconds)
+          if(!this.state.isDisableSpacebar){
+
+            let endMS = Date.now() - this.state.start
+            let allSolves = []
+            for (const solve of this.props.solves){
+              if (solve.puzzle === this.props.puzzleType){
+                allSolves.push(solve.milliseconds)
+              }
             }
-          }
-          allSolves.sort(this.compareMilliseconds)
-          let halfDate = ""
-          let fullDate = ""
-          let d = new Date()
-          fullDate += d.getFullYear() + "-"
-          if ((d.getMonth() + 1) < 10){
-            fullDate += "0"
-          }
-          fullDate += d.getMonth() + 1 + "-"
-          if ((d.getDate()) < 10){
-            fullDate += "0"
-          }
-          fullDate += d.getDate()
-          fullDate += "T00:00:00.000Z"
-          halfDate += d.getFullYear() + "-"
-          if ((d.getMonth() + 1) < 10){
-            halfDate += "0"
-          }
-          halfDate += d.getMonth() + 1 + "-"
-          if ((d.getDate) < 10){
-            halfDate += "0"
-          }
-          halfDate += d.getDate() 
-          this.timerFormatted("timerFormatted")
-          if (this.state.isDisableSpacebar){
-            this.isDisableSpacebar()
-          }
-          if (JSON.parse(localStorage.getItem("countDown")) === true){
-            clearInterval(this.countdownInterval)
-            this.getCountDownNumber()
-          }
-          clearInterval(this.interval)
-          clearInterval(this.interval2)
-          clearInterval(this.interval3)
-          this.converter(endMS)
-          this.timerFormatted("timerFormatted")
-          this.timerFormatted("displayTimeFormatted")
-          this.timerFormatted("twoFormatted")
-          let solveid = ""
-          solveid+=Date.now()
-          if (this.props.id){
-            this.sendResults(solveid, endMS)
-          }
-          let minimumTime = 0
-          if (this.props.puzzleType==="3x3"){
-            minimumTime=1100
-          }
-          if (this.props.puzzleType==="5x5" || this.props.puzzleType==="6x6"
-          || this.props.puzzleType==="7x7"){
-            minimumTime=10000
-          }
-          if (this.props.puzzleType==="3x3 OH" || this.props.puzzleType==="Megaminx"){
-            minimumTime=2000
-          }
-          if (this.props.puzzleType==="Clock"){
-            minimumTime=500
-          }
-          if (this.props.puzzleType==="Square-1"||this.props.puzzleType==="4x4 BLD"){
-            minimumTime=1000
-          }
-          if (this.props.puzzleType==="5x5 BLD" || this.props.puzzleType==="4x4"||this.props.puzzleType==="3x3 BLD"){
-            minimumTime=4000
-          }
-          let unix = Math.round(new Date().getTime() / 1000)
-
-          const solveData = {}
-          solveData["id"] = this.props.id
-          solveData["solve"] = this.state.displayTimeFormatted
-          if (this.props.puzzleType==="Megaminx"){
-            solveData["scramble"] = this.state.megaminxScramble 
-          }else if (this.props.puzzleType==="Multi-BLD"){
-            solveData["scramble"] = this.state.multiBLDScramble
-          }else{
-            solveData["scramble"] = this.state.scramble
-          }
-          solveData["milliseconds"] = String(endMS)
-          solveData["isplustwo"] = false
-          solveData["isdnf"] = false
-          solveData["date"] = halfDate
-          solveData["solveid"] = solveid
-          solveData["plustwo"] = this.state.twoFormatted
-          solveData["millisecondstwo"]= String(endMS + 2000)
-          solveData["session"] = this.props.sessions
-          solveData["unix"] = new Date().getTime()
-          solveData["puzzle"] = this.props.puzzleType
-          solveData["sessionname"]=this.props.sessionName
-          solveData["temporary"] = true
-          this.setState({
-            solves: [solveData, ...this.state.solves],
-            going: false,
-            endMS: endMS,
-          })
-          this.props.getInterfaceSolvesSingle(solveData)
-
-          const finalSolve = {}
-          finalSolve["id"] = this.props.id
-          finalSolve["solve"] = this.state.displayTimeFormatted
-          if (this.props.puzzleType==="Megaminx"){
-            finalSolve["scramble"] = this.state.megaminxScramble
-          }else if (this.props.puzzleType==="Multi-BLD"){
-            finalSolve["scramble"] = this.state.multiBLDScramble
-          }else{
-            finalSolve["scramble"] = this.state.scramble
-          }
-          finalSolve["milliseconds"] = String(this.state.endMS)
-          finalSolve["isplustwo"] = false
-          finalSolve["isdnf"] = false
-          finalSolve["date"] = fullDate
-          finalSolve["solveid"] = solveid
-          finalSolve["plustwo"] = this.state.twoFormatted
-          finalSolve["millisecondstwo"]=String(this.state.endMS + 2000)
-          finalSolve["session"] = this.props.sessions
-          finalSolve["unix"] = String(unix)
-          finalSolve["puzzle"] = this.props.puzzleType
-          finalSolve["sessionname"]=this.props.sessionName
-          setTimeout(()=>this.props.getSolveFromInterface(finalSolve),10)
-          this.rand(this.props.puzzleType)
-          if (this.state.final < allSolves[0] && this.state.endMS > minimumTime){
-            if(allSolves.length>75){
-              this.props.confettiLaunch()
+            allSolves.sort(this.compareMilliseconds)
+            let halfDate = ""
+            let fullDate = ""
+            let d = new Date()
+            fullDate += d.getFullYear() + "-"
+            if ((d.getMonth() + 1) < 10){
+              fullDate += "0"
+            }
+            fullDate += d.getMonth() + 1 + "-"
+            if ((d.getDate()) < 10){
+              fullDate += "0"
+            }
+            fullDate += d.getDate()
+            fullDate += "T00:00:00.000Z"
+            halfDate += d.getFullYear() + "-"
+            if ((d.getMonth() + 1) < 10){
+              halfDate += "0"
+            }
+            halfDate += d.getMonth() + 1 + "-"
+            if ((d.getDate) < 10){
+              halfDate += "0"
+            }
+            halfDate += d.getDate() 
+            this.timerFormatted("timerFormatted")
+            if (this.state.isDisableSpacebar){
+              this.isDisableSpacebar()
+            }
+            if (JSON.parse(localStorage.getItem("countDown")) === true){
+              clearInterval(this.countdownInterval)
+              this.getCountDownNumber()
+            }
+            clearInterval(this.interval)
+            clearInterval(this.interval2)
+            clearInterval(this.interval3)
+            this.converter(endMS)
+            this.timerFormatted("timerFormatted")
+            this.timerFormatted("displayTimeFormatted")
+            this.timerFormatted("twoFormatted")
+            let solveid = ""
+            solveid+=Date.now()
+            if (this.props.id){
+              this.sendResults(solveid, endMS)
+            }
+            let minimumTime = 0
+            if (this.props.puzzleType==="3x3"){
+              minimumTime=1100
+            }
+            if (this.props.puzzleType==="5x5" || this.props.puzzleType==="6x6"
+            || this.props.puzzleType==="7x7"){
+              minimumTime=10000
+            }
+            if (this.props.puzzleType==="3x3 OH" || this.props.puzzleType==="Megaminx"){
+              minimumTime=2000
+            }
+            if (this.props.puzzleType==="Clock"){
+              minimumTime=500
+            }
+            if (this.props.puzzleType==="Square-1"||this.props.puzzleType==="4x4 BLD"){
+              minimumTime=1000
+            }
+            if (this.props.puzzleType==="5x5 BLD" || this.props.puzzleType==="4x4"||this.props.puzzleType==="3x3 BLD"){
+              minimumTime=4000
+            }
+            let unix = Math.round(new Date().getTime() / 1000)
+  
+            const solveData = {}
+            solveData["id"] = this.props.id
+            solveData["solve"] = this.state.displayTimeFormatted
+            if (this.props.puzzleType==="Megaminx"){
+              solveData["scramble"] = this.state.megaminxScramble 
+            }else if (this.props.puzzleType==="Multi-BLD"){
+              solveData["scramble"] = this.state.multiBLDScramble
+            }else{
+              solveData["scramble"] = this.state.scramble
+            }
+            solveData["milliseconds"] = String(endMS)
+            solveData["isplustwo"] = false
+            solveData["isdnf"] = false
+            solveData["date"] = halfDate
+            solveData["solveid"] = solveid
+            solveData["plustwo"] = this.state.twoFormatted
+            solveData["millisecondstwo"]= String(endMS + 2000)
+            solveData["session"] = this.props.sessions
+            solveData["unix"] = new Date().getTime()
+            solveData["puzzle"] = this.props.puzzleType
+            solveData["sessionname"]=this.props.sessionName
+            solveData["temporary"] = true
+            this.setState({
+              solves: [solveData, ...this.state.solves],
+              going: false,
+              endMS: endMS,
+            })
+            this.props.getInterfaceSolvesSingle(solveData)
+  
+            const finalSolve = {}
+            finalSolve["id"] = this.props.id
+            finalSolve["solve"] = this.state.displayTimeFormatted
+            if (this.props.puzzleType==="Megaminx"){
+              finalSolve["scramble"] = this.state.megaminxScramble
+            }else if (this.props.puzzleType==="Multi-BLD"){
+              finalSolve["scramble"] = this.state.multiBLDScramble
+            }else{
+              finalSolve["scramble"] = this.state.scramble
+            }
+            finalSolve["milliseconds"] = String(this.state.endMS)
+            finalSolve["isplustwo"] = false
+            finalSolve["isdnf"] = false
+            finalSolve["date"] = fullDate
+            finalSolve["solveid"] = solveid
+            finalSolve["plustwo"] = this.state.twoFormatted
+            finalSolve["millisecondstwo"]=String(this.state.endMS + 2000)
+            finalSolve["session"] = this.props.sessions
+            finalSolve["unix"] = String(unix)
+            finalSolve["puzzle"] = this.props.puzzleType
+            finalSolve["sessionname"]=this.props.sessionName
+            setTimeout(()=>this.props.getSolveFromInterface(finalSolve),10)
+            this.rand(this.props.puzzleType)
+            if (this.state.final < allSolves[0] && this.state.endMS > minimumTime){
+              if(allSolves.length>75){
+                this.props.confettiLaunch()
+              }
             }
           }
         }
