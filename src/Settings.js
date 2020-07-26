@@ -271,15 +271,34 @@ class Settings extends Component{
                     </div>
                     <div className="center">
                         <h4>ao #</h4>
-                        <br></br>
+                        {/* <br></br> */}
 
+
+
+                        {/* <nav style={{display: 'flex', }}>
                         <div className="center">
                             {this.props.isBackgroundLight ? 
-                            <input style={{width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-white form-input" onChange={this.aoNumInput} type="text"></input>
+                            <input style={{width:"10px", height:"50px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-white form-input" onChange={this.aoNumInput} type="text"></input>
                             :
-                            <input style={{width: "100px", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-black form-input"  onChange={this.aoNumInput} type="number"></input>
+                            <input style={{height:"50px", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-black form-input"  onChange={this.aoNumInput} type="number"></input>
                             }
                         </div>
+                        <h1><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number</button></h1>
+                        </nav> */}
+
+
+                                
+                            <div >
+                                {this.props.isBackgroundLight ? 
+                                <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum}  onChange={this.aoNumInput} type="number"></input>
+                                :
+                                <input className="test11 pa2 ba b--green bg-black form-input" style={{ width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum}  onChange={this.aoNumInput} type="number"></input>
+                                }
+                                <h1 className="test11 test22"><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number</button></h1>
+                            </div>
+
+                            
+
 
                         {this.state.isAoSubmitted ? 
                         <h4 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Number has been updated</h4>
@@ -291,7 +310,6 @@ class Settings extends Component{
                         :
                         <h4> </h4>
                         }
-                    <h1><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number</button></h1>
                     </div>
                     {/* <div className="center">
                         <h4>Scramble Length</h4>

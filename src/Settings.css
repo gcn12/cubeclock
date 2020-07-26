@@ -28,3 +28,14 @@
   .checkbox {
     display : none;
   }
+
+  .test11{
+    display: inline-block;
+    vertical-align: middle;
+    /* margin: 10px 0; */
+  }
+
+  .test22{
+    padding-bottom: 6px;
+    padding-left: 5px;
+  }
