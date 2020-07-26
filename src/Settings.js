@@ -303,43 +303,72 @@ class Settings extends Component{
                         </nav>
                     </div> */}
 
-                    <div className="summary-center">
-                    <nav  style={{display: 'flex'}}>
-                    <h4 >Mobile Start/Stop </h4>
+                    {/* <div className="summary-center">
+                    <nav  style={{display: 'flex'}}> */}
+                    {/* <h4 >Touch Start/Stop</h4> */}
                     {/* <br></br> */}
+                        {/* <label for="mobile">label1</label>
                         <input type="checkbox" id="mobile" className="checkbox" onClick={this.isMobile} />  
                         <label htmlFor="mobile" className="switch"></label>
                     </nav>
                     </div>
-                    <br></br>
+                    <br></br> */}
 
-                    <div className="summary-center">
+                    {/* <div className="summary-center">
                     <nav  style={{display: 'flex'}}>
                     <h4 >Confirm Before Deleting Solve</h4>
                         <input type="checkbox" id="solveconfirm" className="checkbox" onClick={this.isConfirmSolve} />  
                         <label htmlFor="solveconfirm" className="switch"></label>
                         </nav>
                     </div>
-                    <br></br>
+                    <br></br> */}
 
 
-                    <div className="summary-center">
+                    {/* <div className="summary-center">
                     <nav  style={{display: 'flex'}}>
                     <h4 className="center">Confirm Before Deleting Session</h4>
                         <input type="checkbox" id="sessionconfirm" className="checkbox" onClick={this.isConfirmSession} />  
                         <label htmlFor="sessionconfirm" className="switch"></label>
                         </nav>
                     </div>
-                    <br></br>
+                    <br></br> */}
 
-                    <div className="summary-center">
-                    <nav  style={{display: 'flex'}}>
-                    <h4 className="center">Deactivate timer during solve</h4>
+                    {/* <div className="summary-center">
+                        <nav  style={{display: 'flex'}}>
+                        <h4 className="center">Deactivate timer during solve</h4>
                         <input type="checkbox" id="disabletimer" className="checkbox" onClick={this.isDisableTimer} />  
                         <label htmlFor="disabletimer" className="switch"></label>
                         </nav>
-                    </div>
+                    </div> */}
+
                     <br></br>
+
+
+                    <ul className="summary-center">      
+                        <li>
+                            <label htmlFor="mobile" className="label1"><h4>Touch start/stop</h4></label>
+                            <input type="checkbox" id="mobile" className="checkbox input1" onClick={this.isMobile} />  
+                            <label htmlFor="mobile" className="switch"></label>
+                        </li>  
+                        <br></br>
+                        <li>
+                            <label htmlFor="solveconfirm" className="label1"><h4>Confirm before deleting solve</h4></label>
+                            <input type="checkbox" id="solveconfirm" className="checkbox input1" onClick={this.isConfirmSolve} />  
+                            <label htmlFor="solveconfirm" className="switch"></label>
+                        </li>  
+                        <br></br>
+                        <li>
+                            <label htmlFor="sessionconfirm" className="label1"><h4>Confirm before deleting session</h4></label>
+                            <input type="checkbox" id="sessionconfirm" className="checkbox input1" onClick={this.isConfirmSession} />  
+                            <label htmlFor="sessionconfirm" className="switch"></label>
+                        </li>
+                        <br></br>
+                        <li>
+                            <label htmlFor="disabletimer" className="label1"><h4>Deactivate timer during solve</h4></label>
+                            <input type="checkbox" id="disabletimer" className="checkbox input1" onClick={this.isDisableTimer} />  
+                            <label htmlFor="disabletimer" className="switch"></label>
+                        </li>
+                    </ul>
 
 
                     <br></br>

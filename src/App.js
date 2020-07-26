@@ -826,7 +826,7 @@ class App extends Component {
   //     headers: {"Content-Type": "application/json"},
   //     body: JSON.stringify({
   //       id: this.state.user.id,
-  //       test: JSON.stringify(this.state.solves),
+  //       test: JSON.stringify(this.state.solves[0]),
   //     })
   //   }).then(response=>response.json())
   // }
@@ -841,12 +841,13 @@ class App extends Component {
   //     })
   //   }).then(response=>response.json())
   //   .then(data=>{
-  //     console.log(data)
-  //     this.setState({
-  //       solves: data
-  //     })
+  //     console.log((JSON.parse(data[0].test)))
   //   })
   // }
+
+  test = () => {
+    console.log(this.state.solves)
+  }
       
     render() {   
       return (

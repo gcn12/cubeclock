@@ -124,3 +124,27 @@ button{
 .light2{
   margin-left: 3%;
 }
+
+
+.input1 {
+  width: 20px;
+
+  position: relative;
+  left: 200px;
+
+  vertical-align: middle;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.label1 {  
+  width: 280px;
+
+  position: relative;
+  left: -20px;
+
+  display: inline-block;
+  vertical-align: middle;
+}
