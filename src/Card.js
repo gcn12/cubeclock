@@ -99,27 +99,21 @@ class Card extends Component {
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best: {this.props.puzzleBest}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst: {this.props.puzzleWorst}</h4>
                     <div className="tc">
-                        {/* {
-                            this.props.ao5 ? 
+                    {
+                        this.props.ao5 ? 
                     <table className="summary-center">
                         <thead>
                             <tr>
                                 <td>
                                 </td>
                                 <td>
-                                    <h4>
-                                Current:
-                                    </h4>
+                                    <h4>Current:</h4>
                                 </td>
                                 <td>
-                                    <h4>
-                                    Best:
-                                    </h4>
+                                    <h4>Best:</h4>
                                 </td>
                                 <td>
-                                    <h4>
-                                    Worst:
-                                    </h4>
+                                    <h4>Worst:</h4>
                                 </td>
                             </tr>
                         </thead>
@@ -147,6 +141,16 @@ class Card extends Component {
                                 {this.props.ao5}
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao5BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao5BestAndWorst[0]}
+                                </h4>
+                            </td>
                         </tr>
                         :
                         <tr></tr>
@@ -161,6 +165,16 @@ class Card extends Component {
                             <td>
                                 <h4>
                                 {this.props.ao12}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao12BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao12BestAndWorst[0]}
                                 </h4>
                             </td>
                         </tr>
@@ -179,6 +193,16 @@ class Card extends Component {
                                 {this.props.ao25}
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao25BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao25BestAndWorst[0]}
+                                </h4>
+                            </td>
                         </tr>
                         :
                         <tr></tr>
@@ -193,6 +217,16 @@ class Card extends Component {
                             <td>
                                 <h4>
                                 {this.props.ao50}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao50BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao50BestAndWorst[0]}
                                 </h4>
                             </td>
                         </tr>
@@ -211,6 +245,16 @@ class Card extends Component {
                                 {this.props.ao100}
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao100BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao100BestAndWorst[0]}
+                                </h4>
+                            </td>
                         </tr>
                         :
                         <tr></tr>
@@ -225,6 +269,16 @@ class Card extends Component {
                             <td>
                                 <h4>
                                 {this.props.ao200}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao200BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao200BestAndWorst[0]}
                                 </h4>
                             </td>
                         </tr>
@@ -243,6 +297,16 @@ class Card extends Component {
                                 {this.props.ao500}
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao500BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao500BestAndWorst[0]}
+                                </h4>
+                            </td>
                         </tr>
                         :
                         <tr></tr>
@@ -257,6 +321,16 @@ class Card extends Component {
                             <td>
                                 <h4>
                                 {this.props.ao1000}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao1000BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao1000BestAndWorst[0]}
                                 </h4>
                             </td>
                         </tr>
@@ -275,6 +349,16 @@ class Card extends Component {
                                 {this.props.ao5000}
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao5000BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao5000BestAndWorst[0]}
+                                </h4>
+                            </td>
                         </tr>
                         :
                         <tr></tr>
@@ -291,6 +375,16 @@ class Card extends Component {
                                 {this.props.ao10000}
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao10000BestAndWorst[1]}
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                {this.props.ao10000BestAndWorst[0]}
+                                </h4>
+                            </td>
                         </tr>
                         :
                         <tr></tr>
@@ -299,7 +393,7 @@ class Card extends Component {
                     </table>
                         :
                         <table></table>
-                        } */}
+                        }
                         <h1><button className="button2" onClick={()=>this.props.loadPastSessionSolveData(this.props.uniqueSession, this.props.ind)} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Resume Session</button></h1>
                         <button className="button2" onClick={this.deleteFunc} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Session</button>
                     </div>

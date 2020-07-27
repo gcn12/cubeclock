@@ -62,13 +62,87 @@ class CardList extends Component {
         }
         return finalAverage
     }
+
+
+
+    bestWorstAverage = (solve, ao) => {
+        let finalAverages = []
+        let solves = [...solve].reverse()
+        let loopNumber = solves.length - (ao-1)
+        let averagesMS = []
+        while(loopNumber>0){
+            let divisor = 0
+            let totalMS = 0
+            let solvesArray = []
+            let averageMS = 0
+            let dnfCount = 0
+            for (let i = 0; i < ao; i++){
+                divisor++
+                if(solves[i].isplustwo){
+                    solvesArray.push(Number(solves[i].millisecondstwo))
+                }else if (solves[i].isdnf) {
+                    dnfCount++
+                }else{
+                    solvesArray.push(Number(solves[i].milliseconds))
+                }
+            }
+            solvesArray.sort(this.compare)
+            if(dnfCount===0){
+                solvesArray.pop()
+            }
+            solvesArray.shift()
+            for (const milliseconds of solvesArray){
+                totalMS += Number(milliseconds)
+            }
+            loopNumber--
+            averageMS = totalMS / (divisor-2)
+            if(dnfCount<2){
+                averagesMS.push(averageMS)
+            }
+            solves.shift()  
+            // finalAverages.push(finalAverage)
+        }
+        let bestAndWorst = []
+        bestAndWorst.push(Math.max(...averagesMS))
+        bestAndWorst.push(Math.min(...averagesMS))
+        for (let i = 0; i<2; i++){
+            let finalAverage = ""
+            let hours = Math.floor((bestAndWorst[i] / 3600000))
+            let minutes = Math.floor((bestAndWorst[i] / 60000)%60)
+            let seconds = Math.floor((bestAndWorst[i] / 1000)%60)
+            let milliseconds = Math.round(bestAndWorst[i] % 1000)
+            finalAverage = ""
+            if (hours > 0){
+                finalAverage += hours +":"
+            }
+            if (minutes > 0){
+                finalAverage += minutes +":"
+                if(seconds<10){
+                    finalAverage+="0"
+                }
+            }
+            finalAverage += seconds + "."
+            if (milliseconds < 10){
+                finalAverage += "00"
+            }
+            if (milliseconds < 100){
+                if (milliseconds > 9){
+                    finalAverage += "0"
+                }
+            }
+            finalAverage += milliseconds
+            finalAverages.push(finalAverage)
+        }
+        return finalAverages
+    }
  
     render() {
         let sessionDisplayName = (this.props.solvesSorted.length+1)
         return(
             <div>
                 {
-                this.props.solvesSorted.map((solve,i)=>{
+                    this.props.solvesSorted.map((solve,i)=>{
+                    this.bestWorstAverage(solve, 5)
                     let ao5 
                     let ao12
                     let ao25
@@ -79,35 +153,55 @@ class CardList extends Component {
                     let ao1000
                     let ao5000
                     let ao10000
+                    let ao5BestAndWorst
+                    let ao12BestAndWorst
+                    let ao25BestAndWorst
+                    let ao50BestAndWorst
+                    let ao100BestAndWorst
+                    let ao200BestAndWorst
+                    let ao500BestAndWorst
+                    let ao1000BestAndWorst
+                    let ao5000BestAndWorst
+                    let ao10000BestAndWorst 
                     if(solve.length>4){
                         ao5 = this.average(solve, 5)
+                        ao5BestAndWorst = this.bestWorstAverage(solve,5)
                     }
                     if(solve.length>11){
                         ao12 = this.average(solve, 12)
+                        ao12BestAndWorst = this.bestWorstAverage(solve,12)
                     }
                     if(solve.length>24){
                         ao25 = this.average(solve, 25)
+                        ao25BestAndWorst = this.bestWorstAverage(solve,25)
                     }
                     if(solve.length>49){
                         ao50 = this.average(solve, 50)
+                        ao50BestAndWorst = this.bestWorstAverage(solve,50)
                     }
                     if(solve.length>99){
                         ao100 = this.average(solve, 100)
+                        ao100BestAndWorst = this.bestWorstAverage(solve,100)
                     }
                     if(solve.length>199){
                         ao200 = this.average(solve, 200)
+                        ao200BestAndWorst = this.bestWorstAverage(solve,200)
                     }
                     if(solve.length>499){
                         ao500 = this.average(solve, 500)
+                        ao500BestAndWorst = this.bestWorstAverage(solve,500)
                     }
                     if(solve.length>999){
                         ao1000 = this.average(solve, 1000)
+                        ao1000BestAndWorst = this.bestWorstAverage(solve,1000)
                     }
                     if(solve.length>4999){
                         ao5000 = this.average(solve, 5000)
+                        ao5000BestAndWorst = this.bestWorstAverage(solve,5000)
                     }
                     if(solve.length>9999){
                         ao10000 = this.average(solve, 10000)
+                        ao10000BestAndWorst = this.bestWorstAverage(solve,10000)
                     }
                     // console.log(this.props.puzzleBest)
                     let puzzleBest = this.props.puzzleBest[i]
@@ -247,6 +341,16 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        ao5BestAndWorst={ao5BestAndWorst}
+                        ao12BestAndWorst={ao12BestAndWorst}
+                        ao25BestAndWorst={ao25BestAndWorst}
+                        ao50BestAndWorst={ao50BestAndWorst}
+                        ao100BestAndWorst={ao100BestAndWorst}
+                        ao200BestAndWorst={ao200BestAndWorst}
+                        ao500BestAndWorst={ao500BestAndWorst}
+                        ao1000BestAndWorst={ao1000BestAndWorst}
+                        ao5000BestAndWorst={ao5000BestAndWorst}
+                        ao10000BestAndWorst ={ao10000BestAndWorst}
                         ao5={ao5}
                         ao12={ao12}
                         ao25={ao25}
