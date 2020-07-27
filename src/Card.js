@@ -99,7 +99,9 @@ class Card extends Component {
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best: {this.props.puzzleBest}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst: {this.props.puzzleWorst}</h4>
                     <div className="tc">
-                    {/* <table className="summary-center">
+                        {
+                            this.props.ao5 ? 
+                    <table className="summary-center">
                         <thead>
                             <tr>
                                 <td>
@@ -122,13 +124,7 @@ class Card extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <h4>
-                                Average
-                                </h4>
-                            </td>
-                        </tr>
+                        {this.props.mo3 ? 
                         <tr>
                             <td>
                                 <h4>
@@ -136,78 +132,174 @@ class Card extends Component {
                                 </h4>
                             </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao5 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao5
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao5}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao12 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao12
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao12}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao25 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao25
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao25}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao50 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao50
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao50}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao100 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao100
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao100}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao200 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao200
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao200}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao500 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao500
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao500}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao1000 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao1000
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao1000}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao5000 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao5000
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao5000}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
+                        {this.props.ao10000 ? 
                         <tr>
                             <td>
                                 <h4>
                                 ao10000
                                 </h4>
                             </td>
+                            <td>
+                                <h4>
+                                {this.props.ao10000}
+                                </h4>
+                            </td>
                         </tr>
+                        :
+                        <tr></tr>
+                        }
                         </tbody>
-                    </table> */}
+                    </table>
+                        :
+                        <table></table>
+                        }
                         <h1><button className="button2" onClick={()=>this.props.loadPastSessionSolveData(this.props.uniqueSession, this.props.ind)} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Resume Session</button></h1>
                         <button className="button2" onClick={this.deleteFunc} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Session</button>
                     </div>

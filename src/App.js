@@ -475,6 +475,8 @@ class App extends Component {
       inspectionTime: data.inspectiontime,
       isMobile: data.mobile,
       isTimerDisabled: data.disabletimer,
+      isConfirmSolveDelete: data.confirmsolve,
+      isConfirmSessionDelete: data.confirmsession,
     })
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
     localStorage.setItem("countDown", JSON.stringify(data.inspection))

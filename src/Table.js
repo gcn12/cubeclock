@@ -104,7 +104,6 @@ const Body = (props) => {
             if(solves2[i].isplustwo){
                 solvesArray.push(Number(solves2[i].millisecondstwo))
             }else if (solves2[i].isdnf) {
-                // solvesArray.push("dnf")
                 dnfCount++
             }else{
                 solvesArray.push(Number(solves2[i].milliseconds))

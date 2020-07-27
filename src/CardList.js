@@ -5,6 +5,63 @@ class CardList extends Component {
     compare = (a,b) => {
         return b - a
     } 
+
+    average = (solve, ao) => {
+        let timesMS = []
+        let divisor = 0
+        let dnfCount = 0
+        let totalMS = 0
+        let finalAverage = ""
+        let solves = [...solve].reverse()
+        for(let i = 0; i<ao; i++){
+            divisor++
+            if(solves[i].isplustwo){
+                timesMS.push(Number(solves[i].millisecondstwo))
+            }else if (solves[i].isdnf) {
+                dnfCount++
+            }else{
+                timesMS.push(Number(solves[i].milliseconds))
+            }
+        }
+        timesMS.sort(this.compare)
+        if(dnfCount===0){
+            timesMS.pop()
+        }
+        timesMS.shift()
+        for (const milliseconds of timesMS){
+            totalMS += Number(milliseconds)
+        }
+        let averageMS = totalMS / (divisor-2)
+        if(dnfCount>1){
+            finalAverage+="DNF"
+        }else{
+            let hours = Math.floor((averageMS / 3600000))
+            let minutes = Math.floor((averageMS / 60000)%60)
+            let seconds = Math.floor((averageMS / 1000)%60)
+            let milliseconds = Math.round(averageMS % 1000)
+            finalAverage = ""
+            if (hours > 0){
+                finalAverage += hours +":"
+            }
+            if (minutes > 0){
+                finalAverage += minutes +":"
+                if(seconds<10){
+                    finalAverage+="0"
+                }
+            }
+            finalAverage += seconds + "."
+            if (milliseconds < 10){
+                finalAverage += "00"
+            }
+            if (milliseconds < 100){
+                if (milliseconds > 9){
+                    finalAverage += "0"
+                }
+            }
+            finalAverage += milliseconds
+        }
+        return finalAverage
+    }
  
     render() {
         let sessionDisplayName = (this.props.solvesSorted.length+1)
@@ -12,6 +69,46 @@ class CardList extends Component {
             <div>
                 {
                 this.props.solvesSorted.map((solve,i)=>{
+                    let ao5 
+                    let ao12
+                    let ao25
+                    let ao50
+                    let ao100
+                    let ao200
+                    let ao500
+                    let ao1000
+                    let ao5000
+                    let ao10000
+                    if(solve.length>4){
+                        ao5 = this.average(solve, 5)
+                    }
+                    if(solve.length>11){
+                        ao12 = this.average(solve, 12)
+                    }
+                    if(solve.length>24){
+                        ao25 = this.average(solve, 25)
+                    }
+                    if(solve.length>49){
+                        ao50 = this.average(solve, 50)
+                    }
+                    if(solve.length>99){
+                        ao100 = this.average(solve, 100)
+                    }
+                    if(solve.length>199){
+                        ao200 = this.average(solve, 200)
+                    }
+                    if(solve.length>499){
+                        ao500 = this.average(solve, 500)
+                    }
+                    if(solve.length>999){
+                        ao1000 = this.average(solve, 1000)
+                    }
+                    if(solve.length>4999){
+                        ao5000 = this.average(solve, 5000)
+                    }
+                    if(solve.length>9999){
+                        ao10000 = this.average(solve, 10000)
+                    }
                     // console.log(this.props.puzzleBest)
                     let puzzleBest = this.props.puzzleBest[i]
                     let puzzleWorst = this.props.puzzleWorst[i]
@@ -150,6 +247,16 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        ao5={ao5}
+                        ao12={ao12}
+                        ao25={ao25}
+                        ao50={ao50}
+                        ao100={ao100}
+                        ao200={ao200}
+                        ao500={ao500}
+                        ao1000={ao1000}
+                        ao5000={ao5000}
+                        ao10000={ao10000}
                         puzzleBest={puzzleBest}
                         puzzleWorst={puzzleWorst}
                         getSessionNameOnLoad={this.props.getSessionNameOnLoad}
