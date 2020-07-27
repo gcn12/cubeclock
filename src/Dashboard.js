@@ -1026,6 +1026,9 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
+                changeInspectionTime={this.props.changeInspectionTime}
+                aoNum2={this.props.aoNum2} 
+                aoNumChange2={this.props.aoNumChange2}
                 disableTimer={this.props.disableTimer}
                 mobileStartStop={this.props.mobileStartStop}
                 isPasswordChanged={this.state.isPasswordChanged}

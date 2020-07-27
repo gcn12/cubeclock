@@ -202,20 +202,23 @@ class TimerInterface extends Component {
   } 
 
   begin = (e) => {
+    this.getCountDownNumber()
     // if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
     if(e.keyCode === 32){
       if(!this.state.isDisableSpacebar){
         if (!this.state.going) {
           if(this.state.preventStartLoop % 2===0){
             if (!this.state.countingDown){
-              if(localStorage.countDown){
-                if (JSON.parse(localStorage.getItem("countDown")) === false){
-                  this.beginFunction()
-                }
-              }else{
-                console.log("here")
+              if(Number(this.state.countDown)===0){
                 this.beginFunction()
               }
+              // if(localStorage.countDown){
+              //   if (JSON.parse(localStorage.getItem("countDown")) === false){
+              //     this.beginFunction()
+              //   }
+              // }else{
+              //   this.beginFunction()
+              // }
             }    
           }
         }
@@ -249,7 +252,8 @@ class TimerInterface extends Component {
 
   beginMobile = () => {
     this.preventStartLoopMobile()
-    if (JSON.parse(localStorage.getItem("countDown")) === false){
+    // if (JSON.parse(localStorage.getItem("countDown")) === false){
+      if(this.state.countDown>0){
       if (!this.state.going) {
         if(this.state.preventStartLoopMobile % 2===0){
           if(this.props.isBackgroundLight){
@@ -341,7 +345,6 @@ class TimerInterface extends Component {
   //       isMobileGoing: false,
   //     })
   //   }
-  //   console.log("heled")
   //   setTimeout(()=>routeChange, 1000)
   // }
 
@@ -377,7 +380,8 @@ class TimerInterface extends Component {
         if (this.state.isDisableSpacebar){
           this.isDisableSpacebar()
         }
-        if (JSON.parse(localStorage.getItem("countDown")) === true){
+        // if (JSON.parse(localStorage.getItem("countDown")) === true){
+        if(this.state.countDown>0){
           clearInterval(this.countdownInterval)
           this.getCountDownNumber()
         }
@@ -527,7 +531,6 @@ class TimerInterface extends Component {
       if (e.keyCode===32||(!this.state.keyPressOne && !this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
         if (!this.state.countingDown){
           if(!this.state.isDisableSpacebar){
-
             let endMS = Date.now() - this.state.start
             let allSolves = []
             for (const solve of this.props.solves){
@@ -559,13 +562,14 @@ class TimerInterface extends Component {
             }
             halfDate += d.getDate() 
             this.timerFormatted("timerFormatted")
-            if (this.state.isDisableSpacebar){
-              this.isDisableSpacebar()
-            }
-            if (JSON.parse(localStorage.getItem("countDown")) === true){
+            // if (this.state.isDisableSpacebar){
+            //   this.isDisableSpacebar()
+            // }
+            // if (JSON.parse(localStorage.getItem("countDown")) === true){
+            // if(this.state.countDown>0){
               clearInterval(this.countdownInterval)
               this.getCountDownNumber()
-            }
+            // }
             clearInterval(this.interval)
             clearInterval(this.interval2)
             clearInterval(this.interval3)
@@ -691,6 +695,7 @@ class TimerInterface extends Component {
             this.countdownInterval = setInterval(()=>this.countDown(), 1000)
             this.startTimer =  setTimeout(()=>this.timerStart(),this.props.inspectionTime * 1000)
             this.runCountingDown =  setTimeout(()=>this.countingDown(),this.props.inspectionTime * 1000)
+            setTimeout(()=>this.isDisableSpacebar(),this.props.inspectionTime * 1000)
           }
         }    
       }
@@ -702,9 +707,15 @@ class TimerInterface extends Component {
     //runs count down
     // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
       if(e.keyCode === 32){
-      if (JSON.parse(localStorage.getItem("countDown")) === true){
-        this.countDownRunFunction()
-      }
+        if(!this.state.isTimerDisabled){
+            if(this.state.countDown>0){
+              this.countDownRunFunction()
+              this.setState({
+              })
+            }
+          }
+          // if (JSON.parse(localStorage.getItem("countDown")) === true){
+      // }
     }
   }
 
@@ -714,29 +725,32 @@ class TimerInterface extends Component {
     })
   }
 
-  startTimerDuringCountDown = (e) => {
+  // startTimerDuringCountDown = (e) => {
+    startTimerDuringCountDown = () => {
     //function runs if count down is activated 
     //runs count down
-    if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
+    // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
       // if (JSON.parse(localStorage.getItem("countDown")) === true){
         //   if(!this.state.isCountDownGoing){
-          if (this.state.countingDown) {
-            this.beginFunction()
-            // if(this.state.preventStartLoop % 2===0){
-              // this.getCountDownNumber()
-              this.setState({
-                // preventStartLoop: this.state.preventStartLoop+1,
-                isCountDownGoing: false,
-                countingDown: false,
-              })
-              // this.isDisableSpacebar()
-              // this.isCountDownGoing()
-              clearTimeout(this.countDownGoing)
-              clearInterval(this.countdownInterval)
-              clearTimeout(this.startTimer)
 
-            }    
-          }
+            if (this.state.countingDown) {
+              this.beginFunction()
+              // if(this.state.preventStartLoop % 2===0){
+                // this.getCountDownNumber()
+                this.setState({
+                  // preventStartLoop: this.state.preventStartLoop+1,
+                  isCountDownGoing: false,
+                  countingDown: false,
+                })
+                // this.isDisableSpacebar()
+                // this.isCountDownGoing()
+                clearTimeout(this.countDownGoing)
+                clearInterval(this.countdownInterval)
+                clearTimeout(this.startTimer)
+                // this.isDisableSpacebar()
+  
+              }    
+          // }
     //     }
     //   }
     // }
@@ -1110,11 +1124,9 @@ class TimerInterface extends Component {
             if (topRunningTotal%3!==0){
               if (one===0){
                 valueBottom4.shift()
-                // console.log(indexOf(0))
               }
               if (one===6){
                 valueBottom4.pop()
-                // console.log(valueBottom4)
               }
               two = valueBottom4[Math.floor(Math.random()*valueBottom4.length)]
             }else if (topRunningTotal%3===0){
@@ -1478,7 +1490,6 @@ class TimerInterface extends Component {
 
   keyPressSafety = (e) => {
   if (!this.state.going){
-    // console.log(this.state.preventStartLoop )
     if(this.state.preventStartLoop % 2===0){
       if (e.keyCode===91){
         this.setState({
@@ -1510,9 +1521,10 @@ class TimerInterface extends Component {
     if (!this.state.going){
       if (this.state.keyPressOne && this.state.keyPressTwo){
         if(this.state.preventStartLoop % 2===0){
-          if (JSON.parse(localStorage.getItem("countDown")) === false){
-            this.beginFunction()
-          }else{
+          // if (JSON.parse(localStorage.getItem("countDown")) === false){
+          //   this.beginFunction()
+          // }else{
+            if(this.state.countDown===0){
             this.countDownRunFunction()
           }
         }

@@ -27,7 +27,7 @@ class App extends Component {
     aoNum2: 12,
     isCountDownGoing: false,
     isCountDownActivated: false,
-    inspectionTime: 2,
+    inspectionTime: 0,
     puzzleType: "3x3",
     isCreateNewSession: false,
     sessionName: null,
@@ -42,25 +42,6 @@ class App extends Component {
     randPrevent: false,
     isMobile: false,
     isTimerDisabled: false,
-  }
-
-  aoLocalStorage = () => {
-    if(localStorage.ao){
-      this.setState({
-        // aoNum: JSON.parse(localStorage.getItem("ao"))
-      })
-    }
-  }
-
-  getConfirmSessionAndSolveOnMount = () => {
-    if(localStorage.solveconfirm && localStorage.sessionconfirm && localStorage.inspectionTime && localStorage.mobile){
-      this.setState({
-        // isConfirmSolveDelete: JSON.parse(localStorage.getItem("solveconfirm")),
-        // isConfirmSessionDelete: JSON.parse(localStorage.getItem("sessionconfirm")),
-        // inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
-        // isMobile: JSON.parse(localStorage.getItem("mobile")), 
-      })
-    }
   }
 
   randPreventFunction = () => {
@@ -89,6 +70,7 @@ class App extends Component {
           isBackgroundLight: data.theme,
           scrambleQuantity: data.scramblelength,
           aoNum: data.aonumber, 
+          aoNum2: data.aonumber2, 
           isTimerDisabled: data.disabletimer,
         })
         localStorage.setItem("countDown", JSON.stringify(data.inspection))
@@ -339,6 +321,24 @@ class App extends Component {
     }
   }
 
+  changeInspectionTime = (input) => {
+    //increases inspection time
+    // if (this.state.inspectionTime<31 && this.state.inspectionTime>-1){
+      this.setState({
+        inspectionTime: input
+      })
+      localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime +1))
+      fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
+        method: "put",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          time: input
+        })
+      }).then(response=>response.json())
+    // }
+  }
+
   getInspectionTimeOnMount = () => {
     if (this.state.user.id){
       if(localStorage.inspectionTime){
@@ -470,6 +470,7 @@ class App extends Component {
       scrambleQuantity: data.scramblelength,
       isBackgroundLight: data.theme,
       aoNum: data.aonumber,
+      aoNum2: data.aonumber2,
       isCountDownActivated: data.inspection, 
       inspectionTime: data.inspectiontime,
       isMobile: data.mobile,
@@ -480,6 +481,7 @@ class App extends Component {
     localStorage.setItem("scrambleLength", data.scramblelength)
     localStorage.setItem("theme", JSON.stringify(data.theme))
     localStorage.setItem("ao", JSON.stringify(data.aonumber))
+    localStorage.setItem("ao2", JSON.stringify(data.aonumber2))
     localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
     localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
     localStorage.setItem("mobile", JSON.stringify(data.mobile))
@@ -509,6 +511,7 @@ class App extends Component {
         id: 0,
       },
       aoNum: 5, 
+      aoNum2: 12,
       scrambleQuantity: 22,
       isSignedIn: false,
       isDashboard: false,
@@ -530,6 +533,7 @@ class App extends Component {
     localStorage.removeItem("lastsession")
     localStorage.removeItem("isCountDownActivated")
     localStorage.removeItem("ao")
+    localStorage.removeItem("ao2")
     localStorage.removeItem("inspectionTime") 
     localStorage.removeItem("solveconfirm")
     localStorage.removeItem("xyz")
@@ -629,6 +633,12 @@ class App extends Component {
   aoNumChange = (input) => {
     this.setState({
       aoNum: input
+    })
+  }
+
+  aoNumChange2 = (input) => {
+    this.setState({
+      aoNum2: input
     })
   }
 
@@ -734,7 +744,6 @@ class App extends Component {
   componentDidMount() {
     // console.log(Object.keys(localStorage))
     // console.log(localStorage)
-    this.getConfirmSessionAndSolveOnMount()
     setTimeout(()=>this.getSolves(),3)
     setTimeout(()=>this.getUserInfo(),10)
     // setTimeout(()=>this.manageSolveData,10)
@@ -844,10 +853,6 @@ class App extends Component {
   //     console.log((JSON.parse(data[0].test)))
   //   })
   // }
-
-  test = () => {
-    console.log(this.state.solves)
-  }
       
     render() {   
       return (
@@ -921,9 +926,11 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          aoNum2={this.state.aoNum2} 
           disableTimer={this.disableTimer}
           mobileStartStop={this.mobileStartStop}
           aoNumChange={this.aoNumChange}
+          aoNumChange2={this.aoNumChange2}
           getNewUsername={this.getNewUsername}
           addToUniqueSessionsDB={this.addToUniqueSessionsDB}
           inspection={this.inspection}
@@ -936,6 +943,7 @@ class App extends Component {
           getSolvesFromImportManual={this.getSolvesFromImportManual} 
           removeFromSolves={this.removeFromSolves} 
           solves={this.state.solves} 
+          changeInspectionTime={this.changeInspectionTime}
           inspectionTimePlus={this.inspectionTimePlus} 
           inspectionTimeMinus={this.inspectionTimeMinus} 
           inspectionTime={this.state.inspectionTime} 

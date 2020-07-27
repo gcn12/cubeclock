@@ -21,12 +21,44 @@ class Settings extends Component{
         aoNum: "",
         isInvalidAoNum: false,
         isAoSubmitted: false,
+        isInvalidAoNum2: false,
+        isAoSubmitted2: false,
+        inspectionTime: "",
+        isInspectionSubmitted: false,
+        isInvalidInspection: false,
     }
 
     aoNumInput = (e) => {
         this.setState({
             aoNum: e.target.value
         })
+    }
+
+    aoNumInput2 = (e) => {
+        this.setState({
+            aoNum2: e.target.value
+        })
+    }
+
+    inspectionTimeState = (e) => {
+        this.setState({
+            inspectionTime: e.target.value
+        })
+    }
+
+    changeInspectionTime = (input) => {
+        if (input < 101 && input > -1){
+            this.props.changeInspectionTime(input)
+            this.setState({
+                isInvalidInspection: false,
+                isInspectionSubmitted: true, 
+            })
+        }else{
+            this.setState({
+                isInvalidInspection: true,
+                isInspectionSubmitted: false, 
+            })
+        }
     }
 
     aoNumChange = (input) => {
@@ -49,6 +81,30 @@ class Settings extends Component{
             this.setState({
                 isInvalidAoNum: true,
                 isAoSubmitted: false,
+            })
+        }
+    }
+
+    aoNumChange2 = (input) => {
+        if (input>3 && input<1001){
+            localStorage.setItem("ao2", JSON.stringify(input))
+            fetch("https://blooming-hollows-98248.herokuapp.com/ao2", {
+                method: "put",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    id: this.props.id,
+                    aonumber2: input
+                })
+            }).then(response=>response.json())
+            this.props.aoNumChange2(input)
+            this.setState({
+                isInvalidAoNum2: false,
+                isAoSubmitted2: true,
+            })
+        }else{
+            this.setState({
+                isInvalidAoNum2: true,
+                isAoSubmitted2: false,
             })
         }
     }
@@ -131,13 +187,13 @@ class Settings extends Component{
         }
     }
 
-    getCountDownOnMount = () => {
-        if(localStorage.countDown) {
-            var x = localStorage.getItem("countDown")
-            var y = JSON.parse(x)
-            document.getElementById("countdown").checked = y
-        }
-    }
+    // getCountDownOnMount = () => {
+    //     if(localStorage.countDown) {
+    //         var x = localStorage.getItem("countDown")
+    //         var y = JSON.parse(x)
+    //         document.getElementById("countdown").checked = y
+    //     }
+    // }
  
 
     handleImportSolvesChange = (event) => {
@@ -209,7 +265,7 @@ class Settings extends Component{
     }
 
     componentDidMount() {
-        this.getCountDownOnMount()
+        // this.getCountDownOnMount()
         this.getConfirmSolveOnMount()
         this.getConfirmSessionOnMount()
         this.getMobileOnMount()
@@ -253,7 +309,7 @@ class Settings extends Component{
                         <h1 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>Preferences</h1>
                     </div>
                     
-                    <div className="summary-center">
+                    {/* <div className="summary-center">
                         <nav  style={{display: 'flex'}}>
                             <h4>Inspection Time</h4>
                             <input type="checkbox" id="countdown" className="checkbox" onClick={this.isCountDownActivated} />  
@@ -268,37 +324,43 @@ class Settings extends Component{
                         <h4>{this.props.inspectionTime}</h4>
                         <h1><button onClick={this.props.inspectionTimePlus} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>+1</button></h1>
                         </nav>
-                    </div>
+                    </div> */}
+
                     <div className="center">
-                        <h4>ao #</h4>
-                        {/* <br></br> */}
-
-
-
-                        {/* <nav style={{display: 'flex', }}>
-                        <div className="center">
+                    <h4>Inspection time:</h4>  
+                        <div >
                             {this.props.isBackgroundLight ? 
-                            <input style={{width:"10px", height:"50px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-white form-input" onChange={this.aoNumInput} type="text"></input>
+                            <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.inspectionTime}  onChange={this.inspectionTimeState} type="number" min="0" max="100"></input>
                             :
-                            <input style={{height:"50px", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "white"}} placeholder={this.props.aoNum} className="pa2 ba b--green bg-black form-input"  onChange={this.aoNumInput} type="number"></input>
+                            <input className="test11 pa2 ba b--green bg-black form-input" style={{ width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.inspectionTime}  onChange={this.inspectionTimeState} type="number" min="0" max="100"></input>
                             }
+                            <h1 className="test11 test22"><button onClick={()=>this.changeInspectionTime(this.state.inspectionTime)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change inspection time</button></h1>
                         </div>
-                        <h1><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number</button></h1>
-                        </nav> */}
+                        {this.state.isInspectionSubmitted ? 
+                        <h4 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Inspection time has been updated</h4>
+                        :
+                        <h4> </h4>
+                        }
+                        {this.state.isInvalidInspection ? 
+                        <h4 style={{color: "red"}}>Number must be between 0 and 100</h4>
+                        :
+                        <h4> </h4>
+                        }
+                    </div>
+                    <br></br>
 
 
-                                
-                            <div >
-                                {this.props.isBackgroundLight ? 
-                                <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum}  onChange={this.aoNumInput} type="number"></input>
-                                :
-                                <input className="test11 pa2 ba b--green bg-black form-input" style={{ width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum}  onChange={this.aoNumInput} type="number"></input>
-                                }
-                                <h1 className="test11 test22"><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number</button></h1>
-                            </div>
 
-                            
-
+                    <div className="center">
+                        <h4>ao #</h4>   
+                        <div >
+                            {this.props.isBackgroundLight ? 
+                            <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum}  onChange={this.aoNumInput} type="number" min="4" max="1000"></input>
+                            :
+                            <input className="test11 pa2 ba b--green bg-black form-input" style={{ width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum}  onChange={this.aoNumInput} type="number" min="4" max="1000"></input>
+                            }
+                            <h1 className="test11 test22"><button onClick={()=>this.aoNumChange(this.state.aoNum)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number 1</button></h1>
+                        </div>
 
                         {this.state.isAoSubmitted ? 
                         <h4 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Number has been updated</h4>
@@ -311,57 +373,33 @@ class Settings extends Component{
                         <h4> </h4>
                         }
                     </div>
-                    {/* <div className="center">
-                        <h4>Scramble Length</h4>
-                        <br></br>
-                        <nav style={{display: 'flex', justifyContent: "center"}}>
-                        <h1><button onClick={this.props.scrambleQuantityMinus} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>-1</button></h1>
-                        <h4>{this.props.scrambleQuantity}</h4>
-                        <h1><button onClick={this.props.scrambleQuantityPlus} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>+1</button></h1>
-                        </nav>
-                    </div> */}
 
-                    {/* <div className="summary-center">
-                    <nav  style={{display: 'flex'}}> */}
-                    {/* <h4 >Touch Start/Stop</h4> */}
-                    {/* <br></br> */}
-                        {/* <label for="mobile">label1</label>
-                        <input type="checkbox" id="mobile" className="checkbox" onClick={this.isMobile} />  
-                        <label htmlFor="mobile" className="switch"></label>
-                    </nav>
+                    <div className="center">
+                        <div >
+                            {this.props.isBackgroundLight ? 
+                            <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum2}  onChange={this.aoNumInpu2t} type="number" min="4" max="1000"></input>
+                            :
+                            <input className="test11 pa2 ba b--green bg-black form-input" style={{ width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum2}  onChange={this.aoNumInput2} type="number" min="4" max="1000"></input>
+                            }
+                            <h1 className="test11 test22"><button onClick={()=>this.aoNumChange2(this.state.aoNum2)} className="button2" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Change AO number 2</button></h1>
+                        </div>
+
+
+                        {this.state.isAoSubmitted2 ? 
+                        <h4 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Number has been updated</h4>
+                        :
+                        <h4> </h4>
+                        }
+                        {this.state.isInvalidAoNum2 ? 
+                        <h4 style={{color: "red"}}>Number must be between 4 and 1000</h4>
+                        :
+                        <h4> </h4>
+                        }
                     </div>
-                    <br></br> */}
-
-                    {/* <div className="summary-center">
-                    <nav  style={{display: 'flex'}}>
-                    <h4 >Confirm Before Deleting Solve</h4>
-                        <input type="checkbox" id="solveconfirm" className="checkbox" onClick={this.isConfirmSolve} />  
-                        <label htmlFor="solveconfirm" className="switch"></label>
-                        </nav>
-                    </div>
-                    <br></br> */}
 
 
-                    {/* <div className="summary-center">
-                    <nav  style={{display: 'flex'}}>
-                    <h4 className="center">Confirm Before Deleting Session</h4>
-                        <input type="checkbox" id="sessionconfirm" className="checkbox" onClick={this.isConfirmSession} />  
-                        <label htmlFor="sessionconfirm" className="switch"></label>
-                        </nav>
-                    </div>
-                    <br></br> */}
-
-                    {/* <div className="summary-center">
-                        <nav  style={{display: 'flex'}}>
-                        <h4 className="center">Deactivate timer during solve</h4>
-                        <input type="checkbox" id="disabletimer" className="checkbox" onClick={this.isDisableTimer} />  
-                        <label htmlFor="disabletimer" className="switch"></label>
-                        </nav>
-                    </div> */}
 
                     <br></br>
-
-
                     <ul className="summary-center">      
                         <li>
                             <label htmlFor="mobile" className="label1"><h4>Touch start/stop</h4></label>
