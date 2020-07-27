@@ -98,33 +98,116 @@ class Card extends Component {
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Average: {this.props.average}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best: {this.props.puzzleBest}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst: {this.props.puzzleWorst}</h4>
-                    {/* <table>
+                    <div className="tc">
+                    {/* <table className="summary-center">
                         <thead>
                             <tr>
                                 <td>
-                                    <h2>
-
-                                Best time:
-                                    </h2>
                                 </td>
                                 <td>
-                                    <h2>
-                                    Worst time:
-                                    </h2>
+                                    <h4>
+                                Current:
+                                    </h4>
+                                </td>
+                                <td>
+                                    <h4>
+                                    Best:
+                                    </h4>
+                                </td>
+                                <td>
+                                    <h4>
+                                    Worst:
+                                    </h4>
                                 </td>
                             </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>
-                            <h2>
-                            {this.props.puzzleBest}
-                            </h2>
+                                <h4>
+                                Average
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                mo3
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao5
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao12
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao25
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao50
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao100
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao200
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao500
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao1000
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao5000
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>
+                                ao10000
+                                </h4>
                             </td>
                         </tr>
                         </tbody>
                     </table> */}
-                    <div className="tc">
                         <h1><button className="button2" onClick={()=>this.props.loadPastSessionSolveData(this.props.uniqueSession, this.props.ind)} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Resume Session</button></h1>
                         <button className="button2" onClick={this.deleteFunc} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Session</button>
                     </div>

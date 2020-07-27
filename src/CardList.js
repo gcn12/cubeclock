@@ -5,13 +5,14 @@ class CardList extends Component {
     compare = (a,b) => {
         return b - a
     } 
-
+ 
     render() {
         let sessionDisplayName = (this.props.solvesSorted.length+1)
         return(
             <div>
                 {
                 this.props.solvesSorted.map((solve,i)=>{
+                    // console.log(this.props.puzzleBest)
                     let puzzleBest = this.props.puzzleBest[i]
                     let puzzleWorst = this.props.puzzleWorst[i]
                     let session = -1

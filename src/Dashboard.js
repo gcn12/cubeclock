@@ -136,19 +136,35 @@ class Dashboard extends Component{
     sortSolves = () => {
         //sorts solves by session
         let sessionsDBuniqueInOrder = this.state.sessionsDBunique.sort(this.compare)
+        let bestTimes = []
+        let worstTimes = []
         for (const session of sessionsDBuniqueInOrder) {
             const solves = []
+            const ms = []
+            const times = []
             let solvesInOrder = this.props.solves.sort(this.compareUnix)
             for (const solve of solvesInOrder) {
                 if (solve.session === session){
                     solves.push(solve)
+                    ms.push(Number(solve.milliseconds))
+                    times.push(solve.solve)
                 }
             }
             this.setState({
                 solvesSorted: [solves, ...this.state.solvesSorted],
                 solvesSortedCardList: [solves, ...this.state.solvesSorted]
             })
+            let lowestMS = Math.min(...ms)
+            bestTimes.push(times[ms.indexOf(lowestMS)])
+            let highestMS = Math.max(...ms)
+            worstTimes.push(times[ms.indexOf(highestMS)])
         }
+        bestTimes.reverse()
+        worstTimes.reverse()
+        this.setState({
+            puzzleBest: bestTimes,
+            puzzleWorst: worstTimes,
+        })
     }
 
     sortDates = () => {
@@ -503,8 +519,6 @@ class Dashboard extends Component{
 
     getBestTimes = () => {
         let puzzleBestTimesSummary = []
-        let puzzleWorst = []
-        let puzzleBest = []
         for (const puzzle of this.state.puzzlesSummary){
             let timesAndPuzzle = []
             let allTimesMS = []
@@ -521,20 +535,13 @@ class Dashboard extends Component{
                 }
             }
             let index = allTimesMS.indexOf(String(Math.min(...allTimesMS)))
-            let indexWorst = allTimesMS.indexOf(String(Math.max(...allTimesMS)))
             timesAndPuzzle.push(puzzle)
             timesAndPuzzle.push(allTimes[index])
-            puzzleBest.push(allTimes[index])
-            puzzleWorst.push(allTimes[indexWorst])
             timesAndPuzzle.push(allTimes.length)
             puzzleBestTimesSummary.push(timesAndPuzzle)
         }
-        puzzleBest.reverse()
-        puzzleWorst.reverse()
         this.setState({
             puzzlesSummary: puzzleBestTimesSummary,
-            puzzleWorst: puzzleWorst,
-            puzzleBest: puzzleBest,
         })
     }
 

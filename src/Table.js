@@ -27,7 +27,7 @@ const Body = (props) => {
         id=false
     }
     let finalAverages = []
-    let solves = [...props.solves]
+    let solves = [...props.solves].sort(compare)
     let loopNumber = props.solves.length - (props.aoNum-1)
     while(loopNumber>0){
         let divisor = 0
@@ -35,7 +35,7 @@ const Body = (props) => {
         let solvesArray = []
         let averageMS = 0
         let dnfCount = 0
-        for (let i = props.aoNum-1; i > -1; i--){
+        for (let i = 0; i < props.aoNum; i++){
             divisor++
             if(solves[i].isplustwo){
                 solvesArray.push(Number(solves[i].millisecondstwo))
@@ -91,7 +91,7 @@ const Body = (props) => {
 
 
     let finalAverages2 = []
-    let solves2 = [...props.solves]
+    let solves2 = [...props.solves].sort(compare)
     let loopNumber2 = props.solves.length - (props.aoNum2-1)
     while(loopNumber2>0){
         let divisor = 0
@@ -99,7 +99,7 @@ const Body = (props) => {
         let solvesArray = []
         let averageMS = 0
         let dnfCount = 0
-        for (let i = props.aoNum2-1; i > -1; i--){
+        for (let i = 0; i < props.aoNum2; i++){
             divisor++
             if(solves2[i].isplustwo){
                 solvesArray.push(Number(solves2[i].millisecondstwo))
@@ -157,18 +157,6 @@ const Body = (props) => {
 
     let solveNumber = props.solves.length 
     const rows = props.solves.sort(compare).map((row, index) => {
-        // let isMegaminx = false
-        // let isMultiBLD = false
-        // let isRegular = false
-        // if (row.scramble){
-        //     if (row.scramble.includes("--")||row.scramble.includes("++")){
-        //         isMegaminx=true
-        //     }else if (row.puzzle==="Multi-BLD"){
-        //         isMultiBLD=true
-        //     }else{
-        //         isRegular=true
-        //     }
-        // }
         solveNumber --
         return (
             <tr key={index}>
@@ -185,23 +173,6 @@ const Body = (props) => {
                     borderColor: props.styles ?  "rgb(23, 23, 23)" : "whitesmoke"}} 
                     className="button2 remove" onClick={()=>props.removeTime(index, row.solveid, row.ms)}>Remove</button>
                 </h2></td>
-                {/* {isRegular ? 
-                <td className="small-scramble display-linebreak"><h2 className="mobileNoScramble">{row.scramble}</h2></td>
-                :
-                <td className="small-scramble display-linebreak"><h4> </h4></td>
-                }
-                {isMegaminx ? 
-                // <div id="test">
-                    <td className="small-scramble display-linebreak min-width2"><h4 className="megaminx megaminxSmall">{row.scramble + "\n"}</h4></td>
-                // </div>
-                :
-                <td className="small-scramble display-linebreak"><h2> </h2></td>
-                }
-                {isMultiBLD ? 
-                <td className="small-scramble display-linebreak"><h4 className="mobileNoScramble">{row.scramble + "\n"}</h4></td>
-                :
-                <td className="small-scramble display-linebreak mobileNoScramble"><h2> </h2></td>
-                } */}
                 <td><h2>
                     <button type="button" style={{color: 
                     props.styles 
