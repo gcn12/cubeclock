@@ -60,22 +60,6 @@ const skewb = [
   ["R", "R'"],
 ]
 
-// const sq1 = [
-//   ["(0,1)", "(0,2)","(0,3)","(0,4)","(0,5)","(0,6)","(0,-1)","(0,-2)","(0,-3)","(0,-4)","(0,-5)","(0,-6)"],
-//   ["(1,1)", "(1,2)","(1,3)","(1,4)","(1,5)","(1,6)","(1,-1)","(1,-2)","(1,-3)","(1,-4)","(1,-5)","(1,-6)"],
-//   ["(-1,1)", "(-1,2)","(-1,3)","(-1,4)","(-1,5)","(-1,6)","(-1,-1)","(-1,-2)","(-1,-3)","(-1,-4)","(-1,-5)","(-1,-6)"],
-//   ["(2,1)", "(2,2)","(2,3)","(2,4)","(2,5)","(2,6)","(2,-1)","(2,-2)","(2,-3)","(2,-4)","(2,-5)","(2,-6)"],
-//   ["(-2,1)", "(-2,2)","(-2,3)","(-2,4)","(-2,5)","(-2,6)","(-2,-1)","(-2,-2)","(-2,-3)","(-2,-4)","(-2,-5)","(-2,-6)"],
-//   ["(3,1)", "(3,2)","(3,3)","(3,4)","(3,5)","(3,6)","(3,-1)","(3,-2)","(3,-3)","(3,-4)","(3,-5)","(3,-6)"],
-//   ["(-3,1)", "(-3,2)","(-3,3)","(-3,4)","(-3,5)","(-3,6)","(-3,-1)","(-3,-2)","(-3,-3)","(-3,-4)","(-3,-5)","(-3,-6)"],
-//   ["(4,1)", "(4,2)","(4,3)","(4,4)","(4,5)","(4,6)","(4,-1)","(4,-2)","(4,-3)","(4,-4)","(4,-5)","(4,-6)"],
-//   ["(-4,1)", "(-4,2)","(-4,3)","(-4,4)","(-4,5)","(-4,6)","(-4,-1)","(-4,-2)","(-4,-3)","(-4,-4)","(-4,-5)","(-4,-6)"],
-//   ["(5,1)", "(5,2)","(5,3)","(5,4)","(5,5)","(5,6)","(5,-1)","(5,-2)","(5,-3)","(5,-4)","(5,-5)","(5,-6)"],
-//   ["(-5,1)", "(-5,2)","(-5,3)","(-5,4)","(-5,5)","(-5,6)","(-5,-1)","(-5,-2)","(-5,-3)","(-5,-4)","(-5,-5)","(-5,-6)"],
-//   ["(6,1)", "(6,2)","(6,3)","(6,4)","(6,5)","(6,6)","(6,-1)","(6,-2)","(6,-3)","(6,-4)","(6,-5)","(6,-6)"],
-//   ["(-6,1)", "(-6,2)","(-6,3)","(-6,4)","(-6,5)","(-6,6)","(-6,-1)","(-6,-2)","(-6,-3)","(-6,-4)","(-6,-5)","(-6,-6)"],
-// ]
-
 const ScrambleTable = props => {
   return(
   <table >
@@ -117,89 +101,26 @@ class TimerInterface extends Component {
     countingDown: false,
     keyPressOne: false,
     keyPressTwo: false,
+    test: false,
   }
 
-  converter(input, isFormat) {
-    const hours = Math.floor(input / 3600000)
-    const minutes = Math.floor((input / 60000)%60)
-    const seconds = Math.floor((input / 1000)%60)
-    const milliseconds = (input % 1000)
+  timerStart = () => {
     this.setState({
-      hours: hours,
-      minutes: minutes, 
-      secondsTwo: seconds, 
-      seconds: seconds,
-      milliseconds: milliseconds,
+      endMS: 0,
+      final: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+      start: Date.now(),
+      going: true,
     })
-    if (isFormat === true){
-      this.timerFormatted("timerFormatted")
-      this.timerFormatted("displayTimeFormatted")
-      this.timerFormatted("twoFormatted")
+    this.interval = setInterval(()=>this.time(), 1)
+    this.interval2 = setInterval(()=>this.converter(this.state.final) ,1)
+    if (!this.props.isTimerDisabled){
+      this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
     }
   }
-
-  timerFormatted(stateValue){
-    let time = ""
-    if (this.state.hours > 0){
-      time += this.state.hours + ":"
-    }
-    if (stateValue === "timerFormatted"){
-      time += this.state.minutes + ":"
-      if (this.state.seconds < 10) {
-        time += "0" 
-      }
-    }
-    if(stateValue==="displayTimeFormatted"){
-      if (this.state.minutes>0){
-        time += this.state.minutes + ":"
-        if (this.state.seconds < 10) {
-          time += "0" 
-        }
-      }
-    }
-    if (stateValue === "twoFormatted"){
-      time += this.state.seconds + 2  + "."
-    } else{
-      time += this.state.seconds  + "."
-    }
-    if (this.state.milliseconds < 10){
-      time += "00"
-    }
-    if (this.state.milliseconds < 100){
-      if (this.state.milliseconds > 9){
-        time += "0"
-      }
-    }
-    time += this.state.milliseconds
-    if (stateValue === "timerFormatted"){
-      this.setState({
-        timerFormatted: time,
-      })
-    }
-    if (stateValue === "displayTimeFormatted"){
-      this.setState({
-        displayTimeFormatted: time,
-      })
-    }
-    if (stateValue === "twoFormatted"){
-      this.setState({
-        twoFormatted: time,
-      })
-    }
-  }
-
-  isDisableSpacebar = () =>{
-    this.setState({
-      isDisableSpacebar: !this.state.isDisableSpacebar
-    })
-    
-  }
-
-  isCountDownGoing = () => {
-    this.setState({
-      isCountDownGoing: !this.state.isCountDownGoing
-    })
-  } 
 
   begin = (e) => {
     this.getCountDownNumber()
@@ -223,7 +144,7 @@ class TimerInterface extends Component {
           }
         }
       }
-      }
+    }
   }
 
   beginFunction = () => {
@@ -244,109 +165,36 @@ class TimerInterface extends Component {
     }
   }
 
-  preventStartLoopMobile = () => {
+  isDisableSpacebar = () =>{
     this.setState({
-      preventStartLoopMobile: this.state.preventStartLoopMobile+1
+      isDisableSpacebar: !this.state.isDisableSpacebar
     })
   }
 
-  beginMobile = () => {
-    this.preventStartLoopMobile()
-    // if (JSON.parse(localStorage.getItem("countDown")) === false){
-      if(this.state.countDown>0){
-      if (!this.state.going) {
-        if(this.state.preventStartLoopMobile % 2===0){
-          if(this.props.isBackgroundLight){
-            document.getElementById("colorClick").style.backgroundColor="whitesmoke";
-          }else{
-            document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
-          }
-          this.props.isNewSessionFunction(false)
+   startTimerDuringCountDown = (e) => {
+    // startTimerDuringCountDown = () => {
+      //function runs if count down is activated 
+      //runs count down
+      // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
+        if (this.state.countingDown) {
+          this.beginFunction()
           this.setState({
-              final: 0,
-              hours: 0,
-              minutes: 0,
-              seconds: 0,
-              milliseconds: 0,
-              start: Date.now(),
-              going: true,
-              isDisableSpacebar: true,
+            isCountDownGoing: false,
+            countingDown: false,
+            preventStartLoop: this.state.preventStartLoop + 1
           })
-          this.interval4 = setInterval(()=>this.time(), 1)
-          this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
-          if (!this.props.isTimerDisabled){
-            this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
-          }else{
-            // this.timerFormatted("timerFormatted")
-                this.setState({
-                  timerFormatted: "TAP TO STOP"
-                })
-          }
-          this.setState({
-            isMobileGoing: true
-          })
-        }
-      }
-    }else{
-      this.countDownRunMobile()
+          // if(this.state.preventStartLoop % 2 !== 0){
+          //   this.setState({
+          //     preventStartLoop: this.state.preventStartLoop + 1
+          //   })
+          // }
+          clearTimeout(this.countDownGoing)
+          clearInterval(this.countdownInterval)
+          clearTimeout(this.startTimer)
+          clearTimeout(this.disable)
+        }    
+      // }
     }
-  }
-
-  getCountDownNumber = () => {
-    this.setState({
-      countDown: this.props.inspectionTime
-    })
-  }
-
-  
-
-  countDownRunMobile = () => {
-    //function runs if count down is activated 
-    //runs count down
-    if(!this.state.isDisableSpacebar){
-      if (!this.state.isMobileGoing) {
-        if(this.state.preventStartLoopMobile % 2===0){
-          this.getCountDownNumber()
-          this.setState({
-            isMobileGoing: true,
-            // going: true,
-          })
-          this.isDisableSpacebar()
-          this.isCountDownGoing()
-          setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
-          this.countdownInterval = setInterval(()=>this.countDown(), 1000)
-          setTimeout(()=>this.timerStartMobile(),this.props.inspectionTime * 1000)
-        }
-      }
-    }
-  }
-
-  timerStartMobile = () => {
-    this.setState({
-      endMS: 0,
-      final: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
-      start: Date.now(),
-      going: true,
-    })
-    this.interval4 = setInterval(()=>this.time(), 1)
-    this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
-    if (!this.props.isTimerDisabled){
-      this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
-    }
-  }
-
-  // stopMobileRoute = () => {
-  //   const routeChange = () => {
-  //     this.setState({
-  //       isMobileGoing: false,
-  //     })
-  //   }
-  //   setTimeout(()=>routeChange, 1000)
-  // }
 
   stopMobileRoute = () => {
     const route2 = () => {
@@ -526,6 +374,187 @@ class TimerInterface extends Component {
       }
   }
 
+  countDownRunMobile = () => {
+    //function runs if count down is activated 
+    //runs count down
+    if(!this.state.isDisableSpacebar){
+      if (!this.state.isMobileGoing) {
+        if(this.state.preventStartLoopMobile % 2===0){
+          this.getCountDownNumber()
+          this.setState({
+            isMobileGoing: true,
+            // going: true,
+          })
+          this.isDisableSpacebar()
+          this.isCountDownGoing()
+          setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
+          this.countdownInterval = setInterval(()=>this.countDown(), 1000)
+          setTimeout(()=>this.timerStartMobile(),this.props.inspectionTime * 1000)
+        }
+      }
+    }
+  }
+
+  timerStartMobile = () => {
+    this.setState({
+      endMS: 0,
+      final: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+      start: Date.now(),
+      going: true,
+    })
+    this.interval4 = setInterval(()=>this.time(), 1)
+    this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
+    if (!this.props.isTimerDisabled){
+      this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    }
+  }
+
+  beginMobile = () => {
+    this.preventStartLoopMobile()
+    // if (JSON.parse(localStorage.getItem("countDown")) === false){
+      if(this.state.countDown>0){
+      if (!this.state.going) {
+        if(this.state.preventStartLoopMobile % 2===0){
+          if(this.props.isBackgroundLight){
+            document.getElementById("colorClick").style.backgroundColor="whitesmoke";
+          }else{
+            document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
+          }
+          this.props.isNewSessionFunction(false)
+          this.setState({
+              final: 0,
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+              milliseconds: 0,
+              start: Date.now(),
+              going: true,
+              isDisableSpacebar: true,
+          })
+          this.interval4 = setInterval(()=>this.time(), 1)
+          this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
+          if (!this.props.isTimerDisabled){
+            this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+          }else{
+            // this.timerFormatted("timerFormatted")
+                this.setState({
+                  timerFormatted: "TAP TO STOP"
+                })
+          }
+          this.setState({
+            isMobileGoing: true
+          })
+        }
+      }
+    }else{
+      this.countDownRunMobile()
+    }
+  }
+
+  converter(input, isFormat) {
+    const hours = Math.floor(input / 3600000)
+    const minutes = Math.floor((input / 60000)%60)
+    const seconds = Math.floor((input / 1000)%60)
+    const milliseconds = (input % 1000)
+    this.setState({
+      hours: hours,
+      minutes: minutes, 
+      secondsTwo: seconds, 
+      seconds: seconds,
+      milliseconds: milliseconds,
+    })
+    if (isFormat === true){
+      this.timerFormatted("timerFormatted")
+      this.timerFormatted("displayTimeFormatted")
+      this.timerFormatted("twoFormatted")
+    }
+  }
+
+  timerFormatted(stateValue){
+    let time = ""
+    if (this.state.hours > 0){
+      time += this.state.hours + ":"
+    }
+    if (stateValue === "timerFormatted"){
+      time += this.state.minutes + ":"
+      if (this.state.seconds < 10) {
+        time += "0" 
+      }
+    }
+    if(stateValue==="displayTimeFormatted"){
+      if (this.state.minutes>0){
+        time += this.state.minutes + ":"
+        if (this.state.seconds < 10) {
+          time += "0" 
+        }
+      }
+    }
+    if (stateValue === "twoFormatted"){
+      time += this.state.seconds + 2  + "."
+    } else{
+      time += this.state.seconds  + "."
+    }
+    if (this.state.milliseconds < 10){
+      time += "00"
+    }
+    if (this.state.milliseconds < 100){
+      if (this.state.milliseconds > 9){
+        time += "0"
+      }
+    }
+    time += this.state.milliseconds
+    if (stateValue === "timerFormatted"){
+      this.setState({
+        timerFormatted: time,
+      })
+    }
+    if (stateValue === "displayTimeFormatted"){
+      this.setState({
+        displayTimeFormatted: time,
+      })
+    }
+    if (stateValue === "twoFormatted"){
+      this.setState({
+        twoFormatted: time,
+      })
+    }
+  }
+
+  isCountDownGoing = () => {
+    this.setState({
+      isCountDownGoing: !this.state.isCountDownGoing
+    })
+  } 
+
+  preventStartLoopMobile = () => {
+    this.setState({
+      preventStartLoopMobile: this.state.preventStartLoopMobile+1
+    })
+  }
+
+  
+
+  getCountDownNumber = () => {
+    this.setState({
+      countDown: this.props.inspectionTime
+    })
+  }
+
+  // stopMobileRoute = () => {
+  //   const routeChange = () => {
+  //     this.setState({
+  //       isMobileGoing: false,
+  //     })
+  //   }
+  //   setTimeout(()=>routeChange, 1000)
+  // }
+
+  
+
   stop = (e) => {
     if(this.state.going===true) {
       if (e.keyCode===32||(!this.state.keyPressOne && !this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
@@ -678,6 +707,8 @@ class TimerInterface extends Component {
     })
   }
 
+
+
   countDownRunFunction = () => {
     if(!this.state.isDisableSpacebar){
       if (!this.state.going) {
@@ -695,65 +726,13 @@ class TimerInterface extends Component {
             this.countdownInterval = setInterval(()=>this.countDown(), 1000)
             this.startTimer =  setTimeout(()=>this.timerStart(),this.props.inspectionTime * 1000)
             this.runCountingDown =  setTimeout(()=>this.countingDown(),this.props.inspectionTime * 1000)
-            setTimeout(()=>this.isDisableSpacebar(),this.props.inspectionTime * 1000)
+            // if (!this.state.test){
+            this.disable = setTimeout(()=>this.isDisableSpacebar(),this.props.inspectionTime * 1000)
+            // }
           }
         }    
       }
     }
-  }
-
-  countDownRun = (e) => {
-    //function runs if count down is activated 
-    //runs count down
-    // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
-      if(e.keyCode === 32){
-        if(!this.state.isTimerDisabled){
-            if(this.state.countDown>0){
-              this.countDownRunFunction()
-              this.setState({
-              })
-            }
-          }
-          // if (JSON.parse(localStorage.getItem("countDown")) === true){
-      // }
-    }
-  }
-
-  countingDown = () => {
-    this.setState({
-      countingDown: false
-    })
-  }
-
-  // startTimerDuringCountDown = (e) => {
-    startTimerDuringCountDown = () => {
-    //function runs if count down is activated 
-    //runs count down
-    // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
-      // if (JSON.parse(localStorage.getItem("countDown")) === true){
-        //   if(!this.state.isCountDownGoing){
-
-            if (this.state.countingDown) {
-              this.beginFunction()
-              // if(this.state.preventStartLoop % 2===0){
-                // this.getCountDownNumber()
-                this.setState({
-                  // preventStartLoop: this.state.preventStartLoop+1,
-                  isCountDownGoing: false,
-                  countingDown: false,
-                })
-                // this.isDisableSpacebar()
-                // this.isCountDownGoing()
-                clearTimeout(this.countDownGoing)
-                clearInterval(this.countdownInterval)
-                clearTimeout(this.startTimer)
-                // this.isDisableSpacebar()
-  
-              }    
-          // }
-    //     }
-    //   }
-    // }
   }
 
   preventStartLoop = (e) => {
@@ -765,6 +744,42 @@ class TimerInterface extends Component {
       }
     }
   }
+
+  countDownRun = (e) => {
+    //function runs if count down is activated 
+    //runs count down
+    // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
+      if(e.keyCode === 32){
+        // if(!this.state.isDisableSpacebar){
+          if(this.state.countDown>0){
+            if(!this.state.test){
+              // if(this.state.preventStartLoop%2===0){
+                this.countDownRunFunction()
+                if(this.state.going){
+                  this.setState({
+                    test: true
+                  })
+                }
+              // }
+            }else{
+              this.startTimerDuringCountDown()
+              this.setState({
+                test: false,
+                isDisableSpacebar: false,
+              })
+            }
+          }
+        // }
+    }
+  }
+
+  countingDown = () => {
+    this.setState({
+      countingDown: false
+    })
+  }
+
+
 
   countDown = () => {
     this.setState({
@@ -831,23 +846,7 @@ class TimerInterface extends Component {
     this.props.removeSolveFromSolvesState(this.props.solvesInterface[index].solveid, this.props.solvesInterface[index].milliseconds)
   }
 
-  timerStart = () => {
-    this.setState({
-      endMS: 0,
-      final: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
-      start: Date.now(),
-      going: true,
-    })
-    this.interval = setInterval(()=>this.time(), 1)
-    this.interval2 = setInterval(()=>this.converter(this.state.final) ,1)
-    if (!this.props.isTimerDisabled){
-      this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
-    }
-  }
+
 
   resetCountDown = () => {
     this.setState({
@@ -1167,9 +1166,7 @@ class TimerInterface extends Component {
           "(6,3)/ (-2,3)/ (-4,2)/ (0,1)/ (-4,0)", "(6,3)/ (-2,3)/ (-4,2)/ (0,1)", "(3,6)/ (-2,3)/ (5,-4)/ (1,-3)/ (-3,3)", "(3,6)/ (-2,3)/ (5,-4)/ (1,-3)",]
           scrambleEnd+=scrambleOptions2[Math.floor(Math.random()*scrambleOptions2.length)]
         }
-  
-  
-  
+
         for (let i = 0;i<7;i++){
           scramble+="("+ arrayTop[i] + "," + arrayBottom[i] + ")" 
           // if (i < arrayTop.length-2){
@@ -1489,31 +1486,31 @@ class TimerInterface extends Component {
   }
 
   keyPressSafety = (e) => {
-  if (!this.state.going){
-    if(this.state.preventStartLoop % 2===0){
-      if (e.keyCode===91){
-        this.setState({
-          keyPressOne: true
-        })
-      }
-      if (e.keyCode===93){
-        this.setState({
-          keyPressTwo: true
-        })
-      }
-      if(e.keyCode===17){
-        if(!this.state.keyPressOne){
+    if (!this.state.going){
+      if(this.state.preventStartLoop % 2===0){
+        if (e.keyCode===91){
           this.setState({
             keyPressOne: true
           })
-        }else{
+        }
+        if (e.keyCode===93){
           this.setState({
             keyPressTwo: true
           })
         }
+        if(e.keyCode===17){
+          if(!this.state.keyPressOne){
+            this.setState({
+              keyPressOne: true
+            })
+          }else{
+            this.setState({
+              keyPressTwo: true
+            })
+          }
+        }
       }
     }
-  }
   }
 
   keyPressStart = (e) => {
@@ -1701,7 +1698,7 @@ class TimerInterface extends Component {
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
-    document.addEventListener('keydown', this.startTimerDuringCountDown)
+    // document.addEventListener('keydown', this.startTimerDuringCountDown)
     // document.addEventListener('keydown', this.keyPressStop)
     // document.addEventListener('keydown', this.keyPressSafetyStop)
     // document.addEventListener('keydown', this.keyPressSafety)
