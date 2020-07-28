@@ -183,18 +183,25 @@ class TimerInterface extends Component {
             countingDown: false,
             preventStartLoop: this.state.preventStartLoop + 1
           })
-          // if(this.state.preventStartLoop % 2 !== 0){
-          //   this.setState({
-          //     preventStartLoop: this.state.preventStartLoop + 1
-          //   })
-          // }
           clearTimeout(this.countDownGoing)
           clearInterval(this.countdownInterval)
           clearTimeout(this.startTimer)
           clearTimeout(this.disable)
         }    
       // }
-    }
+  } 
+
+
+  startTimerDuringCountDownMobile = () => {
+    this.setState({
+      isMobileGoing: true,
+      isCountDownGoing: false,
+    })
+    this.timerStartMobile()
+    clearInterval(this.countdownInterval)
+    clearTimeout(this.countDownRouteMobile)
+    clearTimeout(this.timerMobileTimeout)
+  }
 
   stopMobileRoute = () => {
     const route2 = () => {
@@ -229,10 +236,10 @@ class TimerInterface extends Component {
           this.isDisableSpacebar()
         }
         // if (JSON.parse(localStorage.getItem("countDown")) === true){
-        if(this.state.countDown>0){
+        // if(this.state.countDown>0){
           clearInterval(this.countdownInterval)
           this.getCountDownNumber()
-        }
+        // }
         clearInterval(this.interval4)
         clearInterval(this.interval5)
         clearInterval(this.interval6)
@@ -387,9 +394,9 @@ class TimerInterface extends Component {
           })
           this.isDisableSpacebar()
           this.isCountDownGoing()
-          setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
+          this.countDownRouteMobile = setTimeout(()=>this.isCountDownGoing(), this.props.inspectionTime * 1000)
           this.countdownInterval = setInterval(()=>this.countDown(), 1000)
-          setTimeout(()=>this.timerStartMobile(),this.props.inspectionTime * 1000)
+          this.timerMobileTimeout = setTimeout(()=>this.timerStartMobile(),this.props.inspectionTime * 1000)
         }
       }
     }
@@ -414,9 +421,10 @@ class TimerInterface extends Component {
   }
 
   beginMobile = () => {
+    this.getCountDownNumber()
     this.preventStartLoopMobile()
     // if (JSON.parse(localStorage.getItem("countDown")) === false){
-      if(this.state.countDown>0){
+    if(this.props.inspectionTime===0){
       if (!this.state.going) {
         if(this.state.preventStartLoopMobile % 2===0){
           if(this.props.isBackgroundLight){
@@ -426,24 +434,23 @@ class TimerInterface extends Component {
           }
           this.props.isNewSessionFunction(false)
           this.setState({
-              final: 0,
-              hours: 0,
-              minutes: 0,
-              seconds: 0,
-              milliseconds: 0,
-              start: Date.now(),
-              going: true,
-              isDisableSpacebar: true,
+            final: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            milliseconds: 0,
+            start: Date.now(),
+            going: true,
+            isDisableSpacebar: true,
           })
           this.interval4 = setInterval(()=>this.time(), 1)
           this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
           if (!this.props.isTimerDisabled){
             this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
           }else{
-            // this.timerFormatted("timerFormatted")
-                this.setState({
-                  timerFormatted: "TAP TO STOP"
-                })
+            this.setState({
+              timerFormatted: "TAP TO STOP"
+            })
           }
           this.setState({
             isMobileGoing: true
@@ -591,14 +598,8 @@ class TimerInterface extends Component {
             }
             halfDate += d.getDate() 
             this.timerFormatted("timerFormatted")
-            // if (this.state.isDisableSpacebar){
-            //   this.isDisableSpacebar()
-            // }
-            // if (JSON.parse(localStorage.getItem("countDown")) === true){
-            // if(this.state.countDown>0){
-              clearInterval(this.countdownInterval)
-              this.getCountDownNumber()
-            // }
+            clearInterval(this.countdownInterval)
+            this.getCountDownNumber()
             clearInterval(this.interval)
             clearInterval(this.interval2)
             clearInterval(this.interval3)
@@ -726,9 +727,7 @@ class TimerInterface extends Component {
             this.countdownInterval = setInterval(()=>this.countDown(), 1000)
             this.startTimer =  setTimeout(()=>this.timerStart(),this.props.inspectionTime * 1000)
             this.runCountingDown =  setTimeout(()=>this.countingDown(),this.props.inspectionTime * 1000)
-            // if (!this.state.test){
             this.disable = setTimeout(()=>this.isDisableSpacebar(),this.props.inspectionTime * 1000)
-            // }
           }
         }    
       }
@@ -778,8 +777,6 @@ class TimerInterface extends Component {
       countingDown: false
     })
   }
-
-
 
   countDown = () => {
     this.setState({
@@ -844,14 +841,6 @@ class TimerInterface extends Component {
     }) 
     .then(response=>response.json())
     this.props.removeSolveFromSolvesState(this.props.solvesInterface[index].solveid, this.props.solvesInterface[index].milliseconds)
-  }
-
-
-
-  resetCountDown = () => {
-    this.setState({
-      countDown: 5
-    })
   }
 
   newSession = () => {
@@ -1578,8 +1567,8 @@ class TimerInterface extends Component {
         {
           
             this.state.isCountDownGoing ? 
-          <div className="center absolute-center">
-            <h5 style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{this.state.countDown}</h5>
+          <div onTouchEnd={this.startTimerDuringCountDownMobile} onMouseUp={this.startTimerDuringCountDownMobile}  className="height-width">
+            <h5 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{this.state.countDown}</h5>
           </div>
             :
             
