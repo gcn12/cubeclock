@@ -829,12 +829,10 @@ class App extends Component {
     })
     this.setState({
       solvesInterface: this.state.solvesInterface.filter(solve=>{
-        console.log(solve.solveid, solve.milliseconds)
         return solveid !== solve.solveid && milliseconds !== solve.milliseconds
       }),
       solves: solves
     })
-    console.log(solveid, milliseconds)
     this.send(solves)
   }
 
