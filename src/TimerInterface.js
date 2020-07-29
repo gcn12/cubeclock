@@ -1698,7 +1698,7 @@ class TimerInterface extends Component {
           :
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
-          <button onClick={this.test}>test</button>
+          {/* <button onClick={this.test}>test</button> */}
           {this.state.isMobileGoing ? 
           <h1> </h1>
           :
