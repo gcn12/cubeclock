@@ -1617,6 +1617,9 @@ class TimerInterface extends Component {
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
           {/* <button onClick={this.test}>test</button> */}
+          {this.state.isMobileGoing ? 
+          <h1> </h1>
+          :
           <h1 >
             <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
               {this.props.isSignedIn 
@@ -1630,6 +1633,7 @@ class TimerInterface extends Component {
               }
             </nav>
           </h1>
+          }
           <div className=" display-linebreak">
             {this.state.isDisplayScrambleSmall ? 
             (this.state.isDisplayScrambleMedium ? 
@@ -1655,11 +1659,19 @@ class TimerInterface extends Component {
           <div className="tc" >
             <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
           </div>
-            {this.props.isMobile ? 
+            {
+            this.props.isMobileGoing ? 
+            <h1> </h1>
+            :
+            (this.props.isMobile ? 
             <h5 className="hide-button summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
             :
             <h5 className="hide-button timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
-            }
+            )
+          }
+          {this.state.isMobileGoing ? 
+          <div></div>
+          :
           <div style={{borderTop: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid",  borderBottom: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid"}}>
             <Scroll isMobile={this.props.isMobile}>
             <Table 
@@ -1675,6 +1687,7 @@ class TimerInterface extends Component {
             styles={this.props.isBackgroundLight}/>
             </Scroll >
           </div>
+          }
           {this.props.isMobile ? 
           <h5 className="not-hide-button summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
