@@ -6,14 +6,19 @@ import React, { Component } from "react";
 class Card extends Component {
     deleteSession=()=>{
         this.props.removeSessionFromState(this.props.session)
-        fetch("https://blooming-hollows-98248.herokuapp.com/deletesession", {
-            method: "delete",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({
-                session: this.props.uniqueSession,
-                id: this.props.id,
-            })
-        }).then(null)
+        // fetch("https://blooming-hollows-98248.herokuapp.com/deletesession", {
+        //     method: "delete",
+        //     headers: {"Content-Type":"application/json"},
+        //     body: JSON.stringify({
+        //         session: this.props.uniqueSession,
+        //         id: this.props.id,
+        //     })
+        // }).then(null)
+        let solvesToDB = this.props.solves.filter(sessions=>{
+            return sessions.session!==this.props.uniqueSession
+        })
+        // console.log(solvesToDB)
+        this.props.send(solvesToDB)
         this.props.removeFromSolves(this.props.uniqueSession)
         setTimeout(()=>this.props.getSolves(),400)
         let x = this.props.uniqueSessionsDB

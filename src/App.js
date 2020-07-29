@@ -95,6 +95,65 @@ class App extends Component {
     }
   }
 
+  send = (input) => {
+    //testing storing all solves in one cell
+    fetch("https://blooming-hollows-98248.herokuapp.com/sendsolves",{
+      method: "put",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.user.id,
+        solves: {"allsolves": input},
+      })
+    }).then(response=>response.json())
+  }
+
+  receive = () => {
+    //testing storing all solves in one cell
+    fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.user.id,
+      })
+    }).then(response=>response.json())
+    .then(data=>{
+      let parsedData = JSON.parse(data[0].solves).allsolves
+      this.setState({
+        solves: parsedData
+      })
+      let sessions = parsedData.map(solves => solves.session)
+        if (sessions.length === 0) {
+          this.setState({
+            uniqueSessionsDB: [1],
+            sessions: 1,
+            sessionInterface: 1,
+          })
+        } else if (parsedData.length===0){
+          this.setState({
+            sessionInterface: 1,
+          })
+        }else{
+          this.setState({
+            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+            sessions: Math.max.apply(Math,sessions),
+            sessionInterface: Array.from(new Set(sessions)).length,
+            solvesInterface: []
+          })
+          let allSolves = []
+          for (const solve of parsedData){
+            if (Math.max.apply(Math,sessions) === solve.session){
+              allSolves = [solve, ...allSolves]
+              this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+              this.isSessionName(solve.sessionname)
+            }
+          }
+          this.setState({
+            solvesInterface: allSolves
+          })
+        }
+    })
+  }
+
   
   getSolves = () => {
     //gets all solves and sessions from database
@@ -274,7 +333,7 @@ class App extends Component {
   isSessionName = (input) => {
     //updates state so that timer interface know whether 
     //or not to display session name
-    if(input===null){
+    if(input===null||input===""){
       this.setState({
         isSessionName: false,
       })
@@ -599,7 +658,7 @@ class App extends Component {
 
   getSessionNameOnLoad = (name, puzzle) =>{
     //gets session name and puzzle type 
-    if (name === null){
+    if (name === null||name===""){
       this.setState({
         isSessionName: false,
       })
@@ -654,18 +713,17 @@ class App extends Component {
 
   getSolvesFromImportManual = (input) => {
     //gets solves when user manually imports
+    let solves = [...this.state.solves, input]
+    this.send(solves)
     this.setState({
-      solves: [...this.state.solves, input]
+      solves: solves
     })
   }
 
   getSolvesFromImport = (input) => {
-    let allSolves = this.state.solves
-    for (const solve of input){
-      allSolves = [...allSolves, solve]
-    }
+    this.send([...this.state.solves.concat(...input)])
     this.setState({
-      solves: allSolves
+      solves: [...this.state.solves.concat(...input)]
     })
   }
 
@@ -746,7 +804,8 @@ class App extends Component {
   componentDidMount() {
     // console.log(Object.keys(localStorage))
     // console.log(localStorage)
-    setTimeout(()=>this.getSolves(),3)
+    // setTimeout(()=>this.getSolves(),3)
+    setTimeout(()=>this.receive(),3)
     setTimeout(()=>this.getUserInfo(),10)
     // setTimeout(()=>this.manageSolveData,10)
     // this.getInspectionTimeOnMount()
@@ -765,11 +824,18 @@ class App extends Component {
   removeSolveFromState = (solveid, milliseconds) => {
     //removes solve when user clicks "remove"
     //on interface page 
+    let solves = this.state.solves.filter(solve=> {
+      return solveid !== solve.solveid && milliseconds !== solve.milliseconds
+    })
     this.setState({
       solvesInterface: this.state.solvesInterface.filter(solve=>{
+        console.log(solve.solveid, solve.milliseconds)
         return solveid !== solve.solveid && milliseconds !== solve.milliseconds
-      })
+      }),
+      solves: solves
     })
+    console.log(solveid, milliseconds)
+    this.send(solves)
   }
 
   removeSolveFromSolvesState = (solveid, milliseconds) => {
@@ -788,15 +854,15 @@ class App extends Component {
       if (solve.solveid === input){
         let x = !solve.isplustwo
         solve["isplustwo"] = x
-        fetch("https://blooming-hollows-98248.herokuapp.com/plustwo",{
-          method: "post",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            id: this.state.user.id,
-            solveid: input,
-            plustwo: x,
-          })
-        }).then(response=>response.json())
+        // fetch("https://blooming-hollows-98248.herokuapp.com/plustwo",{
+        //   method: "post",
+        //   headers: {"Content-Type": "application/json"},
+        //   body: JSON.stringify({
+        //     id: this.state.user.id,
+        //     solveid: input,
+        //     plustwo: x,
+        //   })
+        // }).then(response=>response.json())
       }
       solves = [...solves, solve]
       return(null)
@@ -804,6 +870,7 @@ class App extends Component {
     this.setState({
       solves: solves
     })
+    this.send(solves)
   }
 
   toggleDNF = (input) => {
@@ -818,6 +885,7 @@ class App extends Component {
     this.setState({
       solves: xyz
     })
+    this.send(xyz)
   }
   
   getNewUsername = (input) => {
@@ -830,38 +898,28 @@ class App extends Component {
     localStorage.setItem("user", JSON.stringify(this.state.user))
   }
 
-  // send = () => {
-  //   //testing storing all solves in one cell
-  //   fetch("https://blooming-hollows-98248.herokuapp.com/test",{
-  //     method: "post",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify({
-  //       id: this.state.user.id,
-  //       test: JSON.stringify(this.state.solves[0]),
-  //     })
-  //   }).then(response=>response.json())
-  // }
+  send2 = () => {
+    //add id to solve data table
+    fetch("https://blooming-hollows-98248.herokuapp.com/test2",{
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: 'n5b5658a@(4D^',
+      })
+    }).then(response=>response.json())
+  }
 
-  // receive = () => {
-  //   //testing storing all solves in one cell
-  //   fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
-  //     method: "post",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify({
-  //       id: this.state.user.id,
-  //     })
-  //   }).then(response=>response.json())
-  //   .then(data=>{
-  //     console.log((JSON.parse(data[0].test)))
-  //   })
-  // }
+  test = () => {
+    console.log(this.state.solves)
+  }
+
       
     render() {   
       return (
       <div> 
         {/* <button onClick={this.test}>push</button> */}
-        {/* <button onClick={this.send}>send</button>
-      <button onClick={this.receive}>receive</button> */}
+        {/* <button onClick={this.send}>send</button> */}
+        {/* <button onClick={this.receive}>receive</button> */}
         { this.state.isHome 
         ? 
         (this.state.isCreateNewSession ? 
@@ -881,6 +939,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            send={this.send}
             removeSolveFromSolvesState={this.removeSolveFromSolvesState}
             isTimerDisabled={this.state.isTimerDisabled}
             isMobile={this.state.isMobile}
@@ -928,6 +987,7 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          send={this.send}
           aoNum2={this.state.aoNum2} 
           disableTimer={this.disableTimer}
           mobileStartStop={this.mobileStartStop}

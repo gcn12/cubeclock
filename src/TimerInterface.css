@@ -14,6 +14,50 @@ h5 {
   font-size: 10rem;
 }
 
+
+@media only screen and (min-width: 800px) {
+  .medium-text {
+    font-size: 1.75rem;
+    margin-left: 17%;
+    margin-right: 17%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .medium-text {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .small-text {
+    font-size: 1.5rem;
+    margin-left: 17%;
+    margin-right: 17%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .small-text {
+    font-size: 1.1rem;
+  }
+}
+
+@media only screen and (min-width: 400px) {
+  .hide-button {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .not-hide-button {
+    display: none;
+  }
+}
+
+
+
+
 body,
 html {
   width: 100%;

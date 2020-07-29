@@ -4,7 +4,7 @@ import Table from "./Table"
 import Scroll from './Scroll';
 import Average from './Average';
 import CustomAverage from './CustomAverage';
-import moment from "moment"
+// import moment from "moment"
 
 
 window.onkeydown = function(e) { 
@@ -102,6 +102,8 @@ class TimerInterface extends Component {
     keyPressOne: false,
     keyPressTwo: false,
     test: false,
+    isDisplayScrambleSmall: false,
+    isDisplayScrambleMedium: false,
   }
 
   timerStart = () => {
@@ -576,18 +578,18 @@ class TimerInterface extends Component {
             }
             allSolves.sort(this.compareMilliseconds)
             let halfDate = ""
-            let fullDate = ""
+            // let fullDate = ""
             let d = new Date()
-            fullDate += d.getFullYear() + "-"
+            // fullDate += d.getFullYear() + "-"
             if ((d.getMonth() + 1) < 10){
-              fullDate += "0"
+              // fullDate += "0"
             }
-            fullDate += d.getMonth() + 1 + "-"
+            // fullDate += d.getMonth() + 1 + "-"
             if ((d.getDate()) < 10){
-              fullDate += "0"
+              // fullDate += "0"
             }
-            fullDate += d.getDate()
-            fullDate += "T00:00:00.000Z"
+            // fullDate += d.getDate()
+            // fullDate += "T00:00:00.000Z"
             halfDate += d.getFullYear() + "-"
             if ((d.getMonth() + 1) < 10){
               halfDate += "0"
@@ -609,9 +611,9 @@ class TimerInterface extends Component {
             this.timerFormatted("twoFormatted")
             let solveid = ""
             solveid+=Date.now()
-            if (this.props.id){
-              this.sendResults(solveid, endMS)
-            }
+            // if (this.props.id){
+            //   this.sendResults(solveid, endMS)
+            // }
             let minimumTime = 0
             if (this.props.puzzleType==="3x3"){
               minimumTime=1100
@@ -633,7 +635,7 @@ class TimerInterface extends Component {
               minimumTime=4000
             }
             let unix = Math.round(new Date().getTime() / 1000)
-  
+            
             const solveData = {}
             solveData["id"] = this.props.id
             solveData["solve"] = this.state.displayTimeFormatted
@@ -652,7 +654,8 @@ class TimerInterface extends Component {
             solveData["plustwo"] = this.state.twoFormatted
             solveData["millisecondstwo"]= String(endMS + 2000)
             solveData["session"] = this.props.sessions
-            solveData["unix"] = new Date().getTime()
+            // solveData["unix"] = new Date().getTime()
+            solveData["unix"] = String(unix)
             solveData["puzzle"] = this.props.puzzleType
             solveData["sessionname"]=this.props.sessionName
             solveData["temporary"] = true
@@ -661,6 +664,8 @@ class TimerInterface extends Component {
               going: false,
               endMS: endMS,
             })
+            let sendToDB = [...this.props.solves, solveData]
+            this.send(sendToDB)
             this.props.getInterfaceSolvesSingle(solveData)
   
             const finalSolve = {}
@@ -676,7 +681,8 @@ class TimerInterface extends Component {
             finalSolve["milliseconds"] = String(this.state.endMS)
             finalSolve["isplustwo"] = false
             finalSolve["isdnf"] = false
-            finalSolve["date"] = fullDate
+            // finalSolve["date"] = fullDate
+            finalSolve["date"] = halfDate
             finalSolve["solveid"] = solveid
             finalSolve["plustwo"] = this.state.twoFormatted
             finalSolve["millisecondstwo"]=String(this.state.endMS + 2000)
@@ -734,16 +740,6 @@ class TimerInterface extends Component {
     }
   }
 
-  preventStartLoop = (e) => {
-    if(e.keyCode===32){
-      if(!this.state.isDisableSpacebar){
-        this.setState((prevState)=>({
-          preventStartLoop: prevState.preventStartLoop+1
-        }))
-      }
-    }
-  }
-
   countDownRun = (e) => {
     //function runs if count down is activated 
     //runs count down
@@ -784,36 +780,53 @@ class TimerInterface extends Component {
     })
   }
 
-  sendResults = (solveid, endMS) => {
-    // sends each solve to db after timer is stopped
-    let submitScramble = this.state.scramble
-    if (this.state.megaminxScramble) {
-      submitScramble = this.state.megaminxScramble
-    }
-    if (this.state.multiBLDScramble) {
-      submitScramble = this.state.multiBLDScramble
-    }
-    fetch("https://blooming-hollows-98248.herokuapp.com/results",{
-      method: "post",
+  send = (input) => {
+    //testing storing all solves in one cell
+    fetch("https://blooming-hollows-98248.herokuapp.com/sendsolves",{
+      method: "put",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        milliseconds: endMS,
-        solve: this.state.displayTimeFormatted,
-        scramble: submitScramble,
         id: this.props.id,
-        session: this.props.sessions,
-        unix: Math.floor(new Date().getTime() / 1000),
-        date: moment().format(),
-        sessionname: this.props.sessionName,
-        puzzle: this.props.puzzleType,
-        solveid: solveid,
-        plustwo: this.state.twoFormatted,
-        isplustwo: false,
-        isdnf: false,
-        millisecondstwo: endMS + 2000 
+        solves: {"allsolves": input},
       })
-    })
-    .then(response => response.json())
+    }).then(response=>response.json())
+  }
+
+  sendResults = (solveid, endMS) => {
+    //do not delete
+
+    // sends each solve to db after timer is stopped
+    // let submitScramble = this.state.scramble
+    // if (this.state.megaminxScramble) {
+    //   submitScramble = this.state.megaminxScramble
+    // }
+    // if (this.state.multiBLDScramble) {
+    //   submitScramble = this.state.multiBLDScramble
+    // }
+    // this.props.send()
+
+    //turn back on
+    // fetch("https://blooming-hollows-98248.herokuapp.com/results",{
+    //   method: "post",
+    //   headers: {"Content-Type": "application/json"},
+    //   body: JSON.stringify({
+    //     milliseconds: endMS,
+    //     solve: this.state.displayTimeFormatted,
+    //     scramble: submitScramble,
+    //     id: this.props.id,
+    //     session: this.props.sessions,
+    //     unix: Math.floor(new Date().getTime() / 1000),
+    //     date: moment().format(),
+    //     sessionname: this.props.sessionName,
+    //     puzzle: this.props.puzzleType,
+    //     solveid: solveid,
+    //     plustwo: this.state.twoFormatted,
+    //     isplustwo: false,
+    //     isdnf: false,
+    //     millisecondstwo: endMS + 2000 
+    //   })
+    // })
+    // .then(response => response.json())
   }
 
   // deleteDB = (index) => {
@@ -863,24 +876,36 @@ class TimerInterface extends Component {
         scrambleLength=23
       }else if (input==="2x2"){
         scrambleLength=9
-      }else if (input==="4x4"){
+      }else if (input==="4x4"||input==="4x4 BLD"){
+        this.setState({
+          isDisplayScrambleMedium: true,
+          isDisplayScrambleSmall: true
+        })
         scrambleLength=45
-      }else if (input==="4x4 BLD"){
-        scrambleLength=45
-      }else if (input==="5x5"){
+      }else if (input==="5x5"||input==="5x5 BLD"){
         scrambleLength=60
-      }else if (input==="5x5 BLD"){
-        scrambleLength=60
+        this.setState({
+          isDisplayScrambleMedium: true,
+          isDisplayScrambleSmall: true
+        })
       }else if (input==="6x6"){
         scrambleLength=80
+        this.setState({
+          isDisplayScrambleSmall: true
+        })
       }else if (input==="7x7"){
         scrambleLength=100
+        this.setState({
+          isDisplayScrambleSmall: true
+        })
       }else if (input==="Skewb"){
         scrambleLength=8
       }else if (input==="Square-1"){
         scrambleLength=10
       }else if (input==="Pyraminx"){
         scrambleLength=9
+      }else if (input==="3x3 OH"){
+        scrambleLength=23
       }
       let pastScrambles = {
         pastScramble: null,
@@ -1009,6 +1034,10 @@ class TimerInterface extends Component {
           scramble += " " 
         }
         if (input==="Clock") {
+          this.setState({
+            isDisplayScrambleMedium: true,
+            isDisplayScrambleSmall: true
+          })
           let end = Math.round(Math.random()*4)
           let endOptions = ["UR", "DR", "DL", "UL"]
           scramble += "UR"
@@ -1263,26 +1292,16 @@ class TimerInterface extends Component {
     if (this.props.isConfirmSolveDelete) {
       let confirm = window.confirm("Are you sure you would like to remove this solve? Action cannot be undone.")
       if (confirm){
-        // const { solves } = this.state;
         this.props.removeSolveFromState(solveid, milliseconds)
-        // this.setState({
-        //   solves: solves.filter((solve, i) => { 
-        //     return i !== index;
-        //   })
-        // });
-        this.deleteDB(index)
+        // this.deleteDB(index)
       }
     }else{
       // const { solves } = this.state;
         this.props.removeSolveFromState(solveid, milliseconds)
-        // this.setState({
-        //   solves: solves.filter((solve, i) => { 
-        //     return i !== index;
-        //   })
-        // });
-        this.deleteDB(index)
+        // this.deleteDB(index)
     }
     this.removeButtonFocus()
+    // this.send(this.props.solves)
   }
 
 
@@ -1502,15 +1521,31 @@ class TimerInterface extends Component {
     }
   }
 
+  preventStartLoop = (e) => {
+    if(e.keyCode===32){
+      if(!this.state.isDisableSpacebar){
+        this.setState((prevState)=>({
+          preventStartLoop: prevState.preventStartLoop+1
+        }))
+      }
+    }
+    if((e.keyCode===91||e.keyCode===93) && this.state.preventStartLoop%2!==0){
+      this.setState({
+        preventStartLoop: this.state.preventStartLoop + 1
+      })
+    }
+  }
+
   keyPressStart = (e) => {
     if(e.keyCode===93||e.keyCode===91||e.keyCode===17)
     if (!this.state.going){
+      console.log(this.state.preventStartLoop )
       if (this.state.keyPressOne && this.state.keyPressTwo){
         if(this.state.preventStartLoop % 2===0){
           // if (JSON.parse(localStorage.getItem("countDown")) === false){
           //   this.beginFunction()
           // }else{
-            if(this.state.countDown===0){
+          if(this.state.countDown===0){
             this.countDownRunFunction()
           }
         }
@@ -1596,7 +1631,19 @@ class TimerInterface extends Component {
             </nav>
           </h1>
           <div className=" display-linebreak">
-            <h3 className="tc">{this.state.scramble}</h3> 
+            {this.state.isDisplayScrambleSmall ? 
+            (this.state.isDisplayScrambleMedium ? 
+              <div className="tc medium-text">
+                {this.state.scramble}
+              </div>
+              :
+              <div className="tc small-text">
+              <h4 className="tc">{this.state.scramble}</h4> 
+              </div>
+              )
+            :
+            <h3 className="tc">{this.state.scramble}</h3>
+            }
             <div className="summary-center">
               <ScrambleTable 
               isBackgroundLight={this.props.isBackgroundLight}
@@ -1608,6 +1655,11 @@ class TimerInterface extends Component {
           <div className="tc" >
             <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
           </div>
+            {this.props.isMobile ? 
+            <h5 className="hide-button summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+            :
+            <h5 className="hide-button timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+            }
           <div style={{borderTop: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid",  borderBottom: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid"}}>
             <Scroll isMobile={this.props.isMobile}>
             <Table 
@@ -1624,9 +1676,9 @@ class TimerInterface extends Component {
             </Scroll >
           </div>
           {this.props.isMobile ? 
-          <h5 className="summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="not-hide-button summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()}  onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           :
-          <h5 className="timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
+          <h5 className="not-hide-button timerButton summary-center button-no-select"><button id="colorClick" onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile} onClick={this.beginMobile} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2 timer-text-start"></button></h5>
           }
           <div id="light">
             {
@@ -1687,14 +1739,16 @@ class TimerInterface extends Component {
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
+    setTimeout(()=>this.randOther(this.props.puzzleType),10)
+    setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
+
+
     // document.addEventListener('keydown', this.startTimerDuringCountDown)
     // document.addEventListener('keydown', this.keyPressStop)
     // document.addEventListener('keydown', this.keyPressSafetyStop)
     // document.addEventListener('keydown', this.keyPressSafety)
     // document.addEventListener('keyup', this.keyPressStart)
     // document.addEventListener('keyup', this.keyPressSafetyUndo)
-    setTimeout(()=>this.randOther(this.props.puzzleType),10)
-    setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import moment from "moment"
 
 class ImportSolves extends Component{
 
@@ -68,7 +69,7 @@ class ImportSolves extends Component{
                         // console.log(propertiesArray[index]["name"])
                         sessionName = propertiesArray[index]["name"]
                     }else{
-                        sessionName = ""
+                        sessionName = null
                     }
                 }
                 for (const solve of solve1){
@@ -202,10 +203,11 @@ class ImportSolves extends Component{
                     if (solve[3] === null){
                         solveToDB["date"]=null
                     }else{
+                        var dateString = moment.unix(abc2/1000).format("YYYY-MM-DD");
                         let date = new Date(abc2).toISOString()
                         date = date.slice(0,10)
-                        date += "T07:00:00.000Z"
-                        solveToDB["date"]= date
+                        // date += "T07:00:00.000Z"
+                        solveToDB["date"]= String(dateString)
                     }
                     solveToDB["session"]=session
                     solveToDB["id"]=this.props.id
@@ -216,8 +218,11 @@ class ImportSolves extends Component{
                     }
                     solveToDB["sessionname"]=sessionName
                     if (solve[4]){
-                        solveToDB["sessionname"]=solve[4]
-                        // console.log(solve[4])
+                        if(sessionName==="" && solve[4]===""){
+                            solveToDB["sessionname"]=null
+                        }else{
+                            solveToDB["sessionname"]=solve[4]
+                        }
                     }
                     // }else{
                     //     solveToDB["sessionname"]=null
@@ -227,7 +232,7 @@ class ImportSolves extends Component{
                     }
                     solveToDB["solveid"] = solveid
                     solvesArray.push(solveToDB)
-                    this.importResults(solveToDB)
+                    // this.importResults(solveToDB)
                 }
                 return(null)
             }) 

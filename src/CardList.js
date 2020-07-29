@@ -141,7 +141,7 @@ class CardList extends Component {
         return(
             <div>
                 {
-                    this.props.solvesSorted.map((solve,i)=>{
+                this.props.solvesSorted.map((solve,i)=>{
                     this.bestWorstAverage(solve, 5)
                     let ao5 
                     let ao12
@@ -203,7 +203,6 @@ class CardList extends Component {
                         ao10000 = this.average(solve, 10000)
                         ao10000BestAndWorst = this.bestWorstAverage(solve,10000)
                     }
-                    // console.log(this.props.puzzleBest)
                     let puzzleBest = this.props.puzzleBest[i]
                     let puzzleWorst = this.props.puzzleWorst[i]
                     let session = -1
@@ -220,7 +219,7 @@ class CardList extends Component {
                     let uniqueSessions = ""
                     let ind = this.props.solvesSorted.length-i
                     let sessionname = ""
-                    let isSessionName=""
+                    let isSessionName=false
                     let puzzle = ""
                     let solveNumber = 0
                     let solveid = []
@@ -341,6 +340,7 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        send={this.props.send}
                         ao5BestAndWorst={ao5BestAndWorst}
                         ao12BestAndWorst={ao12BestAndWorst}
                         ao25BestAndWorst={ao25BestAndWorst}
@@ -389,6 +389,7 @@ class CardList extends Component {
                         session={session} 
                         row={row} 
                         id={this.props.id}
+                        solves={this.props.solves}
                         />
                     );
                 }) 

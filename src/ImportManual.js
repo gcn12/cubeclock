@@ -185,7 +185,6 @@ class ImportManual extends Component{
                     }else if(this.props.puzzle==="Megaminx"){
                         let megaminxScramble = this.props.scramble.split(" ")
                         for (const letter of megaminxScramble) { 
-                            console.log(letter)
                             scramble += letter
                             if (letter ==="U" || letter==="U'"){
                                 scramble += "\n"
@@ -204,10 +203,11 @@ class ImportManual extends Component{
                     if(this.props.date===null){
                         solvesToAppState["date"] = null
                     }else{
-                        solvesToAppState["date"] = this.props.date + "T07:00:00.000Z"
+                        // solvesToAppState["date"] = this.props.date + "T07:00:00.000Z"
+                        solvesToAppState["date"] = this.props.date
                     }
                     solvesToAppState["solve"] = timeFormatted
-                    solvesToAppState["unix"] = unix
+                    solvesToAppState["unix"] = String(unix)
                     solvesToAppState["puzzle"] = this.props.puzzle
                     solvesToAppState["milliseconds"] = ms
                     solvesToAppState["sessionname"] = this.props.importManualTextAreaName
@@ -217,7 +217,6 @@ class ImportManual extends Component{
                     solvesToAppState["isplustwo"] = false
                     solvesToAppState["millisecondstwo"] = ms + 2000
             
-                    console.log(solvesToAppState)
                     this.props.getSolvesFromImportManual(solvesToAppState)
             
                     fetch("https://blooming-hollows-98248.herokuapp.com/importmanual",{
