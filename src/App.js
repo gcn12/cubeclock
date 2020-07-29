@@ -109,49 +109,51 @@ class App extends Component {
 
   receive = () => {
     //testing storing all solves in one cell
-    fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
-      method: "post",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.user.id,
-      })
-    }).then(response=>response.json())
-    .then(data=>{
-      let parsedData = JSON.parse(data[0].solves).allsolves
-      this.setState({
-        solves: parsedData
-      })
-      let sessions = parsedData.map(solves => solves.session)
-        if (sessions.length === 0) {
-          this.setState({
-            uniqueSessionsDB: [1],
-            sessions: 1,
-            sessionInterface: 1,
-          })
-        } else if (parsedData.length===0){
-          this.setState({
-            sessionInterface: 1,
-          })
-        }else{
-          this.setState({
-            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-            sessions: Math.max.apply(Math,sessions),
-            sessionInterface: Array.from(new Set(sessions)).length,
-            solvesInterface: []
-          })
-          let allSolves = []
-          for (const solve of parsedData){
-            if (Math.max.apply(Math,sessions) === solve.session){
-              allSolves = [solve, ...allSolves]
-              this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-              this.isSessionName(solve.sessionname)
+    if(this.state.user.id.length>0){
+      fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+        })
+      }).then(response=>response.json())
+      .then(data=>{
+        let parsedData = JSON.parse(data[0].solves).allsolves
+        this.setState({
+          solves: parsedData
+        })
+        let sessions = parsedData.map(solves => solves.session)
+          if (sessions.length === 0) {
+            this.setState({
+              uniqueSessionsDB: [1],
+              sessions: 1,
+              sessionInterface: 1,
+            })
+          } else if (parsedData.length===0){
+            this.setState({
+              sessionInterface: 1,
+            })
+          }else{
+            this.setState({
+              uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+              sessions: Math.max.apply(Math,sessions),
+              sessionInterface: Array.from(new Set(sessions)).length,
+              solvesInterface: []
+            })
+            let allSolves = []
+            for (const solve of parsedData){
+              if (Math.max.apply(Math,sessions) === solve.session){
+                allSolves = [solve, ...allSolves]
+                this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+                this.isSessionName(solve.sessionname)
+              }
             }
+            this.setState({
+              solvesInterface: allSolves
+            })
           }
-          this.setState({
-            solvesInterface: allSolves
-          })
-        }
-    })
+      })
+    }
   }
 
   
