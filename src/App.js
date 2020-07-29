@@ -346,41 +346,6 @@ class App extends Component {
     }
   }
 
-  inspectionTimeMinus = () => {
-    //Lowers inspection time 
-    if (this.state.inspectionTime>0){
-      localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime - 1))
-      fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
-        method: "put",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id,
-          time: this.state.inspectionTime -1
-        })
-      }).then(response=>response.json())
-      this.setState(prevState=>({
-        inspectionTime: prevState.inspectionTime - 1
-      }))
-    }
-  }
-
-  inspectionTimePlus = () => {
-    //increases inspection time
-    if (this.state.inspectionTime<30){
-      localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime +1))
-      fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
-        method: "put",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id,
-          time: this.state.inspectionTime + 1
-        })
-      }).then(response=>response.json())
-      this.setState(prevState=>({
-        inspectionTime: prevState.inspectionTime + 1
-      }))
-    }
-  }
 
   changeInspectionTime = (input) => {
     //increases inspection time
@@ -388,7 +353,7 @@ class App extends Component {
       this.setState({
         inspectionTime: input
       })
-      localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime +1))
+      // localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime +1))
       fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
         method: "put",
         headers: {"Content-Type": "application/json"},
@@ -616,46 +581,6 @@ class App extends Component {
     this.setState({
       scrambleQuantity: scramble
     })
-  }
-
-  scrambleQuantityPlus = () => {
-    //saves scramble quantity to database in settings page
-    if (this.state.scrambleQuantity < 30) {
-      localStorage.setItem("scrambleLength", String(this.state.scrambleQuantity + 1))
-      fetch("https://blooming-hollows-98248.herokuapp.com/putscramblelength", {
-        method: "put",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id,
-          scramble: this.state.scrambleQuantity + 1
-        })
-      }).then(response=> response.json())
-      .then(
-        this.setState({
-          scrambleQuantity: this.state.scrambleQuantity + 1
-        })
-      )
-    }
-  }
-
-  scrambleQuantityMinus = () => {
-    //saves scramble quantity to database in settings page
-    if (this.state.scrambleQuantity > 5) {
-      localStorage.setItem("scrambleLength", String(this.state.scrambleQuantity - 1))
-      fetch("https://blooming-hollows-98248.herokuapp.com/putscramblelength", {
-        method: "put",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id,
-          scramble: this.state.scrambleQuantity - 1
-        })
-      }).then(response=> response.json())
-      .then(
-        this.setState({
-          scrambleQuantity: this.state.scrambleQuantity - 1
-        })
-      )
-    }
   }
 
   getSessionNameOnLoad = (name, puzzle) =>{
@@ -1042,6 +967,7 @@ class App extends Component {
           />
           :
           <SignIn 
+          receive={this.receive}
           getSolves={this.getSolves} 
           user={this.state.user} 
           isBackgroundLight={this.state.isBackgroundLight}  
