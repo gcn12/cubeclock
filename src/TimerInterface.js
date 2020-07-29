@@ -104,6 +104,7 @@ class TimerInterface extends Component {
     test: false,
     isDisplayScrambleSmall: false,
     isDisplayScrambleMedium: false,
+    disableCommand: false,
   }
 
   timerStart = () => {
@@ -183,15 +184,23 @@ class TimerInterface extends Component {
           this.setState({
             isCountDownGoing: false,
             countingDown: false,
-            preventStartLoop: this.state.preventStartLoop + 1,
             keyPressOne: false,
             keyPressTwo: false,
+          })
+          if(!this.state.disableCommand){
+            this.setState({
+              preventStartLoop: this.state.preventStartLoop + 1,
+            })
+          }
+          this.setState({
+            disableCommand: false,
           })
          
           clearTimeout(this.countDownGoing)
           clearInterval(this.countdownInterval)
           clearTimeout(this.startTimer)
           clearTimeout(this.disable)
+          clearTimeout(this.commandFalse)
         }    
       // }
   } 
@@ -570,7 +579,6 @@ class TimerInterface extends Component {
       if (!this.state.countingDown){
         if (e.keyCode===32||(!this.state.keyPressOne && !this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
           if(!this.state.isDisableSpacebar){
-            console.log(this.state.keyPressOne, this.state.keyPressTwo)
             let endMS = Date.now() - this.state.start
             let allSolves = []
             for (const solve of this.props.solves){
@@ -724,8 +732,12 @@ class TimerInterface extends Component {
         if(this.state.preventStartLoop % 2===0){
           if (!this.state.countingDown){
             this.getCountDownNumber()
+            if(!this.state.disableCommand){
+              this.setState({
+                preventStartLoop: this.state.preventStartLoop+1,
+              })
+            }
             this.setState({
-              preventStartLoop: this.state.preventStartLoop+1,
               going: true,
               countingDown: true,
             })
@@ -1484,10 +1496,14 @@ class TimerInterface extends Component {
         }))
       }
     }
-    if((e.keyCode===91||e.keyCode===93) && this.state.preventStartLoop%2!==0){
-      this.setState({
-        preventStartLoop: this.state.preventStartLoop + 1
-      })
+    if((e.keyCode===91||e.keyCode===93)&&(!this.state.keyPressOne&&!this.state.keyPressTwo)){
+      if(!this.state.countingDown){
+        if(!this.state.going){
+          this.setState({
+            preventStartLoop: this.state.preventStartLoop + 1
+          })
+        }
+      }
     }
   }
 
@@ -1517,7 +1533,6 @@ class TimerInterface extends Component {
   keyPressSafety = (e) => {
     if (!this.state.going){
       if(!this.state.countingDown){
-
         if(this.state.preventStartLoop % 2===0){
           if (e.keyCode===91){
             this.setState({
@@ -1551,25 +1566,41 @@ class TimerInterface extends Component {
       if(this.state.countingDown){
         this.startTimerDuringCountDown()
       }
-      // this.getCountDownNumber()
-      if (!this.state.going){
-        if (this.state.keyPressOne && this.state.keyPressTwo){
-          if(this.state.preventStartLoop % 2===0){
-            if(Number(this.state.countDown)===0){
-              //here
-              this.beginFunction()
-            }else{
-              this.countDownRunFunction()
-              this.setState({
-                keyPressOne: false,
-                keyPressTwo: false,
-              })
+      // if (this.state.going){
+        // if (this.state.keyPressOne && this.state.keyPressTwo){
+          //   }
+          // }
+          // this.getCountDownNumber()
+          if (!this.state.going){
+            if (this.state.keyPressOne && this.state.keyPressTwo){
+              if(this.state.preventStartLoop % 2===0){
+                if(Number(this.state.countDown)===0){
+                  //here
+                this.setState({
+                  preventStartLoop: this.state.preventStartLoop+1,
+                })
+                this.beginFunction()
+                }else{
+                  this.countDownRunFunction()
+                  this.setState({
+                  // preventStartLoop: this.state.preventStartLoop+1,
+                    disableCommand: true,
+                    keyPressOne: false,
+                    keyPressTwo: false,
+                  })
               setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
+              this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
             }
           }
         }
       }
     }
+  }
+
+  disableCommandFalse = () => {
+    this.setState({
+      disableCommand: false
+    })
   }
 
   keyPressTrue = () => {
@@ -1644,7 +1675,7 @@ class TimerInterface extends Component {
   }
 
   test = () => {
-    console.log(this.props.inspectionTime)
+    console.log(this.state.preventStartLoop)
   }
 
   render() {   
@@ -1667,7 +1698,7 @@ class TimerInterface extends Component {
           :
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
-          {/* <button onClick={this.test}>test</button> */}
+          <button onClick={this.test}>test</button>
           {this.state.isMobileGoing ? 
           <h1> </h1>
           :
@@ -1808,12 +1839,12 @@ class TimerInterface extends Component {
 
     // document.addEventListener('keydown', this.startTimerDuringCountDown)
 
-    // document.addEventListener('keydown', this.keyPressStop)
-    // document.addEventListener('keydown', this.keyPressSafetyStop)
-    // document.addEventListener('keydown', this.keyPressSafety)
-    // document.addEventListener('keyup', this.keyPressStart)
-    // document.addEventListener('keyup', this.keyPressSafetyUndo)
-    // document.addEventListener('keyup', this.keyPressSafetyUndoStop)
+    document.addEventListener('keydown', this.keyPressStop)
+    document.addEventListener('keydown', this.keyPressSafetyStop)
+    document.addEventListener('keydown', this.keyPressSafety)
+    document.addEventListener('keyup', this.keyPressStart)
+    document.addEventListener('keyup', this.keyPressSafetyUndo)
+    document.addEventListener('keyup', this.keyPressSafetyUndoStop)
   }
 }
 

@@ -36,7 +36,6 @@ class App extends Component {
     isConfirmSessionDelete: false,
     averageMS: [],
     solves: [],
-    interfaceSolvesCount: 0,
     isNewSession: false,
     solvesInterface: [],
     randPrevent: false,
