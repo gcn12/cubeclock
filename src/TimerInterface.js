@@ -211,7 +211,7 @@ class TimerInterface extends Component {
         isMobileGoing: false,
       })
     }
-    setTimeout(()=>route2(),1)
+    setTimeout(()=>route2(),200)
   }
 
   stopMobile = () => {
@@ -264,18 +264,18 @@ class TimerInterface extends Component {
       }
       allSolves.sort(this.compareMilliseconds)
       let halfDate = ""
-      let fullDate = ""
+      // let fullDate = ""
       let d = new Date()
-      fullDate += d.getFullYear() + "-"
+      // fullDate += d.getFullYear() + "-"
       if ((d.getMonth() + 1) < 10){
-        fullDate += "0"
+        // fullDate += "0"
       }
-      fullDate += d.getMonth() + 1 + "-"
-      if ((d.getDate()) < 10){
-        fullDate += "0"
-      }
-      fullDate += d.getDate()
-      fullDate += "T00:00:00.000Z"
+      // fullDate += d.getMonth() + 1 + "-"
+      // if ((d.getDate()) < 10){
+      //   fullDate += "0"
+      // }
+      // fullDate += d.getDate()
+      // fullDate += "T00:00:00.000Z"
       halfDate += d.getFullYear() + "-"
       if ((d.getMonth() + 1) < 10){
         halfDate += "0"
@@ -366,7 +366,7 @@ class TimerInterface extends Component {
       finalSolve["milliseconds"] = String(this.state.endMS)
       finalSolve["isplustwo"] = false
       finalSolve["isdnf"] = false
-      finalSolve["date"] = fullDate
+      finalSolve["date"] = halfDate
       finalSolve["solveid"] = solveid
       finalSolve["plustwo"] = this.state.twoFormatted
       finalSolve["millisecondstwo"]=String(this.state.endMS + 2000)
@@ -374,6 +374,8 @@ class TimerInterface extends Component {
       finalSolve["unix"] = String(unix)
       finalSolve["puzzle"] = this.props.puzzleType
       finalSolve["sessionname"]=this.props.sessionName
+      // console.log(finalSolve)
+      this.props.send([...this.props.solves, finalSolve])
       setTimeout(()=>this.props.getSolveFromInterface(finalSolve),10)
       this.rand(this.props.puzzleType)
       if (this.state.final < allSolves[0] && this.state.endMS > minimumTime){
