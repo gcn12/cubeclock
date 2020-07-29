@@ -568,9 +568,9 @@ class TimerInterface extends Component {
   stop = (e) => {
     if(this.state.going===true) {
       if (!this.state.countingDown){
-        console.log(this.state.keyPressOne, this.state.keyPressTwo)
         if (e.keyCode===32||(!this.state.keyPressOne && !this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
           if(!this.state.isDisableSpacebar){
+            console.log(this.state.keyPressOne, this.state.keyPressTwo)
             let endMS = Date.now() - this.state.start
             let allSolves = []
             for (const solve of this.props.solves){
@@ -1629,12 +1629,15 @@ class TimerInterface extends Component {
     if (this.state.going){
       if (e.keyCode===91 || e.keyCode===93){
         if (!this.state.keyPressOne || !this.state.keyPressTwo){
-          this.stop()
+          this.setState({
+            isDisableSpacebar: false
+          })
+          this.stop(e)
         }
       }
       if (e.keyCode===17){
         if (!this.state.keyPressOne || !this.state.keyPressTwo){
-          this.stop()
+          this.stop(e)
         }
       }
     }
@@ -1664,7 +1667,7 @@ class TimerInterface extends Component {
           :
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
-          <button onClick={this.test}>test</button>
+          {/* <button onClick={this.test}>test</button> */}
           {this.state.isMobileGoing ? 
           <h1> </h1>
           :
