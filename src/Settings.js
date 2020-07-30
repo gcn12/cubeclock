@@ -239,7 +239,7 @@ class Settings extends Component{
                     localStorage.setItem("offline", JSON.stringify(x))
                 }
             }else{
-                let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
+                let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. You must remain signed in. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
                 if (confirmation) {
                     fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
                     method: "post",
