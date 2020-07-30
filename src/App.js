@@ -125,8 +125,8 @@ class App extends Component {
     if (localStorage.offline){
       offline = JSON.parse(localStorage.getItem("offline"))
     }
-    if(!offline){
-      if(this.state.user.id.length>0){
+    if(this.state.user.id.length>0){
+      if(!offline){
         fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
           method: "post",
           headers: {"Content-Type": "application/json"},
@@ -176,43 +176,43 @@ class App extends Component {
               })
             }
         })
-      }
-    }else{
-      let solves = localStorage.getItem("offlinesolves")
-      solves = JSON.parse(solves).solves
-      // console.log(solves)
-      this.setState({
-        solves: solves
-      })
-      let sessions = solves.map(solves => solves.session)
-      if (sessions.length === 0) {
-        this.setState({
-          uniqueSessionsDB: [1],
-          sessions: 1,
-          sessionInterface: 1,
-        })
-      } else if (solves.length===0){
-        this.setState({
-          sessionInterface: 1,
-        })
       }else{
+        let solves = localStorage.getItem("offlinesolves")
+        solves = JSON.parse(solves).solves
+        // console.log(solves)
         this.setState({
-          uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-          sessions: Math.max.apply(Math,sessions),
-          sessionInterface: Array.from(new Set(sessions)).length,
-          solvesInterface: []
+          solves: solves
         })
-        let allSolves = []
-        for (const solve of solves){
-          if (Math.max.apply(Math,sessions) === solve.session){
-            allSolves = [solve, ...allSolves]
-            this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-            this.isSessionName(solve.sessionname)
+        let sessions = solves.map(solves => solves.session)
+        if (sessions.length === 0) {
+          this.setState({
+            uniqueSessionsDB: [1],
+            sessions: 1,
+            sessionInterface: 1,
+          })
+        } else if (solves.length===0){
+          this.setState({
+            sessionInterface: 1,
+          })
+        }else{
+          this.setState({
+            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+            sessions: Math.max.apply(Math,sessions),
+            sessionInterface: Array.from(new Set(sessions)).length,
+            solvesInterface: []
+          })
+          let allSolves = []
+          for (const solve of solves){
+            if (Math.max.apply(Math,sessions) === solve.session){
+              allSolves = [solve, ...allSolves]
+              this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+              this.isSessionName(solve.sessionname)
+            }
           }
+          this.setState({
+            solvesInterface: allSolves
+          })
         }
-        this.setState({
-          solvesInterface: allSolves
-        })
       }
     }
   }
@@ -220,7 +220,6 @@ class App extends Component {
   
   getSolves = () => {
     //gets all solves and sessions from database
-    let offline = localStorage.getItem(("offline"))
     if (this.state.user.id){
       if(!this.state.isOffline){
         fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
