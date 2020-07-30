@@ -24,20 +24,24 @@ class Card extends Component {
             localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...solvesToDB]}))
         }
         this.props.removeFromSolves(this.props.uniqueSession)
-        setTimeout(()=>this.props.getSolves(),400)
+        // setTimeout(()=>this.props.getSolves(),400)
+        // this.props.getSolves()
         let x = this.props.uniqueSessionsDB
             x.splice(x.indexOf(this.props.uniqueSession), 1)
         if (x.length===0){
             this.props.getSessionNumber(1)
             this.props.getInterfaceSession(1)
             this.props.getSessionNameOnLoad(null, "3x3")
+            console.log(1)
         }else if (this.props.uniqueSession===this.props.sessions) {
             let c = x.length 
             this.props.getSessionNumber(Math.max(...x))
             this.props.getInterfaceSession(c)
+            console.log(2)
         } else {
             let a = [...x].sort(this.compare).indexOf(this.props.sessions)
             this.props.getInterfaceSession(a+1)
+            console.log(3)
         }
     }
 
@@ -60,6 +64,7 @@ class Card extends Component {
         const runDelete = async () => {
             await this.deleteSession()
             await this.removeSessionDB()
+            await this.props.getSolves()
         };
         if (this.props.isConfirmSessionDelete){
             let confirm = window.confirm("Are you sure you would like to remove this session? Action cannot be undone.")
