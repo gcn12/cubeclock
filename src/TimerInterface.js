@@ -1719,11 +1719,14 @@ class TimerInterface extends Component {
           <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
             {this.props.isSignedIn 
             ? <div id="padRight">
-              <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
+            {/* ? <div> */}
             {JSON.parse(localStorage.getItem("offline")) ? 
-            <h4 style={{paddingLeft: "5%", verticalAlign:"middle"}}>OFFLINE</h4>
+              <nav style={{display: 'flex'}}>
+              <h4 style={{ paddingTop:"13%", verticalAlign:"middle"}}>OFFLINE</h4>
+              <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
+              </nav>
             :
-            <h4> </h4>
+            <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
             }
             </div>
             :
