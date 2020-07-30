@@ -242,7 +242,7 @@ const Table = props => {
                     <th></th>
                     <th></th>
                     <th></th>
-                    {props.id.length ? 
+                    {props.id.length>2 ? 
                     (
                     props.solves.length > props.aoNum-1 ? 
                     <th>

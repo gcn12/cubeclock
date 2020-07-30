@@ -63,15 +63,18 @@ class Settings extends Component{
 
     aoNumChange = (input) => {
         if (input>3 && input<1001){
+            let offline = JSON.parse(localStorage.getItem("offline"))
+            if(!offline){
+                fetch("https://blooming-hollows-98248.herokuapp.com/ao", {
+                    method: "put",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        id: this.props.id,
+                        aonumber: input
+                    })
+                }).then(response=>response.json())
+            }
             localStorage.setItem("ao", JSON.stringify(input))
-            fetch("https://blooming-hollows-98248.herokuapp.com/ao", {
-                method: "put",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    id: this.props.id,
-                    aonumber: input
-                })
-            }).then(response=>response.json())
             this.props.aoNumChange(input)
             this.setState({
                 isInvalidAoNum: false,
@@ -87,15 +90,18 @@ class Settings extends Component{
 
     aoNumChange2 = (input) => {
         if (input>3 && input<1001){
+            let offline = JSON.parse(localStorage.getItem("offline"))
+            if(!offline){
+                fetch("https://blooming-hollows-98248.herokuapp.com/ao2", {
+                    method: "put",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        id: this.props.id,
+                        aonumber2: input
+                    })
+                }).then(response=>response.json())
+            }
             localStorage.setItem("ao2", JSON.stringify(input))
-            fetch("https://blooming-hollows-98248.herokuapp.com/ao2", {
-                method: "put",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    id: this.props.id,
-                    aonumber2: input
-                })
-            }).then(response=>response.json())
             this.props.aoNumChange2(input)
             this.setState({
                 isInvalidAoNum2: false,
@@ -156,6 +162,101 @@ class Settings extends Component{
         }
         if(document.getElementById("disabletimer").checked===false){
             localStorage.setItem("disabletimer", JSON.stringify(false))
+        }
+    }
+
+    offline = () => {
+        this.props.offline()
+        if(document.getElementById("offline").checked===true){
+            localStorage.setItem("offline", JSON.stringify(true))
+        }
+        if(document.getElementById("offline").checked===false){
+            localStorage.setItem("offline", JSON.stringify(false))
+        }
+    }
+
+    getOffline= () => {
+        if(localStorage.offline) {
+            let x = JSON.parse(localStorage.getItem("offline"))
+            document.getElementById("offline").checked=x
+        }
+    }
+
+    offlineConfirm = () => {
+        if(localStorage.offline) {
+            // let offlineState = this.props.offlineState
+            let x = JSON.parse(localStorage.getItem("offline"))
+            if(x){
+                let confirmation = window.confirm("You are now going online. To reconnect, be sure to have a wifi connection.")
+                if (confirmation) {
+                    if(localStorage.offlinesolves){
+                        let online = navigator.onLine;
+                        if(online){
+                            let solves = localStorage.getItem("offlinesolves")
+                            fetch("https://blooming-hollows-98248.herokuapp.com/sendonline",{
+                            method: "put",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({
+                              id: this.props.id,
+                              solves: {"allsolves": JSON.parse(solves).solves},
+                              theme: JSON.parse(localStorage.getItem("theme")),
+                              aonumber: JSON.parse(localStorage.getItem("ao")),
+                              confirmsession: JSON.parse(localStorage.getItem("sessionconfirm")),
+                              confirmsolve: JSON.parse(localStorage.getItem("solveconfirm")),
+                              inspection: JSON.parse(localStorage.getItem("countDown")),
+                              inspectiontime: JSON.parse(localStorage.getItem("inspectionTime")),
+                              mobile: JSON.parse(localStorage.getItem("mobile")),
+                              disabletimer: JSON.parse(localStorage.getItem("disabletimer")),
+                              aonumber2: JSON.parse(localStorage.getItem("ao2")),
+                              offline: JSON.parse(localStorage.getItem("offline")),
+                            })
+                            }).then(response=>response.json())
+                            .then(response=> {
+                              if(response==="unable to send online"){
+                                alert("Unable to conncect to database. Try again.")
+                              }else{
+                                fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
+                                method: "post",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({
+                                    id: this.props.id,
+                                    offline: !x,
+                                })
+                                }).then(response=>response.json())
+                                document.getElementById("offline").checked=!x
+                                localStorage.setItem("offline", JSON.stringify(!x))
+                                localStorage.removeItem("offlinesolves")
+                              }
+                            })
+                        }else{
+                            alert("You are offline. Try again.")
+                            document.getElementById("offline").checked=x
+                            localStorage.setItem("offline", JSON.stringify(x))
+                        }
+                    }
+                }else{
+                    document.getElementById("offline").checked=x
+                    localStorage.setItem("offline", JSON.stringify(x))
+                }
+            }else{
+                let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
+                if (confirmation) {
+                    fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
+                    method: "post",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        id: this.props.id,
+                        offline: !x,
+                    })
+                    }).then(response=>response.json())
+                    document.getElementById("offline").checked=!x
+                    localStorage.setItem("offline", JSON.stringify(!x))
+                    localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...this.props.solvesApp]}))
+                }else{
+                    document.getElementById("offline").checked=x
+                    localStorage.setItem("offline", JSON.stringify(x))
+                }
+            }
         }
     }
 
@@ -266,6 +367,7 @@ class Settings extends Component{
 
     componentDidMount() {
         // this.getCountDownOnMount()
+        this.getOffline()
         this.getConfirmSolveOnMount()
         this.getConfirmSessionOnMount()
         this.getMobileOnMount()
@@ -423,6 +525,12 @@ class Settings extends Component{
                             <label htmlFor="disabletimer" className="label1"><h4>Deactivate timer during solve</h4></label>
                             <input type="checkbox" id="disabletimer" className="checkbox input1" onClick={this.isDisableTimer} />  
                             <label htmlFor="disabletimer" className="switch"></label>
+                        </li>
+                        <br></br>
+                        <li>
+                            <label htmlFor="offlinne" className="label1"><h4>Offline mode</h4></label>
+                            <input type="checkbox" id="offline" className="checkbox input1" onClick={this.offlineConfirm} />  
+                            <label htmlFor="offline" className="switch"></label>
                         </li>
                     </ul>
 

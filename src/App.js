@@ -41,6 +41,7 @@ class App extends Component {
     randPrevent: false,
     isMobile: false,
     isTimerDisabled: false,
+    isOffline: false, 
   }
 
   randPreventFunction = () => {
@@ -50,85 +51,199 @@ class App extends Component {
   }
 
   getUserInfo = () => {
-    if (this.state.user.id){
-      fetch("https://blooming-hollows-98248.herokuapp.com/getuserinfo", {
-        method: "post",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id
-        })
-      })
-      .then(response=>response.json())
-      .then(data=>{
-        this.setState({
-          isConfirmSolveDelete: data.confirmsolve,
-          isConfirmSessionDelete: data.confirmsession,
-          inspectionTime: data.inspectiontime,
-          isMobile: data.mobile,
-          isCountDownActivated: data.inspection,
-          isBackgroundLight: data.theme,
-          scrambleQuantity: data.scramblelength,
-          aoNum: data.aonumber, 
-          aoNum2: data.aonumber2, 
-          isTimerDisabled: data.disabletimer,
-        })
-        localStorage.setItem("countDown", JSON.stringify(data.inspection))
-        localStorage.setItem("mobile", JSON.stringify(data.mobile))
-        localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
-        localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
-        // console.log(data.disabletimer !== true )
-        localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
-        let theme = JSON.parse(localStorage.getItem("theme"))
-        if (data.theme !== theme){
-          this.setState({
-            isBackgroundLight: data.theme,
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(!offline){
+      if (this.state.user.id){
+        fetch("https://blooming-hollows-98248.herokuapp.com/getuserinfo", {
+          method: "post",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            id: this.state.user.id
           })
-          if (theme){
-            this.dark()
-          }else{
-            this.light()
-          }
+        })
+        .then(response=>response.json())
+        .then(data=>{
+          this.setState({
+            isConfirmSolveDelete: data.confirmsolve,
+            isConfirmSessionDelete: data.confirmsession,
+            inspectionTime: data.inspectiontime,
+            isMobile: data.mobile,
+            isCountDownActivated: data.inspection,
+            isBackgroundLight: data.theme,
+            scrambleQuantity: data.scramblelength,
+            aoNum: data.aonumber, 
+            aoNum2: data.aonumber2, 
+            isTimerDisabled: data.disabletimer,
+            isOffline: data.offline,
+          })
+          localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
+          localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
+          localStorage.setItem("countDown", JSON.stringify(data.inspection))
+          localStorage.setItem("scrambleLength", data.scramblelength)
           localStorage.setItem("theme", JSON.stringify(data.theme))
-        }
-      })
+          localStorage.setItem("ao", JSON.stringify(data.aonumber))
+          localStorage.setItem("ao2", JSON.stringify(data.aonumber2))
+          localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
+          localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
+          localStorage.setItem("mobile", JSON.stringify(data.mobile))
+          localStorage.setItem("offline", JSON.stringify(data.offline))
+          let theme = JSON.parse(localStorage.getItem("theme"))
+          if (data.theme !== theme){
+            this.setState({
+              isBackgroundLight: data.theme,
+            })
+            if (theme){
+              this.dark()
+            }else{
+              this.light()
+            }
+            localStorage.setItem("theme", JSON.stringify(data.theme))
+          }
+        })
+      }
     }
   }
 
   send = (input) => {
     //testing storing all solves in one cell
-    fetch("https://blooming-hollows-98248.herokuapp.com/sendsolves",{
-      method: "put",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.user.id,
-        solves: {"allsolves": input},
-      })
-    }).then(response=>response.json())
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(!offline){
+      fetch("https://blooming-hollows-98248.herokuapp.com/sendsolves",{
+        method: "put",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          solves: {"allsolves": input},
+        })
+      }).then(response=>response.json())
+    }
   }
 
   receive = () => {
     //testing storing all solves in one cell
-    if(this.state.user.id.length>0){
-      fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
-        method: "post",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id,
+    let offline = false
+    if (localStorage.offline){
+      offline = JSON.parse(localStorage.getItem("offline"))
+    }
+    if(!offline){
+      if(this.state.user.id.length>0){
+        fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+          method: "post",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            id: this.state.user.id,
+          })
+        }).then(response=>response.json())
+        .then(data=>{
+          let parsedData = []
+          if(data[0].solves){
+            parsedData = JSON.parse(data[0].solves).allsolves
+          }
+          this.setState({
+            solves: parsedData
+          })
+          let sessions = []
+          if(parsedData.length>0){
+            sessions = parsedData.map(solves => solves.session)
+          }
+            if (sessions.length === 0) {
+              this.setState({
+                uniqueSessionsDB: [1],
+                sessions: 1,
+                sessionInterface: 1,
+              })
+            } else if (parsedData.length===0){
+              this.setState({
+                sessionInterface: 1,
+              })
+            }else{
+              this.setState({
+                uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+                sessions: Math.max.apply(Math,sessions),
+                sessionInterface: Array.from(new Set(sessions)).length,
+                solvesInterface: []
+              })
+              let allSolves = []
+              for (const solve of parsedData){
+                if (Math.max.apply(Math,sessions) === solve.session){
+                  allSolves = [solve, ...allSolves]
+                  this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+                  this.isSessionName(solve.sessionname)
+                }
+              }
+              this.setState({
+                solvesInterface: allSolves
+              })
+            }
         })
-      }).then(response=>response.json())
-      .then(data=>{
-        let parsedData = JSON.parse(data[0].solves).allsolves
+      }
+    }else{
+      let solves = localStorage.getItem("offlinesolves")
+      solves = JSON.parse(solves).solves
+      // console.log(solves)
+      this.setState({
+        solves: solves
+      })
+      let sessions = solves.map(solves => solves.session)
+      if (sessions.length === 0) {
         this.setState({
-          solves: parsedData
+          uniqueSessionsDB: [1],
+          sessions: 1,
+          sessionInterface: 1,
         })
-        let sessions = parsedData.map(solves => solves.session)
+      } else if (solves.length===0){
+        this.setState({
+          sessionInterface: 1,
+        })
+      }else{
+        this.setState({
+          uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+          sessions: Math.max.apply(Math,sessions),
+          sessionInterface: Array.from(new Set(sessions)).length,
+          solvesInterface: []
+        })
+        let allSolves = []
+        for (const solve of solves){
+          if (Math.max.apply(Math,sessions) === solve.session){
+            allSolves = [solve, ...allSolves]
+            this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+            this.isSessionName(solve.sessionname)
+          }
+        }
+        this.setState({
+          solvesInterface: allSolves
+        })
+      }
+    }
+  }
+
+  
+  getSolves = () => {
+    //gets all solves and sessions from database
+    let offline = localStorage.getItem(("offline"))
+    console.log(offline)
+    if (this.state.user.id){
+      if(!this.state.isOffline){
+        fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
+          method: "post",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+        .then(response=>response.json())
+        .then(data=>{
+          this.setState({
+            solves: data
+          })
+          let sessions = data.map(solves => solves.session)
           if (sessions.length === 0) {
             this.setState({
               uniqueSessionsDB: [1],
               sessions: 1,
               sessionInterface: 1,
             })
-          } else if (parsedData.length===0){
+          } else if (data.length===0){
             this.setState({
               sessionInterface: 1,
             })
@@ -140,7 +255,7 @@ class App extends Component {
               solvesInterface: []
             })
             let allSolves = []
-            for (const solve of parsedData){
+            for (const solve of data){
               if (Math.max.apply(Math,sessions) === solve.session){
                 allSolves = [solve, ...allSolves]
                 this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
@@ -151,57 +266,8 @@ class App extends Component {
               solvesInterface: allSolves
             })
           }
-      })
-    }
-  }
-
-  
-  getSolves = () => {
-    //gets all solves and sessions from database
-    if (this.state.user.id){
-      fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
-        method: "post",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id
         })
-      })
-      .then(response=>response.json())
-      .then(data=>{
-        this.setState({
-          solves: data
-        })
-        let sessions = data.map(solves => solves.session)
-        if (sessions.length === 0) {
-          this.setState({
-            uniqueSessionsDB: [1],
-            sessions: 1,
-            sessionInterface: 1,
-          })
-        } else if (data.length===0){
-          this.setState({
-            sessionInterface: 1,
-          })
-        }else{
-          this.setState({
-            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-            sessions: Math.max.apply(Math,sessions),
-            sessionInterface: Array.from(new Set(sessions)).length,
-            solvesInterface: []
-          })
-          let allSolves = []
-          for (const solve of data){
-            if (Math.max.apply(Math,sessions) === solve.session){
-              allSolves = [solve, ...allSolves]
-              this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-              this.isSessionName(solve.sessionname)
-            }
-          }
-          this.setState({
-            solvesInterface: allSolves
-          })
-        }
-      })
+      }
     }
   }
 
@@ -228,59 +294,84 @@ class App extends Component {
 
   disableTimer = () => {
     //Toggles timer disable in database
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("disabletimer", JSON.stringify(!this.state.isTimerDisabled))
+
+    }else{
+      fetch("https://blooming-hollows-98248.herokuapp.com/disabletimer", {
+        // fetch("http://localhost:3003/confirmsession", {
+          method: "post",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            id: this.state.user.id,
+            disabletimer: !this.state.isTimerDisabled,
+          })
+        }).then(response=>response.json())
+    }
     this.setState({
       isTimerDisabled: !this.state.isTimerDisabled
     })
-    fetch("https://blooming-hollows-98248.herokuapp.com/disabletimer", {
-    // fetch("http://localhost:3003/confirmsession", {
-      method: "post",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.user.id,
-        disabletimer: !this.state.isTimerDisabled,
-      })
-    }).then(response=>response.json())
   }
- 
 
   confirmSessionDelete = () => {
     //Toggles session delete confirm in database
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("sessionconfirm", JSON.stringify(!this.state.isConfirmSessionDelete))
+    }else{
+      fetch("https://blooming-hollows-98248.herokuapp.com/confirmsession", {
+      // fetch("http://localhost:3003/confirmsession", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          confirmSession: !this.state.isConfirmSessionDelete,
+        })
+      }).then(response=>response.json())
+    }
     this.setState({
       isConfirmSessionDelete: !this.state.isConfirmSessionDelete
     })
-    fetch("https://blooming-hollows-98248.herokuapp.com/confirmsession", {
-    // fetch("http://localhost:3003/confirmsession", {
-      method: "post",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.user.id,
-        confirmSession: !this.state.isConfirmSessionDelete,
-      })
-    }).then(response=>response.json())
   }
 
   mobileStartStop = () => {
     //Toggles mobile in database
     //If on, there is clickable start button
-    fetch("https://blooming-hollows-98248.herokuapp.com/mobile", {
-    // fetch("http://localhost:3003/confirmsolve", {
-      method: "post",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.user.id,
-        mobile: !this.state.isMobile,
-      })
-    }).then(response=>response.json())
-    .then(
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("mobile", JSON.stringify(!this.state.isMobile))
       this.setState({
         isMobile: !this.state.isMobile
       })
-    )
+    }else{
+      fetch("https://blooming-hollows-98248.herokuapp.com/mobile", {
+      // fetch("http://localhost:3003/confirmsolve", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          mobile: !this.state.isMobile,
+        })
+      }).then(response=>response.json())
+      .then(
+        this.setState({
+          isMobile: !this.state.isMobile
+        })
+      )
+    }
   }
 
   confirmSolveDelete = () => {
     //Toggles solve delete confirm in database
     //If on, user is asked if they want to delete solves
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("solveconfirm", JSON.stringify(!this.state.isConfirmSolveDelete))
+      this.setState({
+        isConfirmSolveDelete: !this.state.isConfirmSolveDelete
+      })
+    }
     fetch("https://blooming-hollows-98248.herokuapp.com/confirmsolve", {
     // fetch("http://localhost:3003/confirmsolve", {
       method: "post",
@@ -308,19 +399,27 @@ class App extends Component {
 
   inspection = () => {
     //Toggles when inspection time runs or not
-    fetch("https://blooming-hollows-98248.herokuapp.com/inspection", {
-      method: "post",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.user.id,
-        inspection: !this.state.isCountDownActivated,
-      })
-    }).then(response=>response.json())
-    .then(
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("countDown", JSON.stringify(!this.state.isCountDownActivated))
       this.setState({
         isCountDownActivated: !this.state.isCountDownActivated
       })
-    )
+    }else{
+      fetch("https://blooming-hollows-98248.herokuapp.com/inspection", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          inspection: !this.state.isCountDownActivated,
+        })
+      }).then(response=>response.json())
+      .then(
+        this.setState({
+          isCountDownActivated: !this.state.isCountDownActivated
+        })
+      )
+    }
   }
 
 //   manageSolveData = () => {
@@ -348,19 +447,22 @@ class App extends Component {
 
   changeInspectionTime = (input) => {
     //increases inspection time
-    // if (this.state.inspectionTime<31 && this.state.inspectionTime>-1){
+      let offline = JSON.parse(localStorage.getItem("offline"))
+      if(offline){
+        localStorage.setItem("inspectionTime", JSON.stringify(input))
+      }else{
+        fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
+          method: "put",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            id: this.state.user.id,
+            time: input
+          })
+        }).then(response=>response.json())
+      }
       this.setState({
         inspectionTime: input
       })
-      // localStorage.setItem("inspectionTime", JSON.stringify(this.state.inspectionTime +1))
-      fetch("https://blooming-hollows-98248.herokuapp.com/inspectiontime", {
-        method: "put",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          id: this.state.user.id,
-          time: input
-        })
-      }).then(response=>response.json())
     // }
   }
 
@@ -502,7 +604,9 @@ class App extends Component {
       isTimerDisabled: data.disabletimer,
       isConfirmSolveDelete: data.confirmsolve,
       isConfirmSessionDelete: data.confirmsession,
+      isOffline: data.offline
     })
+    localStorage.setItem("timerDisabled", JSON.stringify(data.disabletimer))
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
     localStorage.setItem("countDown", JSON.stringify(data.inspection))
     localStorage.setItem("scrambleLength", data.scramblelength)
@@ -512,6 +616,7 @@ class App extends Component {
     localStorage.setItem("solveconfirm", JSON.stringify(data.confirmsolve))
     localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
     localStorage.setItem("mobile", JSON.stringify(data.mobile))
+    localStorage.setItem("offline", JSON.stringify(data.offline))
   }
 
   getTheme = () => {
@@ -565,6 +670,7 @@ class App extends Component {
     localStorage.removeItem("solveconfirm")
     localStorage.removeItem("xyz")
     localStorage.removeItem("color")
+    localStorage.removeItem("offline")
     localStorage.setItem("countDown", JSON.stringify(false))
     localStorage.setItem("scrambleLength", 22)
   }
@@ -641,15 +747,24 @@ class App extends Component {
     //gets solves when user manually imports
     let solves = [...this.state.solves, input]
     this.send(solves)
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("offlinesolves", JSON.stringify({"solves":[...solves]}))
+    }
     this.setState({
       solves: solves
     })
   }
 
   getSolvesFromImport = (input) => {
-    this.send([...this.state.solves.concat(...input)])
+    let solves = [...this.state.solves.concat(...input)]
+    this.send(solves)
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("offlinesolves", JSON.stringify({"solves":[...solves]}))
+    }
     this.setState({
-      solves: [...this.state.solves.concat(...input)]
+      solves: solves
     })
   }
 
@@ -760,6 +875,10 @@ class App extends Component {
       solves: solves
     })
     this.send(solves)
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("offlinesolves", JSON.stringify({"solves":[...solves]}))
+    }
   }
 
   removeSolveFromSolvesState = (solveid, milliseconds) => {
@@ -778,15 +897,6 @@ class App extends Component {
       if (solve.solveid === input){
         let x = !solve.isplustwo
         solve["isplustwo"] = x
-        // fetch("https://blooming-hollows-98248.herokuapp.com/plustwo",{
-        //   method: "post",
-        //   headers: {"Content-Type": "application/json"},
-        //   body: JSON.stringify({
-        //     id: this.state.user.id,
-        //     solveid: input,
-        //     plustwo: x,
-        //   })
-        // }).then(response=>response.json())
       }
       solves = [...solves, solve]
       return(null)
@@ -795,6 +905,10 @@ class App extends Component {
       solves: solves
     })
     this.send(solves)
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("offlinesolves", JSON.stringify({"solves":[...solves]}))
+    }
   }
 
   toggleDNF = (input) => {
@@ -810,6 +924,10 @@ class App extends Component {
       solves: xyz
     })
     this.send(xyz)
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("offlinesolves", JSON.stringify({"solves":[...xyz]}))
+    }
   }
   
   getNewUsername = (input) => {
@@ -834,14 +952,75 @@ class App extends Component {
   }
 
   test = () => {
+    // let solves = localStorage.getItem("offlinesolves")
+    // solves = JSON.parse(solves).solves
+    // console.log(solves)
+    localStorage.removeItem("offlinesolves")
+  }
+
+  test2 = () => {
+    if(localStorage.offlinesolves){
+      let solves = localStorage.getItem("offlinesolves")
+      solves = JSON.parse(solves).solves
+      console.log(solves)
+    }
+  }
+
+  test3 = () => {
     console.log(this.state.solves)
   }
 
+  setStateOffline = (input) => {
+    this.setState({
+      isOffline: input
+    })
+  }
+
+  offline = () => {
+    //Toggles timer disable in database
+    let isOffline = !this.state.isOffline
+    this.setState({
+      isOffline: isOffline
+    })
+    fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
+    // fetch("http://localhost:3003/confirmsession", {
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.user.id,
+        offline: !this.state.isOffline,
+      })
+    }).then(response=>response.json())
+    if(isOffline){
+      localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...this.state.solves]}))
+    }else if(!isOffline){
+      if(localStorage.offlinesolves){
+        let solves = localStorage.getItem("offlinesolves")
+        // this.send(JSON.parse(solves).solves)
+        // localStorage.removeItem("offlinesolves")
+        fetch("https://blooming-hollows-98248.herokuapp.com/sendonline",{
+        method: "put",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          solves: {"allsolves": JSON.parse(solves).solves},
+        })
+        }).then(response=>response.json())
+        .then(response=> {
+          if(response==="unable to send online"){
+            alert("Unable to conncect to database. Try again.")
+          }
+        })
+      }
+    }
+  }
       
     render() {   
       return (
       <div> 
-        {/* <button onClick={this.test}>push</button> */}
+        {/* <button onClick={this.test}>removeitem</button>
+        <button onClick={this.test2}>log local storage</button>
+        <button onClick={this.test3}>log state solves</button> */}
         {/* <button onClick={this.send}>send</button> */}
         {/* <button onClick={this.receive}>receive</button> */}
         { this.state.isHome 
@@ -911,6 +1090,9 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          setStateOffline={this.setStateOffline}
+          offlineState={this.state.offline}
+          offline={this.offline}
           send={this.send}
           aoNum2={this.state.aoNum2} 
           disableTimer={this.disableTimer}

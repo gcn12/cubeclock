@@ -384,6 +384,10 @@ class TimerInterface extends Component {
       finalSolve["puzzle"] = this.props.puzzleType
       finalSolve["sessionname"]=this.props.sessionName
       this.props.send([...this.props.solves, finalSolve])
+      let offline = JSON.parse(localStorage.getItem("offline"))
+      if(offline){
+        localStorage.setItem("offlinesolves", JSON.stringify({"solves":[...this.props.solves, finalSolve]}))
+      }
       setTimeout(()=>this.props.getSolveFromInterface(finalSolve),10)
       this.rand(this.props.puzzleType)
       if (this.state.final < allSolves[0] && this.state.endMS > minimumTime){
@@ -676,6 +680,10 @@ class TimerInterface extends Component {
             })
             let sendToDB = [...this.props.solves, solveData]
             this.send(sendToDB)
+            let offline = JSON.parse(localStorage.getItem("offline"))
+            if(offline){
+              localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...sendToDB]}))
+            }
             this.props.getInterfaceSolvesSingle(solveData)
   
             const finalSolve = {}
@@ -796,14 +804,17 @@ class TimerInterface extends Component {
 
   send = (input) => {
     //testing storing all solves in one cell
-    fetch("https://blooming-hollows-98248.herokuapp.com/sendsolves",{
-      method: "put",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.props.id,
-        solves: {"allsolves": input},
-      })
-    }).then(response=>response.json())
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(!offline){
+      fetch("https://blooming-hollows-98248.herokuapp.com/sendsolves",{
+        method: "put",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.props.id,
+          solves: {"allsolves": input},
+        })
+      }).then(response=>response.json())
+    }
   }
 
   sendResults = (solveid, endMS) => {
@@ -1397,23 +1408,26 @@ class TimerInterface extends Component {
   toggleDNFInterface = (input) => {
     this.props.toggleDNF(input)
     let xyz = []
+    let offline = JSON.parse(localStorage.getItem("offline"))
     for (const solve of this.props.solvesInterface){
       if (solve.solveid === input){
         let x = !solve.isdnf
         solve["isdnf"] = !x
         if (solve.temporary){
           let x = !solve.isdnf
-        solve["isdnf"] = x
+          solve["isdnf"] = x
         }
-        fetch("https://blooming-hollows-98248.herokuapp.com/dnf", {
-          method: "post",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            id: this.props.id,
-            isdnf: !x,
-            solveid: solve.solveid,
-          })
-        }).then(response=>response.json())
+        if(!offline){
+          fetch("https://blooming-hollows-98248.herokuapp.com/dnf", {
+            method: "post",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+              id: this.props.id,
+              isdnf: !x,
+              solveid: solve.solveid,
+            })
+          }).then(response=>response.json())
+        }
       }
       xyz = [...xyz, solve]
     }

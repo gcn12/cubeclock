@@ -19,6 +19,10 @@ class Card extends Component {
         })
         // console.log(solvesToDB)
         this.props.send(solvesToDB)
+        let offline = JSON.parse(localStorage.getItem("offline"))
+        if(offline){
+            localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...solvesToDB]}))
+        }
         this.props.removeFromSolves(this.props.uniqueSession)
         setTimeout(()=>this.props.getSolves(),400)
         let x = this.props.uniqueSessionsDB

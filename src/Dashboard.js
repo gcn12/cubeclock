@@ -775,10 +775,26 @@ class Dashboard extends Component{
                 })
             }
             else{
+                localStorage.setItem("theme", JSON.stringify(true))
                 this.props.signIn()
                 this.props.signedIn()
                 sessionStorage.removeItem("solvesStored")
                 localStorage.removeItem("scrambleLength")
+                localStorage.removeItem("mobile")
+                localStorage.removeItem("sessionconfirm")
+                localStorage.removeItem("theme")
+                localStorage.removeItem("user")
+                localStorage.removeItem("lastsession")
+                localStorage.removeItem("isCountDownActivated")
+                localStorage.removeItem("ao")
+                localStorage.removeItem("ao2")
+                localStorage.removeItem("inspectionTime") 
+                localStorage.removeItem("solveconfirm")
+                localStorage.removeItem("xyz")
+                localStorage.removeItem("color")
+                localStorage.removeItem("offline")
+                localStorage.setItem("countDown", JSON.stringify(false))
+                localStorage.setItem("scrambleLength", 22)
                 this.props.signout()
                 this.setState({
                     isWrongPassword2: false,
@@ -799,14 +815,18 @@ class Dashboard extends Component{
         }else {
             this.props.light()
         }
-        fetch("https://blooming-hollows-98248.herokuapp.com/theme", {
-            method: "put",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                id: this.props.id,
-                theme: !this.props.isBackgroundLight
-            })
-        }).then(res=>res.json())
+        localStorage.setItem("theme", JSON.stringify(!this.props.isBackgroundLight))
+        let offline = JSON.parse(localStorage.getItem("offline"))
+        if(!offline){
+            fetch("https://blooming-hollows-98248.herokuapp.com/theme", {
+                method: "put",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    id: this.props.id,
+                    theme: !this.props.isBackgroundLight
+                })
+            }).then(res=>res.json())
+        }
     }
 
     analytics = () => {
@@ -945,7 +965,7 @@ class Dashboard extends Component{
 
 
     test = () => {
-        console.log(this.state.cardSortValue)
+        // console.log(this.state.cardSortValue)
     }
 
     render() {
@@ -1035,6 +1055,10 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
+                solvesApp={this.props.solves}
+                setStateOffline={this.props.setStateOffline}
+                offlineState={this.props.offlineState}
+                offline={this.props.offline}
                 changeInspectionTime={this.props.changeInspectionTime}
                 aoNum2={this.props.aoNum2} 
                 aoNumChange2={this.props.aoNumChange2}

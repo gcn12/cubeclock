@@ -218,24 +218,26 @@ class ImportManual extends Component{
                     solvesToAppState["millisecondstwo"] = ms + 2000
             
                     this.props.getSolvesFromImportManual(solvesToAppState)
-            
-                    fetch("https://blooming-hollows-98248.herokuapp.com/importmanual",{
-                        method: "post",
-                        headers: {"Content-Type": "application/json"},
-                        body: JSON.stringify({
-                            id: this.props.id,
-                            time: timeFormatted,
-                            sessionname: this.props.importManualTextAreaName,
-                            scramble: scramble,
-                            date: this.props.date,
-                            session: tempSession,
-                            puzzle: this.props.puzzle,
-                            milliseconds: ms,
-                            unix: unix,
-                            solveid: solveid,
-                            plustwo: msTwoFinal,
-                        })
-                    }).then(response=>response.json())
+                    let offline = JSON.parse(localStorage.getItem("offline"))
+                    if(!offline){
+                        fetch("https://blooming-hollows-98248.herokuapp.com/importmanual",{
+                            method: "post",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({
+                                id: this.props.id,
+                                time: timeFormatted,
+                                sessionname: this.props.importManualTextAreaName,
+                                scramble: scramble,
+                                date: this.props.date,
+                                session: tempSession,
+                                puzzle: this.props.puzzle,
+                                milliseconds: ms,
+                                unix: unix,
+                                solveid: solveid,
+                                plustwo: msTwoFinal,
+                            })
+                        }).then(response=>response.json())
+                    }
                     this.props.handleImportManualSubmit()
                     this.setState({
                         pastSessionName: this.props.importManualTextAreaName,
