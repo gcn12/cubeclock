@@ -221,7 +221,6 @@ class App extends Component {
   getSolves = () => {
     //gets all solves and sessions from database
     let offline = localStorage.getItem(("offline"))
-    console.log(offline)
     if (this.state.user.id){
       if(!this.state.isOffline){
         fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {

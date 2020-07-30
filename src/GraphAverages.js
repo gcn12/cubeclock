@@ -97,7 +97,7 @@ export default class Graph extends Component {
         this.setState({
             test: testArray
         })
-        console.log("test", this.state.test)
+        // console.log("test", this.state.test)
     }
 
 
