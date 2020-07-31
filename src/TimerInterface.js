@@ -2041,7 +2041,7 @@ class TimerInterface extends Component {
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
     if(this.props.isGetSolvesOnMount){
-      setTimeout(()=>this.randOther(this.props.puzzleType),10)
+      setTimeout(()=>this.randOther(this.props.puzzleType),20)
     }
     // setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
     // document.addEventListener('keydown', this.startTimerDuringCountDown)
