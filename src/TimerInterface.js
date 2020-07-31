@@ -125,6 +125,129 @@ class TimerInterface extends Component {
     }
   }
 
+  receive = () => {
+    //testing storing all solves in one cell
+    let offline = false
+    if (localStorage.offline){
+      offline = JSON.parse(localStorage.getItem("offline"))
+    }
+    if(this.props.id.length>0){
+      if(!this.props.isGetSolvesOnMount){
+        if(!offline){
+          fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+            method: "post",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+              id: this.props.id,
+            })
+          }).then(response=>response.json())
+          .then(data=>{
+            let parsedData = []
+            if(data[0].solves){
+              parsedData = JSON.parse(data[0].solves).allsolves
+            }
+            this.props.getSolvesOnMountPrevent()
+            // this.setState({
+              //   solves: parsedData
+              // })
+              this.props.getAllSolves(parsedData)
+              let sessions = []
+              if(parsedData.length>0){
+                sessions = parsedData.map(solves => solves.session)
+              }
+              if (sessions.length === 0) {
+                this.props.addToUniqueSessionsDBOnMount(1)
+                this.props.getSessionNumber(1)
+                this.props.getInterfaceSession(1)
+                // this.setState({
+                  // uniqueSessionsDB: [1],
+                  // sessions: 1,
+                  //   sessionInterface: 1,
+                  // })
+                } else if (parsedData.length===0){
+                  this.props.getInterfaceSession(1)
+                  // this.setState({
+                    //   sessionInterface: 1,
+                    // })
+                  }else{
+                    this.props.addToUniqueSessionsDBOnMount(Array.from(new Set(sessions)).reverse())
+                    this.props.getSessionNumber(Math.max.apply(Math,sessions))
+                    this.props.getInterfaceSession(Array.from(new Set(sessions)).length)
+                    this.props.getInterfaceSolves([])
+                    // this.setState({
+                      // uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+                      // sessions: Math.max.apply(Math,sessions),
+                      // sessionInterface: Array.from(new Set(sessions)).length,
+                      // solvesInterface: []
+                      // })
+                      let allSolves = []
+                      for (const solve of parsedData){
+                        if (Math.max.apply(Math,sessions) === solve.session){
+                          allSolves = [solve, ...allSolves]
+                          this.props.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+                          this.props.isSessionNameFunc(solve.sessionname)
+                          this.rand(solve.puzzle)
+                        }
+                      }
+                this.props.randPreventFunction()
+                this.props.getInterfaceSolves(allSolves)
+                // this.setState({
+                //   solvesInterface: allSolves
+                // })
+              }
+          })
+        }else{
+          let solves = localStorage.getItem("offlinesolves")
+          solves = JSON.parse(solves).solves
+          // console.log(solves)
+          this.props.getAllSolves(solves)
+          // this.setState({
+          //   solves: solves
+          // })
+          let sessions = solves.map(solves => solves.session)
+          if (sessions.length === 0) {
+            this.props.addToUniqueSessionsDBOnMount(1)
+            this.props.getSessionNumber(1)
+            this.props.getInterfaceSession(1)
+            // this.setState({
+            //   uniqueSessionsDB: [1],
+            //   sessions: 1,
+            //   sessionInterface: 1,
+            // })
+          } else if (solves.length===0){
+            this.props.getInterfaceSession(1)
+            // this.setState({
+            //   sessionInterface: 1,
+            // })
+          }else{
+            this.props.addToUniqueSessionsDBOnMount(Array.from(new Set(sessions)).reverse())
+            this.props.getSessionNumber(Math.max.apply(Math,sessions))
+            this.props.getInterfaceSession(Array.from(new Set(sessions)).length)
+            this.props.getInterfaceSolves([])
+            // this.setState({
+            //   uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
+            //   sessions: Math.max.apply(Math,sessions),
+            //   sessionInterface: Array.from(new Set(sessions)).length,
+            //   solvesInterface: []
+            // })
+            let allSolves = []
+            for (const solve of solves){
+              if (Math.max.apply(Math,sessions) === solve.session){
+                allSolves = [solve, ...allSolves]
+                this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+                this.isSessionName(solve.sessionname)
+              }
+            }
+            this.props.getInterfaceSolves(allSolves)
+            // this.setState({
+            //   solvesInterface: allSolves
+            // })
+          }
+        }
+      }
+    }
+  }
+
   begin = (e) => {
     // if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
       if(e.keyCode === 32){
@@ -891,8 +1014,8 @@ class TimerInterface extends Component {
 
   rand(input) {
     //generates scramble
+    let scramble = ""
     if (input){
-      let scramble = ""
       // let x = this.props.scrambleQuantity
       let scrambleLength 
       if (input==="3x3"){
@@ -1289,6 +1412,7 @@ class TimerInterface extends Component {
         megaminxScramble: String(megaminxScramble),
       })
     }
+    return scramble
   }
 
   clockPuzzle = () => {
@@ -1846,6 +1970,7 @@ class TimerInterface extends Component {
 
 
   componentDidMount() {
+    setTimeout(()=>this.receive(),3)
     this.props.getInspectionTimeOnMount()
     setTimeout(()=>this.getCountDownNumber(),1)
     setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),10)
@@ -1856,9 +1981,10 @@ class TimerInterface extends Component {
     document.addEventListener('keyup', this.countDownRun)
     document.addEventListener('keydown', this.stop)
     document.addEventListener('keyup', this.preventStartLoop)
-    setTimeout(()=>this.randOther(this.props.puzzleType),10)
-    setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
-
+    if(this.props.isGetSolvesOnMount){
+      setTimeout(()=>this.randOther(this.props.puzzleType),10)
+    }
+    // setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
     // document.addEventListener('keydown', this.startTimerDuringCountDown)
 
     document.addEventListener('keydown', this.keyPressStop)

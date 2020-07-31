@@ -28,7 +28,8 @@ class App extends Component {
     isCountDownGoing: false,
     isCountDownActivated: false,
     inspectionTime: 0,
-    puzzleType: "3x3",
+    // puzzleType: "3x3",
+    puzzleType: "",
     isCreateNewSession: false,
     sessionName: null,
     isSessionName: false,
@@ -42,6 +43,13 @@ class App extends Component {
     isMobile: false,
     isTimerDisabled: false,
     isOffline: false, 
+    isGetSolvesOnMount: false,
+  }
+
+  getSolvesOnMountPrevent = () => {
+    this.setState({
+      isGetSolvesOnMount: true
+    })
   }
 
   randPreventFunction = () => {
@@ -395,6 +403,12 @@ class App extends Component {
     })
   }
 
+  getAllSolves = (input) => {
+    this.setState({
+      solves: input
+    })
+  }
+
   inspection = () => {
     //Toggles when inspection time runs or not
     let offline = JSON.parse(localStorage.getItem("offline"))
@@ -507,6 +521,18 @@ class App extends Component {
         uniqueSessionsDB: input
       })
     }else{
+      this.setState({
+        uniqueSessionsDB: [...this.state.uniqueSessionsDB,input]
+      })
+    }
+  }
+
+  addToUniqueSessionsDBOnMount = (input) => {
+    if (input.length>1){
+      this.setState({
+        uniqueSessionsDB: input
+      })
+    }else if (input.length===1){
       this.setState({
         uniqueSessionsDB: [...this.state.uniqueSessionsDB,input]
       })
@@ -654,6 +680,8 @@ class App extends Component {
       inspectionTime: 0,
       solvesInterface: [],
       isMobile: false,
+      isGetSolvesOnMount: false,
+      randPrevent: false
     })
     document.body.style.backgroundColor = "whitesmoke"
     localStorage.removeItem("mobile")
@@ -844,7 +872,7 @@ class App extends Component {
     // console.log(Object.keys(localStorage))
     // console.log(localStorage)
     // setTimeout(()=>this.getSolves(),3)
-    setTimeout(()=>this.receive(),3)
+    // setTimeout(()=>this.receive(),3)
     setTimeout(()=>this.getUserInfo(),10)
     // setTimeout(()=>this.manageSolveData,10)
     // this.getInspectionTimeOnMount()
@@ -952,8 +980,7 @@ class App extends Component {
   test = () => {
     // let solves = localStorage.getItem("offlinesolves")
     // solves = JSON.parse(solves).solves
-    // console.log(solves)
-    localStorage.removeItem("offlinesolves")
+    console.log(this.state.uniqueSessionsDB)
   }
 
   test2 = () => {
@@ -1016,8 +1043,8 @@ class App extends Component {
     render() {   
       return (
       <div> 
-        {/* <button onClick={this.test}>removeitem</button>
-        <button onClick={this.test2}>log local storage</button>
+        {/* <button onClick={this.test}>removeitem</button>  */}
+        {/* <button onClick={this.test2}>log local storage</button>
         <button onClick={this.test3}>log state solves</button> */}
         {/* <button onClick={this.send}>send</button> */}
         {/* <button onClick={this.receive}>receive</button> */}
@@ -1040,6 +1067,11 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            isGetSolvesOnMount={this.state.isGetSolvesOnMount}
+            getSolvesOnMountPrevent={this.getSolvesOnMountPrevent}
+            getSessionNumber={this.getSessionNumber}
+            addToUniqueSessionsDBOnMount={this.addToUniqueSessionsDBOnMount}
+            getAllSolves={this.getAllSolves}
             send={this.send}
             removeSolveFromSolvesState={this.removeSolveFromSolvesState}
             isTimerDisabled={this.state.isTimerDisabled}
