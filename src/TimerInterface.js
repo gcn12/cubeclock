@@ -245,6 +245,8 @@ class TimerInterface extends Component {
           }
         }
       }
+    }else{
+      this.rand("3x3")
     }
   }
 
