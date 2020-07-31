@@ -43,13 +43,13 @@ h5 {
   }
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 650px) {
   .hide-button {
     display: none;
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 650px) {
   .not-hide-button {
     display: none;
   }
@@ -260,4 +260,39 @@ h3{
   }
 }
 
+.button-width {
+  display: block;
+  width: 100%;
+}
 
+.pointer{
+  cursor: pointer;
+}
+
+.start-button{
+  display:inline-block;
+  padding:0.3em .5em;
+  border:0.05em solid #FFFFFF;
+  margin:0 0.1em 0.13em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-family:'Lato',sans-serif;
+  font-weight:400;
+  text-align:center;
+  transition: all 0.15s;
+  font-size: .5em;
+  }
+  .button2:hover{
+  color:#DDDDDD;
+  border-color:#DDDDDD;
+  }
+  .button2:active{
+  border-color:#BBBBBB;
+  }
+  @media all and (max-width:30em){
+   .button2{
+  display:block;
+  margin:0.4em auto;
+  }
+}
