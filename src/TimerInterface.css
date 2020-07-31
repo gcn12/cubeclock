@@ -17,7 +17,7 @@ h5 {
 
 @media only screen and (min-width: 800px) {
   .medium-text {
-    font-size: 1.75rem;
+    font-size: 1.7rem;
     margin-left: 17%;
     margin-right: 17%;
   }
@@ -31,7 +31,7 @@ h5 {
 
 @media only screen and (min-width: 800px) {
   .small-text {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-left: 17%;
     margin-right: 17%;
   }
@@ -39,7 +39,7 @@ h5 {
 
 @media only screen and (max-width: 800px) {
   .small-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 
