@@ -8,6 +8,7 @@ class SignIn extends Component {
         password: "",
         isWrongUsername: false,
         confirm: false,
+        isSigningIn: false,
     }
 
     username = (event) => {
@@ -22,7 +23,14 @@ class SignIn extends Component {
         })
     }
 
+    isSigningIn = () => {
+        this.setState({
+            isSigningIn: true,
+        })
+    }
+
     submit = () => {
+        this.timeout = setTimeout(()=> this.isSigningIn(), 900)
         fetch("https://blooming-hollows-98248.herokuapp.com/signin", {
             method: "post",
             headers: {"Content-Type": "application/json"},
@@ -33,12 +41,14 @@ class SignIn extends Component {
         })
         .then(response => response.json())
         .then(data => {
-            this.props.loadUser(data)
             if (data==="unable to get user"){
                 this.setState({
                     isWrongUsername: true,
+                    isSigningIn: false,
                 })
+                clearTimeout(this.timeout)
             } else{
+                this.props.loadUser(data)
                 this.props.signIn()
                 this.props.signedIn()
                 this.props.receive()
@@ -80,6 +90,15 @@ class SignIn extends Component {
                 </label>
                 <br></br>
                 <h1><button onClick={this.submit} className="button2" style={{color:  "rgb(23, 23, 23)", backgroundColor:  "white", borderColor: "rgb(23, 23, 23)"}}>sign in</button></h1>
+                {this.state.isSigningIn ? 
+                <div>
+
+                <h4>Signing in</h4>
+                <br></br>
+                </div>
+                :
+                <h1> </h1>
+                }
                 <h4><button onClick={this.props.register} className="button2"  style={{color:  "rgb(23, 23, 23)", backgroundColor:  "white", borderColor: "rgb(23, 23, 23)"}}>Register</button></h4>
                 <h1 id="paddingbottom"> </h1>
             </div>
