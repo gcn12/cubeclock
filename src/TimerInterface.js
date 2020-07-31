@@ -591,11 +591,12 @@ class TimerInterface extends Component {
           this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
           if (!this.props.isTimerDisabled){
             this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
-          }else{
-            this.setState({
-              timerFormatted: "TAP TO STOP"
-            })
           }
+          // }else{
+          //   this.setState({
+          //     timerFormatted: "TAP TO STOP"
+          //   })
+          // }
           this.setState({
             isMobileGoing: true
           })
@@ -1845,7 +1846,11 @@ class TimerInterface extends Component {
             (
               this.state.isMobileGoing ?
           <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} onTouchEnd={this.stopMobileRoute} onMouseUp={this.stopMobileRoute} className="height-width">
+            {/* {this.props.isTimerDisabled ?  */}
+              <h1 className="absolute-center disable-timer-mobile" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> TAP TO STOP </h1>
+            {/* :
             <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
+            } */}
           </div>
           
           :

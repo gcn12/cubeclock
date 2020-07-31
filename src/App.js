@@ -630,7 +630,7 @@ class App extends Component {
       isConfirmSessionDelete: data.confirmsession,
       isOffline: data.offline
     })
-    localStorage.setItem("timerDisabled", JSON.stringify(data.disabletimer))
+    localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
     localStorage.setItem("countDown", JSON.stringify(data.inspection))
     localStorage.setItem("scrambleLength", data.scramblelength)

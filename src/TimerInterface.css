@@ -307,3 +307,19 @@ h3{
   margin:0.4em auto;
   }
 }
+
+/* #disable-timer-mobile{
+  font-size: 2rem;
+} */
+
+@media only screen and (min-width: 400px) {
+  .disable-timer-mobile {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .disable-timer-mobile {
+    font-size: 1.3rem;
+  }
+}
