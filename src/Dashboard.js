@@ -972,13 +972,13 @@ class Dashboard extends Component{
         return(
             <div>
                 {/* <button onClick={this.test}>push</button> */}
-                <h1>
+                
                     <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
-                        <div id="padRight">
-                            <button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Home</button> 
+                        <div style={{marginRight: "6%"}}>
+                        <h1><button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Home</button></h1>
                         </div>
                     </nav>
-                </h1>
+                
                 {/* <h1><nav style={{display: 'flex', justifyContent: "center"}}> */}
                 <h1 className="summary-center" > <nav style={{display: 'flex'}}>
                 <button onClick={this.solvesRoute} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Solves</button> 

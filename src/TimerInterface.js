@@ -234,8 +234,9 @@ class TimerInterface extends Component {
             for (const solve of solves){
               if (Math.max.apply(Math,sessions) === solve.session){
                 allSolves = [solve, ...allSolves]
-                this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-                this.isSessionName(solve.sessionname)
+                this.props.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+                this.props.isSessionNameFunc(solve.sessionname)
+                this.rand(solve.puzzle)
               }
             }
             this.props.getInterfaceSolves(allSolves)
@@ -1839,30 +1840,66 @@ class TimerInterface extends Component {
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
           {/* <button onClick={this.test}>test</button> */}
+          {/* <nav className="tester">
+              <h1>Hello</h1>
+              <h1>Bye</h1>
+          </nav> */}
           {this.state.isMobileGoing ? 
           <h1> </h1>
           :
-          <nav  style={{display: 'flex', justifyContent: 'flex-end'}}>
+
+
+            <div>
             {this.props.isSignedIn 
             ? <div id="padRight">
             {/* ? <div> */}
+
+
+              <nav style={{display: 'flex', justifyContent: 'space-between', verticalAlign:"middle"}}>
             {JSON.parse(localStorage.getItem("offline")) ? 
-              <nav style={{display: 'flex'}}>
-              <h4 style={{ paddingTop:"13%", verticalAlign:"middle"}}>OFFLINE</h4>
-              <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
+                <div style={{ marginLeft:"4%",}}>
+                  <h1><button className="button-no-border" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>OFFLINE</button></h1>
+                </div>
+                :
+                <h1> </h1>
+                }
+                <div style={{ marginRight:"1%",}}>
+                  <h1><button onClick={this.props.dashboard} style={{ color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
+                </div>   
               </nav>
-            :
-            <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
-            }
             </div>
             :
-            <div id="padRight" >
-              <h1>
-                <button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Sign In</button>  
-              </h1>
-            </div>
+            <nav style={{display: 'flex', justifyContent: 'flex-end',}}>
+              <div style={{marginRight:"6%",}}>
+                <h1><button onClick={this.props.signIn} style={{ color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Sign In</button></h1>  
+              </div>
+            </nav>
             }
-          </nav>
+          </div>
+
+
+          // <nav  style={{display: 'flex', justifyContent: 'space-between'}}>
+          //   {this.props.isSignedIn 
+          //   ? <div id="padRight">
+          //   {/* ? <div> */}
+          //   {JSON.parse(localStorage.getItem("offline")) ? 
+          //     <nav style={{display: 'flex', justifyContent: 'space-between'}}>
+          //     <h4 style={{ paddingTop:"13%", verticalAlign:"middle"}}>OFFLINE</h4>
+          //     <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
+          //     </nav>
+          //   :
+          //   <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
+          //   }
+          //   </div>
+          //   :
+          //   <div id="padRight" >
+          //     <h1>
+          //       <button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Sign In</button>  
+          //     </h1>
+          //   </div>
+          //   }
+          // </nav>
+
           }
           <div className=" display-linebreak">
             {this.state.isDisplayScrambleSmall ? 

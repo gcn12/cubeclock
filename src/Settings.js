@@ -26,6 +26,7 @@ class Settings extends Component{
         inspectionTime: "",
         isInspectionSubmitted: false,
         isInvalidInspection: false,
+        didOnlineSyncWork: false,
     }
 
     aoNumInput = (e) => {
@@ -226,6 +227,10 @@ class Settings extends Component{
                                 document.getElementById("offline").checked=!x
                                 localStorage.setItem("offline", JSON.stringify(!x))
                                 localStorage.removeItem("offlinesolves")
+                                this.setState({
+                                    didOnlineSyncWork: true,
+                                    didOfflineSyncWork: false,
+                                })
                               }
                             })
                         }else{
@@ -249,6 +254,10 @@ class Settings extends Component{
                         offline: !x,
                     })
                     }).then(response=>response.json())
+                    this.setState({
+                        didOfflineSyncWork: true,
+                        didOnlineSyncWork: false,
+                    })
                     document.getElementById("offline").checked=!x
                     localStorage.setItem("offline", JSON.stringify(!x))
                     localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...this.props.solvesApp]}))
@@ -528,9 +537,26 @@ class Settings extends Component{
                         </li>
                         <br></br>
                         <li>
-                            <label htmlFor="offlinne" className="label1"><h4>Offline mode</h4></label>
+                            <label htmlFor="offline" className="label1"><h4>Offline mode</h4></label>
                             <input type="checkbox" id="offline" className="checkbox input1" onClick={this.offlineConfirm} />  
                             <label htmlFor="offline" className="switch"></label>
+                        </li>
+                        <br></br>
+                        <li>
+                            {this.state.didOnlineSyncWork ? 
+                            <label className="label1">
+                                <h4>Sync was successful</h4>
+                            </label>
+                            :
+                            <h4> </h4>
+                            }
+                            {this.state.didOfflineSyncWork ? 
+                            <label className="label1">
+                                <h4>Offline mode activated</h4>
+                            </label>
+                            :
+                            <h4> </h4>
+                            }
                         </li>
                     </ul>
 
