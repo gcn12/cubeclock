@@ -43,7 +43,7 @@ h5 {
   }
 }
 
-@media only screen and (min-width: 650px) {
+/* @media only screen and (min-width: 650px) {
   .hide-button {
     display: none;
   }
@@ -53,8 +53,19 @@ h5 {
   .not-hide-button {
     display: none;
   }
+} */
+
+@media only screen and (min-height: 500px) {
+  .hide-button {
+    display: none;
+  }
 }
 
+@media only screen and (max-height: 500px) {
+  .not-hide-button {
+    display: none;
+  }
+}
 
 
 
