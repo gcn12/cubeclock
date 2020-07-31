@@ -215,7 +215,14 @@ class Settings extends Component{
                             }).then(response=>response.json())
                             .then(response=> {
                               if(response==="unable to send online"){
+                                document.getElementById("offline").checked=x
+                                localStorage.setItem("offline", JSON.stringify(x))
                                 alert("Unable to conncect to database. Try again.")
+                                this.setState({
+                                    isSyncUnsuccessful: true,
+                                    didOnlineSyncWork: false,
+                                    didOfflineSyncWork: false,
+                                })
                               }else{
                                 fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
                                 method: "post",
@@ -244,11 +251,6 @@ class Settings extends Component{
                 }else{
                     document.getElementById("offline").checked=x
                     localStorage.setItem("offline", JSON.stringify(x))
-                    this.setState({
-                        isSyncUnsuccessful: true,
-                        didOnlineSyncWork: false,
-                        didOfflineSyncWork: false,
-                    })
                 }
             }else{
                 let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. You must remain signed in. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
@@ -560,7 +562,7 @@ class Settings extends Component{
                             }
                             {this.state.isSyncUnsuccessful ? 
                             <label className="label1">
-                                <h4>Sync failed</h4>
+                                <h4 style={{color: "red"}}>Sync failed</h4>
                             </label>
                             :
                             <h4> </h4>
