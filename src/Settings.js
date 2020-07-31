@@ -27,6 +27,7 @@ class Settings extends Component{
         isInspectionSubmitted: false,
         isInvalidInspection: false,
         didOnlineSyncWork: false,
+        isSyncUnsuccessful: false,
     }
 
     aoNumInput = (e) => {
@@ -230,6 +231,7 @@ class Settings extends Component{
                                 this.setState({
                                     didOnlineSyncWork: true,
                                     didOfflineSyncWork: false,
+                                    isSyncUnsuccessful: false,
                                 })
                               }
                             })
@@ -242,6 +244,11 @@ class Settings extends Component{
                 }else{
                     document.getElementById("offline").checked=x
                     localStorage.setItem("offline", JSON.stringify(x))
+                    this.setState({
+                        isSyncUnsuccessful: true,
+                        didOnlineSyncWork: false,
+                        didOfflineSyncWork: false,
+                    })
                 }
             }else{
                 let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. You must remain signed in. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
@@ -257,6 +264,7 @@ class Settings extends Component{
                     this.setState({
                         didOfflineSyncWork: true,
                         didOnlineSyncWork: false,
+                        isSyncUnsuccessful: false,
                     })
                     document.getElementById("offline").checked=!x
                     localStorage.setItem("offline", JSON.stringify(!x))
@@ -546,6 +554,13 @@ class Settings extends Component{
                             {this.state.didOnlineSyncWork ? 
                             <label className="label1">
                                 <h4>Sync was successful</h4>
+                            </label>
+                            :
+                            <h4> </h4>
+                            }
+                            {this.state.isSyncUnsuccessful ? 
+                            <label className="label1">
+                                <h4>Sync failed</h4>
                             </label>
                             :
                             <h4> </h4>
