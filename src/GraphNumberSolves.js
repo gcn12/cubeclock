@@ -101,7 +101,7 @@ export default class GraphNumberSolves extends Component {
                     yAxes : [{
                         ticks : {
                             beginAtZero : true,
-                            maxTicksLimit: 40,
+                            maxTicksLimit: 20,
                             fontColor: this.props.isBackgroundLight ? "rgba(10,10,10,.8)" : "rgba(250,250,250,1)",
                             stepSize: 1,
                         },   
