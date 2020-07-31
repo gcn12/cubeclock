@@ -55,13 +55,13 @@ h5 {
   }
 } */
 
-@media only screen and (min-height: 500px) {
+@media only screen and (min-height: 700px) {
   .hide-button {
     display: none;
   }
 }
 
-@media only screen and (max-height: 500px) {
+@media only screen and (max-height: 700px) {
   .not-hide-button {
     display: none;
   }
