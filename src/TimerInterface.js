@@ -1943,8 +1943,8 @@ class TimerInterface extends Component {
             <h1> </h1>
             : 
             (this.props.isMobile ? 
-            <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
-              <h5 className="hide-button summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start "></button></h5>
+            <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
+              <h5 className="hide-button summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start button-no-select "></button></h5>
             </div>
             :
             <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
@@ -1972,11 +1972,11 @@ class TimerInterface extends Component {
           </div>
           }
           {this.props.isMobile ? 
-          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
+          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
             <h5 className="not-hide-button summary-center button-no-select"><button id="colorClick2"  style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
           </div>
           :
-          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
+          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
             <h5 className="not-hide-button timerButton summary-center button-no-select"><button id="colorClick2"  style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
           </div>
           }
