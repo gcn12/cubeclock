@@ -980,7 +980,6 @@ class TimerInterface extends Component {
                 onefour.splice(i,1)
               }
             }
-            console.log(onefour)
             first =  onefour[Math.floor(Math.random()*onefour.length)]
             scramble += twothree[first][second] 
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
