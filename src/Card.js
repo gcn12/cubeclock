@@ -6,42 +6,28 @@ import React, { Component } from "react";
 class Card extends Component {
     deleteSession=()=>{
         this.props.removeSessionFromState(this.props.session)
-        // fetch("https://blooming-hollows-98248.herokuapp.com/deletesession", {
-        //     method: "delete",
-        //     headers: {"Content-Type":"application/json"},
-        //     body: JSON.stringify({
-        //         session: this.props.uniqueSession,
-        //         id: this.props.id,
-        //     })
-        // }).then(null)
         let solvesToDB = this.props.solves.filter(sessions=>{
             return sessions.session!==this.props.uniqueSession
         })
-        // console.log(solvesToDB)
         this.props.send(solvesToDB)
         let offline = JSON.parse(localStorage.getItem("offline"))
         if(offline){
             localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...solvesToDB]}))
         }
         this.props.removeFromSolves(this.props.uniqueSession)
-        // setTimeout(()=>this.props.getSolves(),400)
-        // this.props.getSolves()
         let x = this.props.uniqueSessionsDB
             x.splice(x.indexOf(this.props.uniqueSession), 1)
         if (x.length===0){
             this.props.getSessionNumber(1)
             this.props.getInterfaceSession(1)
             this.props.getSessionNameOnLoad(null, "3x3")
-            console.log(1)
         }else if (this.props.uniqueSession===this.props.sessions) {
             let c = x.length 
             this.props.getSessionNumber(Math.max(...x))
             this.props.getInterfaceSession(c)
-            console.log(2)
         } else {
             let a = [...x].sort(this.compare).indexOf(this.props.sessions)
             this.props.getInterfaceSession(a+1)
-            console.log(3)
         }
     }
 

@@ -203,7 +203,6 @@ class ImportManual extends Component{
                     if(this.props.date===null){
                         solvesToAppState["date"] = null
                     }else{
-                        // solvesToAppState["date"] = this.props.date + "T07:00:00.000Z"
                         solvesToAppState["date"] = this.props.date
                     }
                     solvesToAppState["solve"] = timeFormatted
@@ -218,26 +217,6 @@ class ImportManual extends Component{
                     solvesToAppState["millisecondstwo"] = ms + 2000
             
                     this.props.getSolvesFromImportManual(solvesToAppState)
-                    let offline = JSON.parse(localStorage.getItem("offline"))
-                    if(!offline){
-                        fetch("https://blooming-hollows-98248.herokuapp.com/importmanual",{
-                            method: "post",
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({
-                                id: this.props.id,
-                                time: timeFormatted,
-                                sessionname: this.props.importManualTextAreaName,
-                                scramble: scramble,
-                                date: this.props.date,
-                                session: tempSession,
-                                puzzle: this.props.puzzle,
-                                milliseconds: ms,
-                                unix: unix,
-                                solveid: solveid,
-                                plustwo: msTwoFinal,
-                            })
-                        }).then(response=>response.json())
-                    }
                     this.props.handleImportManualSubmit()
                     this.setState({
                         pastSessionName: this.props.importManualTextAreaName,
@@ -273,7 +252,47 @@ class ImportManual extends Component{
 
     render(){
         return(
-            <div>
+            <div className="center">
+                {this.props.isManual ? 
+                <div>
+                    <h4>Time (H:M:S.MS):</h4>
+                    <input id="importManualTime" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.props.handleImportManualTimeChange} type="text"></input>
+
+                    <h4>Scramble:</h4>
+                    <input id="importManualScramble" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.props.handleImportManualScrambleChange} type="text"></input>
+                    <h4>
+                        Date (YYYY-MM-DD): 
+                    </h4>
+                    <h4>
+                        *Use of charts requires date
+                    </h4>
+                    <input id="importManualDate" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.props.handleImportManualDateChange} type="text"></input>
+                    <h4>Session name:</h4>
+                    <input id="importManualName" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.handleImportManualNameChange} type="text"></input>
+                    <h4>Puzzle:</h4>
+
+                    <select className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.getPuzzleType} id="puzzle" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}}>
+                        <option value="3x3">3x3</option>
+                        <option value="2x2">2x2</option>
+                        <option value="4x4">4x4</option>
+                        <option value="5x5">5x5</option>
+                        <option value="6x6">6x6</option>
+                        <option value="7x7">7x7</option>
+                        <option value="Pyraminx">Pyraminx</option>
+                        <option value="Megaminx">Megaminx</option>
+                        <option value="Skewb">Skewb</option>
+                        <option value="Square-1">Square-1</option>
+                        <option value="Clock">Clock</option>
+                        <option value="3x3 BLD">3x3 BLD</option>
+                        <option value="3x3 OH">3x3 OH</option>
+                        <option value="4x4 BLD">4x4 BLD</option>
+                        <option value="5x5 BLD">5x5 BLD</option>
+                        <option value="Multi-BLD">Multi-BLD</option>
+                    </select>
+                </div>
+                :
+                <div></div>
+                }
                 {this.state.isDateWrong ? 
                 <h4 style={{color: "red"}}>Invalid date format</h4>
                 :

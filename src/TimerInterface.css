@@ -89,17 +89,12 @@ h1 {
 }
 
 #average {
-  /* padding-left: 10em; */
   margin-left: 1em;
 }
 
 #average2 {
-  /* padding-left: 10em; */
   margin-left: 2em;
 }
-
-
-
 
 .button2{
   display:inline-block;
@@ -307,10 +302,6 @@ h3{
   margin:0.4em auto;
   }
 }
-
-/* #disable-timer-mobile{
-  font-size: 2rem;
-} */
 
 @media only screen and (min-width: 400px) {
   .disable-timer-mobile {

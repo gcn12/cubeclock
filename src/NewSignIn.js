@@ -30,7 +30,7 @@ class SignIn extends Component {
     }
 
     submit = () => {
-        this.timeout = setTimeout(()=> this.isSigningIn(), 900)
+        this.timeout = setTimeout(()=> this.isSigningIn(), 1000)
         fetch("https://blooming-hollows-98248.herokuapp.com/signin", {
             method: "post",
             headers: {"Content-Type": "application/json"},
@@ -89,15 +89,16 @@ class SignIn extends Component {
                     <span> Stay signed in</span>
                 </label>
                 <br></br>
-                <h1><button onClick={this.submit} className="button2" style={{color:  "rgb(23, 23, 23)", backgroundColor:  "white", borderColor: "rgb(23, 23, 23)"}}>sign in</button></h1>
                 {this.state.isSigningIn ? 
                 <div>
-
-                <h4>Signing in</h4>
-                <br></br>
+                    <br></br>
+                    <h4>Signing in...</h4>
+                    <br></br>
+                    <br></br>
                 </div>
                 :
-                <h1> </h1>
+                // <h1> </h1>
+                <h1><button onClick={this.submit} className="button2" style={{color:  "rgb(23, 23, 23)", backgroundColor:  "white", borderColor: "rgb(23, 23, 23)"}}>sign in</button></h1>
                 }
                 <h4><button onClick={this.props.register} className="button2"  style={{color:  "rgb(23, 23, 23)", backgroundColor:  "white", borderColor: "rgb(23, 23, 23)"}}>Register</button></h4>
                 <h1 id="paddingbottom"> </h1>

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import "./Dashboard.css"
 import CardList from "./CardList"
 import GraphNumberSolves from "./GraphNumberSolves"
-import Settings from "./Settings"
+import Settings from "../src/Settings/Settings"
 import Graph from "./GraphAverages"
 import Donut from "./GraphDonut"
 import Summary from "./Summary"
@@ -689,7 +689,7 @@ class Dashboard extends Component{
     }
 
     changeUsername = () => {
-        if (this.state.username.length>0){
+        if (this.state.username.length>2){
             fetch("https://blooming-hollows-98248.herokuapp.com/updateusername", {
                 method: "put",
                 headers: {"Content-Type": "application/json"},

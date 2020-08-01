@@ -187,7 +187,6 @@ class App extends Component {
       }else{
         let solves = localStorage.getItem("offlinesolves")
         solves = JSON.parse(solves).solves
-        // console.log(solves)
         this.setState({
           solves: solves
         })
@@ -475,16 +474,6 @@ class App extends Component {
         inspectionTime: input
       })
     // }
-  }
-
-  getInspectionTimeOnMount = () => {
-    if (this.state.user.id){
-      if(localStorage.inspectionTime){
-        this.setState({
-          // inspectionTime: JSON.parse(localStorage.getItem("inspectionTime")),
-        })
-      }
-    }
   }
 
   isCountDownGoing = () => {
@@ -880,7 +869,6 @@ class App extends Component {
     // setTimeout(()=>this.receive(),3)
     setTimeout(()=>this.getUserInfo(),10)
     // setTimeout(()=>this.manageSolveData,10)
-    // this.getInspectionTimeOnMount()
     // this.aoLocalStorage()
     // this.setScrambleLength()
     if (localStorage.user){
@@ -1102,7 +1090,6 @@ class App extends Component {
             getSessionNameOnLoad={this.getSessionNameOnLoad} 
             puzzleType={this.state.puzzleType} 
             sessionName={this.state.sessionName} 
-            getInspectionTimeOnMount={this.getInspectionTimeOnMount} 
             inspectionTime={this.state.inspectionTime} 
             isCountDownActivated={this.state.isCountDownActivated} 
             isCountDownGoing={this.state.isCountDownGoing} 

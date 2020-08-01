@@ -147,9 +147,6 @@ class TimerInterface extends Component {
               parsedData = JSON.parse(data[0].solves).allsolves
             }
             this.props.getSolvesOnMountPrevent()
-            // this.setState({
-              //   solves: parsedData
-              // })
               this.props.getAllSolves(parsedData)
               let sessions = []
               if(parsedData.length>0){
@@ -159,27 +156,15 @@ class TimerInterface extends Component {
                 this.props.addToUniqueSessionsDBOnMount(1)
                 this.props.getSessionNumber(1)
                 this.props.getInterfaceSession(1)
-                // this.setState({
-                  // uniqueSessionsDB: [1],
-                  // sessions: 1,
-                  //   sessionInterface: 1,
-                  // })
+                this.rand("3x3")
                 } else if (parsedData.length===0){
                   this.props.getInterfaceSession(1)
-                  // this.setState({
-                    //   sessionInterface: 1,
-                    // })
+                  this.rand("3x3")
                   }else{
                     this.props.addToUniqueSessionsDBOnMount(Array.from(new Set(sessions)).reverse())
                     this.props.getSessionNumber(Math.max.apply(Math,sessions))
                     this.props.getInterfaceSession(Array.from(new Set(sessions)).length)
                     this.props.getInterfaceSolves([])
-                    // this.setState({
-                      // uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-                      // sessions: Math.max.apply(Math,sessions),
-                      // sessionInterface: Array.from(new Set(sessions)).length,
-                      // solvesInterface: []
-                      // })
                       let allSolves = []
                       for (const solve of parsedData){
                         if (Math.max.apply(Math,sessions) === solve.session){
@@ -191,45 +176,26 @@ class TimerInterface extends Component {
                       }
                 this.props.randPreventFunction()
                 this.props.getInterfaceSolves(allSolves)
-                // this.setState({
-                //   solvesInterface: allSolves
-                // })
               }
           })
         }else{
           let solves = localStorage.getItem("offlinesolves")
           solves = JSON.parse(solves).solves
-          // console.log(solves)
           this.props.getAllSolves(solves)
-          // this.setState({
-          //   solves: solves
-          // })
           let sessions = solves.map(solves => solves.session)
           if (sessions.length === 0) {
             this.props.addToUniqueSessionsDBOnMount(1)
             this.props.getSessionNumber(1)
             this.props.getInterfaceSession(1)
-            // this.setState({
-            //   uniqueSessionsDB: [1],
-            //   sessions: 1,
-            //   sessionInterface: 1,
-            // })
+            this.rand("3x3")
           } else if (solves.length===0){
             this.props.getInterfaceSession(1)
-            // this.setState({
-            //   sessionInterface: 1,
-            // })
+            this.rand("3x3")
           }else{
             this.props.addToUniqueSessionsDBOnMount(Array.from(new Set(sessions)).reverse())
             this.props.getSessionNumber(Math.max.apply(Math,sessions))
             this.props.getInterfaceSession(Array.from(new Set(sessions)).length)
             this.props.getInterfaceSolves([])
-            // this.setState({
-            //   uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-            //   sessions: Math.max.apply(Math,sessions),
-            //   sessionInterface: Array.from(new Set(sessions)).length,
-            //   solvesInterface: []
-            // })
             let allSolves = []
             for (const solve of solves){
               if (Math.max.apply(Math,sessions) === solve.session){
@@ -240,9 +206,6 @@ class TimerInterface extends Component {
               }
             }
             this.props.getInterfaceSolves(allSolves)
-            // this.setState({
-            //   solvesInterface: allSolves
-            // })
           }
         }
       }
@@ -253,7 +216,7 @@ class TimerInterface extends Component {
 
   begin = (e) => {
     // if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
-      if(e.keyCode === 32){
+    if(e.keyCode === 32){
         this.getCountDownNumber()
       if(!this.state.isDisableSpacebar){
         if (!this.state.going) {
@@ -388,9 +351,6 @@ class TimerInterface extends Component {
     this.converter(this.state.endMS, true)
     let solveid = ""
       solveid+=Date.now()
-      if (this.props.id){
-        this.sendResults(solveid, this.state.endMS)
-      }
       let allSolves = []
       for (const solve of this.props.solves){
         if (solve.puzzle === this.props.puzzleType){
@@ -754,9 +714,6 @@ class TimerInterface extends Component {
             this.timerFormatted("twoFormatted")
             let solveid = ""
             solveid+=Date.now()
-            // if (this.props.id){
-            //   this.sendResults(solveid, endMS)
-            // }
             let minimumTime = 0
             if (this.props.puzzleType==="3x3"){
               minimumTime=1100
@@ -844,8 +801,8 @@ class TimerInterface extends Component {
               }
             }
           }
+          this.rand(this.props.puzzleType)
         }
-        this.rand(this.props.puzzleType)
       }
     }
   }
@@ -894,28 +851,23 @@ class TimerInterface extends Component {
   countDownRun = (e) => {
     //function runs if count down is activated 
     //runs count down
-    // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
-      if(e.keyCode === 32){
-        // if(!this.state.isDisableSpacebar){
-          if(this.state.countDown>0){
-            if(!this.state.test){
-              // if(this.state.preventStartLoop%2===0){
-                this.countDownRunFunction()
-                if(this.state.going){
-                  this.setState({
-                    test: true
-                  })
-                }
-              // }
-            }else{
-              this.startTimerDuringCountDown()
-              this.setState({
-                test: false,
-                isDisableSpacebar: false,
-              })
-            }
+    if(e.keyCode === 32){
+      if(this.state.countDown>0){
+        if(!this.state.test){
+          this.countDownRunFunction()
+          if(this.state.going){
+            this.setState({
+              test: true
+            })
           }
-        // }
+        }else{
+          this.startTimerDuringCountDown()
+          this.setState({
+            test: false,
+            isDisableSpacebar: false,
+          })
+        }
+      }
     }
   }
 
@@ -946,56 +898,6 @@ class TimerInterface extends Component {
     }
   }
 
-  sendResults = (solveid, endMS) => {
-    //do not delete
-
-    // sends each solve to db after timer is stopped
-    // let submitScramble = this.state.scramble
-    // if (this.state.megaminxScramble) {
-    //   submitScramble = this.state.megaminxScramble
-    // }
-    // if (this.state.multiBLDScramble) {
-    //   submitScramble = this.state.multiBLDScramble
-    // }
-    // this.props.send()
-
-    //turn back on
-    // fetch("https://blooming-hollows-98248.herokuapp.com/results",{
-    //   method: "post",
-    //   headers: {"Content-Type": "application/json"},
-    //   body: JSON.stringify({
-    //     milliseconds: endMS,
-    //     solve: this.state.displayTimeFormatted,
-    //     scramble: submitScramble,
-    //     id: this.props.id,
-    //     session: this.props.sessions,
-    //     unix: Math.floor(new Date().getTime() / 1000),
-    //     date: moment().format(),
-    //     sessionname: this.props.sessionName,
-    //     puzzle: this.props.puzzleType,
-    //     solveid: solveid,
-    //     plustwo: this.state.twoFormatted,
-    //     isplustwo: false,
-    //     isdnf: false,
-    //     millisecondstwo: endMS + 2000 
-    //   })
-    // })
-    // .then(response => response.json())
-  }
-
-  // deleteDB = (index) => {
-  //   //removes individual solves from database
-  //   fetch("https://blooming-hollows-98248.herokuapp.com/deletedb", {
-  //     method: "delete",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify({
-  //       solveid: this.state.solves[index].solveid,
-  //       solve: this.state.solves[index].solve
-  //     })
-  //   }) 
-  //   .then(response=>response.json())
-  // }
-
   deleteDB = (index) => {
     //removes individual solves from database
     fetch("https://blooming-hollows-98248.herokuapp.com/deletedb", {
@@ -1022,7 +924,6 @@ class TimerInterface extends Component {
     //generates scramble
     let scramble = ""
     if (input){
-      // let x = this.props.scrambleQuantity
       let scrambleLength 
       if (input==="3x3"){
         scrambleLength=23
@@ -1087,8 +988,6 @@ class TimerInterface extends Component {
       while (scrambleLength > 0) {
           const onefour = [0,1,2,3,4,5]
           const fourfour = [0,1,2,3]
-          // const fivefour = [0,1,2,3,4]
-          // const sixfour = [0,1,2,3,4,5,6,7,8,9,10,11,12]
           scrambleLength--
           let first =  onefour[Math.floor(Math.random()*onefour.length)]
           let second = Math.floor(Math.random()*3)
@@ -1167,24 +1066,6 @@ class TimerInterface extends Component {
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
             pastScrambles["pastScramble"] = first
           }
-          // if(input === "Square-1"){
-          //   if (pastScrambles.pastScramble !== null){
-          //     let k = sixfour.indexOf(pastScrambles.pastScramble)
-          //     sixfour.splice(k, 1)
-          //   }
-          //   if (pastScrambles.pastScramble2 !== 7){
-          //     let l = sixfour.indexOf(pastScrambles.pastScramble2)
-          //     sixfour.splice(l, 1)
-          //   }
-          //   first =  sixfour[Math.floor(Math.random()*sixfour.length)]
-          //   second = Math.floor(Math.random()*12)
-          //   scramble += sq1[first][second]
-          //   if (scrambleLength>0){
-          //     scramble+="/"
-          //   }
-          //   pastScrambles["pastScramble2"] = pastScrambles.pastScramble
-          //   pastScrambles["pastScramble"] = first
-          // }
           scramble += " " 
         }
         if (input==="Clock") {
@@ -1250,8 +1131,6 @@ class TimerInterface extends Component {
 
       
       if (input==="Square-1"){
-
-        // let scramble = ""
         let arrayTop = []
         let arrayBottom = []
         let topRunningTotal = 0
@@ -1301,9 +1180,6 @@ class TimerInterface extends Component {
               }
               two = valueBottom4[Math.floor(Math.random()*valueBottom4.length)]
             }else if (topRunningTotal%3===0){
-              // if (one===0){
-              //   valueBottom3.splice(valueBottom4.indexOf(0))
-              // }
               two = valueBottom3[Math.floor(Math.random()*4)]
             }
           }else if(bottomRunningTotal%3!==0){
@@ -1341,77 +1217,75 @@ class TimerInterface extends Component {
 
         for (let i = 0;i<7;i++){
           scramble+="("+ arrayTop[i] + "," + arrayBottom[i] + ")" 
-          // if (i < arrayTop.length-2){
-            scramble+= "/ "
-          // }
+          scramble+= "/ "
         }
         scramble+=scrambleEnd
       }
 
-        let megaminxScramble = ""
-        if (input==="Megaminx"){
-          let letters = ["D", "R", "D", "R", "D", "R", "D", "R", "D", "R", "U"]
-          for (let i = 7; i>0; i--){
-            for (const letter of letters){
-              let chance = Math.ceil(Math.random()*2)
-              if (letter==="D" || letter==="R"){
-                megaminxScramble += letter 
-                if (chance === 1){
-                  megaminxScramble += "++ "
-                }else {
-                  megaminxScramble += "-- "
-                }
-              }
-              if (letter==="U"){
-                megaminxScramble += letter 
-                if (chance===1){
-                  megaminxScramble += "'"
-                }else{
-                  megaminxScramble += "" 
-                }
+      let megaminxScramble = ""
+      if (input==="Megaminx"){
+        let letters = ["D", "R", "D", "R", "D", "R", "D", "R", "D", "R", "U"]
+        for (let i = 7; i>0; i--){
+          for (const letter of letters){
+            let chance = Math.ceil(Math.random()*2)
+            if (letter==="D" || letter==="R"){
+              megaminxScramble += letter 
+              if (chance === 1){
+                megaminxScramble += "++ "
+              }else {
+                megaminxScramble += "-- "
               }
             }
-            megaminxScramble += "\n"
+            if (letter==="U"){
+              megaminxScramble += letter 
+              if (chance===1){
+                megaminxScramble += "'"
+              }else{
+                megaminxScramble += "" 
+              }
+            }
           }
+          megaminxScramble += "\n"
         }
-        if (input==="Pyraminx"){
-          scramble+=pyraminxEnd
+      }
+      if (input==="Pyraminx"){
+        scramble+=pyraminxEnd
+      }
+      let multiBLD = ""
+      if (input==="Multi-BLD"){
+        let pastScrambleObj = {
+          pastScramble: null,
+          pastScramble2: null
         }
-        let multiBLD = ""
-        if (input==="Multi-BLD"){
-          let pastScrambleObj = {
-            pastScramble: null,
-            pastScramble2: null
-          }
-          let countMultiBLD = 1
-          while (countMultiBLD < 6) {
-            let y = 23
-            multiBLD += countMultiBLD + ")"
+        let countMultiBLD = 1
+        while (countMultiBLD < 6) {
+          let y = 23
+          multiBLD += countMultiBLD + ")"
+          multiBLD += " "
+          while(y>0){
+            const onefour = [0,1,2,3,4,5]
+            if (pastScrambleObj.pastScramble !== null){
+              let i2 = onefour.indexOf(pastScrambleObj.pastScramble)
+              onefour.splice(i2, 1)
+            }
+            if (pastScrambleObj.pastScramble2 !== null){
+              let ind2 = onefour.indexOf(pastScrambleObj.pastScramble2)
+              if (ind2 !== -1){
+                onefour.splice(ind2, 1)
+              }
+            }
+            let first2 =  onefour[Math.floor(Math.random()*onefour.length)]
+            let second2 = Math.floor(Math.random()*3)
+            multiBLD += twothree[first2][second2]
             multiBLD += " "
-            while(y>0){
-              const onefour = [0,1,2,3,4,5]
-              if (pastScrambleObj.pastScramble !== null){
-                let i2 = onefour.indexOf(pastScrambleObj.pastScramble)
-                onefour.splice(i2, 1)
-              }
-              if (pastScrambleObj.pastScramble2 !== null){
-                let ind2 = onefour.indexOf(pastScrambleObj.pastScramble2)
-                if (ind2 !== -1){
-                  onefour.splice(ind2, 1)
-                }
-              }
-              let first2 =  onefour[Math.floor(Math.random()*onefour.length)]
-              let second2 = Math.floor(Math.random()*3)
-              multiBLD += twothree[first2][second2]
-              multiBLD += " "
-              pastScrambleObj["pastScramble2"] = pastScrambleObj.pastScramble
-              pastScrambleObj["pastScramble"] = first2
-              y--
-            }
-            multiBLD+= "\n"
-            countMultiBLD++
+            pastScrambleObj["pastScramble2"] = pastScrambleObj.pastScramble
+            pastScrambleObj["pastScramble"] = first2
+            y--
           }
+          multiBLD+= "\n"
+          countMultiBLD++
         }
+      }
       this.setState({
         multiBLDScramble: String(multiBLD),
         scramble: String(scramble),
@@ -1448,15 +1322,11 @@ class TimerInterface extends Component {
       let confirm = window.confirm("Are you sure you would like to remove this solve? Action cannot be undone.")
       if (confirm){
         this.props.removeSolveFromState(solveid, milliseconds)
-        // this.deleteDB(index)
       }
     }else{
-      // const { solves } = this.state;
-        this.props.removeSolveFromState(solveid, milliseconds)
-        // this.deleteDB(index)
+      this.props.removeSolveFromState(solveid, milliseconds)
     }
     this.removeButtonFocus()
-    // this.send(this.props.solves)
   }
 
 
@@ -1472,12 +1342,6 @@ class TimerInterface extends Component {
         }
       }
       this.props.getInterfaceSolves(allSolves)
-      // this.setState({
-        //   solves: allSolves
-        // })
-      // if (!session){
-      //   this.props.getInterfaceSession(1)
-      // }
     }
   }
 
@@ -1513,27 +1377,8 @@ class TimerInterface extends Component {
       xyz = [...xyz, solve]
     }
     this.props.getInterfaceSolves(xyz)
-    // this.setState({
-    //   solves: xyz
-    // })
     this.removeButtonFocusPlusTwo()
   }
-
-  // togglePlusTwoInterface = (input) => {
-  //   this.props.togglePlusTwo(input)
-  //   let xyz = []
-  //   for (const solve of this.state.solves){
-  //     let x = solve.isplustwo
-  //     if (solve.solveid === input && solve.temporary){
-  //       solve["isplustwo"] = !x
-  //     }
-  //     xyz = [...xyz, solve]
-  //   }
-  //   this.setState({
-  //     solves: xyz
-  //   })
-  //   this.removeButtonFocusPlusTwo()
-  // }
 
   toggleDNFInterface = (input) => {
     this.props.toggleDNF(input)
@@ -1561,44 +1406,9 @@ class TimerInterface extends Component {
       }
       xyz = [...xyz, solve]
     }
-    // this.setState({
-    //   solves: xyz
-    // })
     this.props.getInterfaceSolves(xyz)
     this.removeButtonFocusDNF()
   }
-
-  // toggleDNFInterface = (input) => {
-  //   this.props.toggleDNF(input)
-  //   let xyz = []
-  //   for (const solve of this.state.solves){
-  //     if (solve.solveid === input){
-  //       let x = !solve.isdnf
-  //       solve["isdnf"] = !x
-  //       if (solve.temporary){
-  //         let x = !solve.isdnf
-  //       solve["isdnf"] = x
-  //       }
-  //       fetch("https://blooming-hollows-98248.herokuapp.com/dnf", {
-  //         method: "post",
-  //         headers: {"Content-Type": "application/json"},
-  //         body: JSON.stringify({
-  //           id: this.props.id,
-  //           isdnf: !x,
-  //           solveid: solve.solveid,
-  //         })
-  //       }).then(response=>response.json())
-  //       .then(
-          
-  //       )
-  //     }
-  //     xyz = [...xyz, solve]
-  //   }
-  //   this.setState({
-  //     solves: xyz
-  //   })
-  //   this.removeButtonFocusDNF()
-  // }
 
   randOnMount = (input) => {
     if(!this.props.randPrevent){
@@ -1715,33 +1525,25 @@ class TimerInterface extends Component {
   }
 
   keyPressStart = (e) => {
-    // let x = this.state.countDown
     if(e.keyCode===93||e.keyCode===91||e.keyCode===17){
       if(this.state.countingDown){
         this.startTimerDuringCountDown()
       }
-      // if (this.state.going){
-        // if (this.state.keyPressOne && this.state.keyPressTwo){
-          //   }
-          // }
-          // this.getCountDownNumber()
-          if (!this.state.going){
-            if (this.state.keyPressOne && this.state.keyPressTwo){
-              if(this.state.preventStartLoop % 2===0){
-                if(Number(this.state.countDown)===0){
-                  //here
-                this.setState({
-                  preventStartLoop: this.state.preventStartLoop+1,
-                })
-                this.beginFunction()
-                }else{
-                  this.countDownRunFunction()
-                  this.setState({
-                  // preventStartLoop: this.state.preventStartLoop+1,
-                    disableCommand: true,
-                    keyPressOne: false,
-                    keyPressTwo: false,
-                  })
+      if (!this.state.going){
+        if (this.state.keyPressOne && this.state.keyPressTwo){
+          if(this.state.preventStartLoop % 2===0){
+            if(Number(this.state.countDown)===0){
+            this.setState({
+              preventStartLoop: this.state.preventStartLoop+1,
+            })
+            this.beginFunction()
+            }else{
+              this.countDownRunFunction()
+              this.setState({
+                disableCommand: true,
+                keyPressOne: false,
+                keyPressTwo: false,
+              })
               setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
               this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
             }
@@ -1856,22 +1658,12 @@ class TimerInterface extends Component {
           :
 
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
-          {/* <button onClick={this.test}>test</button> */}
-          {/* <nav className="tester">
-              <h1>Hello</h1>
-              <h1>Bye</h1>
-          </nav> */}
           {this.state.isMobileGoing ? 
           <h1> </h1>
           :
-
-
             <div>
             {this.props.isSignedIn 
             ? <div id="padRight">
-            {/* ? <div> */}
-
-
               <nav style={{display: 'flex', justifyContent: 'space-between', verticalAlign:"middle"}}>
             {JSON.parse(localStorage.getItem("offline")) ? 
                 <div style={{ marginLeft:"4%",}}>
@@ -1893,30 +1685,6 @@ class TimerInterface extends Component {
             </nav>
             }
           </div>
-
-
-          // <nav  style={{display: 'flex', justifyContent: 'space-between'}}>
-          //   {this.props.isSignedIn 
-          //   ? <div id="padRight">
-          //   {/* ? <div> */}
-          //   {JSON.parse(localStorage.getItem("offline")) ? 
-          //     <nav style={{display: 'flex', justifyContent: 'space-between'}}>
-          //     <h4 style={{ paddingTop:"13%", verticalAlign:"middle"}}>OFFLINE</h4>
-          //     <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
-          //     </nav>
-          //   :
-          //   <h1><button onClick={this.props.dashboard} style={{verticalAlign:"middle", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
-          //   }
-          //   </div>
-          //   :
-          //   <div id="padRight" >
-          //     <h1>
-          //       <button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Sign In</button>  
-          //     </h1>
-          //   </div>
-          //   }
-          // </nav>
-
           }
           <div className=" display-linebreak">
             {this.state.isDisplayScrambleSmall ? 
@@ -1969,7 +1737,6 @@ class TimerInterface extends Component {
             toggleDNFInterface={this.toggleDNFInterface}
             togglePlusTwo={this.togglePlusTwoInterface}
             plusTwo={this.plusTwo} 
-            // solves={this.state.solves} 
             solves={this.props.solvesInterface} 
             removeTime={this.removeTime} 
             styles={this.props.isBackgroundLight}/>
@@ -2006,23 +1773,21 @@ class TimerInterface extends Component {
               <h2> </h2>)
             }
             <Average 
-            // solves={this.state.solves} 
             solves={this.props.solvesInterface} 
             /> 
             <CustomAverage  
             aoNum={this.props.aoNum} 
-            // solves={this.state.solves} 
             solves={this.props.solvesInterface} 
             />
-          </div>
             {
               this.props.id ? 
-              <div className="light2">
-                <h1 ><button  onClick={this.newSession} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">New Session</button></h1>
-              </div>
+              // <div className="light2">
+                <h1 ><button  onClick={this.newSession} style={{marginLeft:"1rem", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">New Session</button></h1>
+              // </div>
               :
               <h1> </h1>
             }
+          </div>
         <br></br>
         </div>
         )
@@ -2035,7 +1800,6 @@ class TimerInterface extends Component {
 
   componentDidMount() {
     setTimeout(()=>this.receive(),3)
-    this.props.getInspectionTimeOnMount()
     setTimeout(()=>this.getCountDownNumber(),1)
     setTimeout(()=>this.loadPastSessionSolveData(this.props.sessions),10)
     setTimeout(()=>this.props.getTheme(),1)
@@ -2048,9 +1812,6 @@ class TimerInterface extends Component {
     if(this.props.isGetSolvesOnMount){
       setTimeout(()=>this.randOther(this.props.puzzleType),20)
     }
-    // setTimeout(()=>this.randOnMount(this.props.puzzleType),1000)
-    // document.addEventListener('keydown', this.startTimerDuringCountDown)
-
     document.addEventListener('keydown', this.keyPressStop)
     document.addEventListener('keydown', this.keyPressSafetyStop)
     document.addEventListener('keydown', this.keyPressSafety)

@@ -53,7 +53,6 @@ class ImportSolves extends Component{
                 }
             }
             
-            // propertiesArray.reverse()
             values1.map((solve1,index)=>{
                 session++
                 sessionArray.push(session)
@@ -66,7 +65,6 @@ class ImportSolves extends Component{
                         puzzleType = ""
                     }
                     if (propertiesArray[index]["name"]){
-                        // console.log(propertiesArray[index]["name"])
                         sessionName = propertiesArray[index]["name"]
                     }else{
                         sessionName = null
@@ -206,8 +204,7 @@ class ImportSolves extends Component{
                         var dateString = moment.unix(abc2/1000).format("YYYY-MM-DD");
                         let date = new Date(abc2).toISOString()
                         date = date.slice(0,10)
-                        // date += "T07:00:00.000Z"
-                        solveToDB["date"]= String(dateString)
+                        solveToDB["date"]= dateString
                     }
                     solveToDB["session"]=session
                     solveToDB["id"]=this.props.id
@@ -224,15 +221,11 @@ class ImportSolves extends Component{
                             solveToDB["sessionname"]=solve[4]
                         }
                     }
-                    // }else{
-                    //     solveToDB["sessionname"]=null
-                    // }
                     if (solve[5]){
                         solveToDB["puzzle"] = solve[5]
                     }
                     solveToDB["solveid"] = solveid
                     solvesArray.push(solveToDB)
-                    // this.importResults(solveToDB)
                 }
                 return(null)
             }) 
@@ -284,7 +277,20 @@ class ImportSolves extends Component{
 
     render() {
         return(
-            <div>
+            <div className="center">
+                {this.props.isImportFromFile ? 
+                    <div>
+                        <h4>Copy and paste .json data from .txt file</h4>
+                        {this.props.isBackgroundLight ? 
+                        <textarea style={{color: "rgb(25, 25, 25)"}} id="importSolves" className="pa2 ba b--green bg-white" onChange={this.props.handleImportSolvesChange} rows="13" cols="80"></textarea>
+                        :
+                        <textarea style={{color: "white"}}  id="importSolves" className="pa2 ba b--green bg-black" onChange={this.props.handleImportSolvesChange} rows="13" cols="80"></textarea>
+                        }
+                    </div>
+                    :
+                    <div></div>
+                }
+
                 {this.state.isIncorrectFormat ? 
                 <h4 style={{color: "red"}}>unreadable format</h4>
                 :
