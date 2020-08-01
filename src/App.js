@@ -538,6 +538,12 @@ class App extends Component {
     }
   }
 
+  clearSolvesState = () => {
+    this.setState({
+      solves: []
+    })
+  }
+
   newSessionApp = () => {
     //changes route
     this.setState({
@@ -1169,6 +1175,7 @@ class App extends Component {
         :
         (this.state.isRegistered ?
           <Register  
+          clearSolvesState={this.clearSolvesState}
           isBackgroundLight={this.state.isBackgroundLight} 
           signedIn={this.signedIn} 
           signIn={this.signIn} 

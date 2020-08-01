@@ -91,6 +91,7 @@ class Register extends Component {
                             isUserExist: true,
                         })
                     } else{
+                        this.props.clearSolvesState()
                         this.props.signIn()
                         this.props.signedIn()
                         this.props.loadUser(data)
