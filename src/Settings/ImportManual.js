@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import moment from "moment"
 
 class ImportManual extends Component{
 
@@ -161,9 +162,10 @@ class ImportManual extends Component{
                     msTwoFinal += milliseconds
                     
                     
-                    var unix = null
+                    let unix = null
                     if (this.props.date){
-                        unix = new Date(this.props.date).getTime() / 1000
+                        // unix = new Date(this.props.date).getTime() / 1000
+                        unix = moment(this.props.date, "YYYY-MM-DD").unix();
                     }
                     
                     let solveid = ""

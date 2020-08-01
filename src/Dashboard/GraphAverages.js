@@ -38,9 +38,7 @@ export default class Graph extends Component {
 
 
     compare = (a,b) => {
-        // if (a > b){
-            return a - b
-        // }
+        return a - b
     }
 
     changeData = () => {

@@ -480,46 +480,7 @@ class Settings extends Component{
                 />
 
                 <h1 className="center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>Import Solves</h1>
-                {/* {this.state.isManual ? 
-                <div>
-                    <h4>Time (H:M:S.MS):</h4>
-                    <input id="importManualTime" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.handleImportManualTimeChange} type="text"></input>
-
-                    <h4>Scramble:</h4>
-                    <input id="importManualScramble" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.handleImportManualScrambleChange} type="text"></input>
-                    <h4>
-                        Date (YYYY-MM-DD): 
-                    </h4>
-                    <h4>
-                        *Use of charts requires date
-                    </h4>
-                    <input id="importManualDate" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.handleImportManualDateChange} type="text"></input>
-                    <h4>Session name:</h4>
-                    <input id="importManualName" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.handleImportManualNameChange} type="text"></input>
-                    <h4>Puzzle:</h4>
-
-                    <select className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.getPuzzleType} id="puzzle" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}}>
-                        <option value="3x3">3x3</option>
-                        <option value="2x2">2x2</option>
-                        <option value="4x4">4x4</option>
-                        <option value="5x5">5x5</option>
-                        <option value="6x6">6x6</option>
-                        <option value="7x7">7x7</option>
-                        <option value="Pyraminx">Pyraminx</option>
-                        <option value="Megaminx">Megaminx</option>
-                        <option value="Skewb">Skewb</option>
-                        <option value="Square-1">Square-1</option>
-                        <option value="Clock">Clock</option>
-                        <option value="3x3 BLD">3x3 BLD</option>
-                        <option value="3x3 OH">3x3 OH</option>
-                        <option value="4x4 BLD">4x4 BLD</option>
-                        <option value="5x5 BLD">5x5 BLD</option>
-                        <option value="Multi-BLD">Multi-BLD</option>
-                    </select>
-                </div>
-                :
-                <div></div>
-                } */}
+                
                 <ImportManual 
                 getPuzzleType={this.getPuzzleType}
                 handleImportManualNameChange={this.handleImportManualNameChange}
@@ -566,10 +527,8 @@ class Settings extends Component{
                 importSolves={this.state.importSolvesTextArea}
                 />
                 
-                
-                <br></br>
                 <hr></hr>
-                <br></br>
+                
                 <ChangeUsername 
                 isBackgroundLight={this.props.isBackgroundLight}
                 username={this.props.username}
@@ -595,8 +554,6 @@ class Settings extends Component{
                 isWrongPassword2={this.props.isWrongPassword2}
                 deleteAccountConfirm={this.deleteAccountConfirm}
                 />
-                <br></br>
-                <br></br>
             </div>
         )
     }

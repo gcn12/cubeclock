@@ -3,6 +3,7 @@ import React from "react"
 const ChangeUsername = props => {
     return(
         <div className="center"> 
+            <br></br>
             <h2>Change username:</h2>
             <br></br>
             {props.isBackgroundLight ? 

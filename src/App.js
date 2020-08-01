@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import TimerInterface from "./TimerInterface"
-import Dashboard from "./Dashboard"
+import TimerInterface from "../src/TimerInterface/TimerInterface"
+import Dashboard from "../src/Dashboard/Dashboard"
 import NewSessionOptions from "./NewSessionOptions"
 import "./App.css"
 import Register from './NewRegister';

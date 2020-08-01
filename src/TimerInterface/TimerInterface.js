@@ -4,7 +4,7 @@ import Table from "./Table"
 import Scroll from './Scroll';
 import Average from './Average';
 import CustomAverage from './CustomAverage';
-// import moment from "moment"
+import moment from "moment"
 
 
 window.onkeydown = function(e) { 
@@ -358,29 +358,7 @@ class TimerInterface extends Component {
         }
       }
       allSolves.sort(this.compareMilliseconds)
-      let halfDate = ""
-      // let fullDate = ""
-      let d = new Date()
-      // fullDate += d.getFullYear() + "-"
-      if ((d.getMonth() + 1) < 10){
-        // fullDate += "0"
-      }
-      // fullDate += d.getMonth() + 1 + "-"
-      // if ((d.getDate()) < 10){
-      //   fullDate += "0"
-      // }
-      // fullDate += d.getDate()
-      // fullDate += "T00:00:00.000Z"
-      halfDate += d.getFullYear() + "-"
-      if ((d.getMonth() + 1) < 10){
-        halfDate += "0"
-      }
-      halfDate += d.getMonth() + 1 + "-"
-      if ((d.getDate) < 10){
-        halfDate += "0"
-      }
-      halfDate += d.getDate()
-
+      let halfDate = moment.unix(Math.round(new Date().getTime() / 1000)).format("YYYY-MM-DD");
       let minimumTime = 0
       if (this.props.puzzleType==="3x3"){
         minimumTime=1100
@@ -442,7 +420,6 @@ class TimerInterface extends Component {
       solveData["sessionname"]=this.props.sessionName
       solveData["temporary"] = true
       this.setState({
-        // solves: [solveData, ...this.state.solves],
         going: false,
         // isMobileGoing: false,
         isDisableSpacebar: false,
@@ -525,7 +502,6 @@ class TimerInterface extends Component {
   beginMobile = () => {
     this.getCountDownNumber()
     this.preventStartLoopMobile()
-    // if (JSON.parse(localStorage.getItem("countDown")) === false){
     if(this.props.inspectionTime===0){
       if (!this.state.going) {
         if(this.state.preventStartLoopMobile % 2===0){
@@ -552,11 +528,6 @@ class TimerInterface extends Component {
           if (!this.props.isTimerDisabled){
             this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
           }
-          // }else{
-          //   this.setState({
-          //     timerFormatted: "TAP TO STOP"
-          //   })
-          // }
           this.setState({
             isMobileGoing: true
           })
@@ -656,17 +627,6 @@ class TimerInterface extends Component {
     })
   }
 
-  // stopMobileRoute = () => {
-  //   const routeChange = () => {
-  //     this.setState({
-  //       isMobileGoing: false,
-  //     })
-  //   }
-  //   setTimeout(()=>routeChange, 1000)
-  // }
-
-  
-
   stop = (e) => {
     if(this.state.going===true) {
       if (!this.state.countingDown){
@@ -680,28 +640,7 @@ class TimerInterface extends Component {
               }
             }
             allSolves.sort(this.compareMilliseconds)
-            let halfDate = ""
-            // let fullDate = ""
-            let d = new Date()
-            // fullDate += d.getFullYear() + "-"
-            if ((d.getMonth() + 1) < 10){
-              // fullDate += "0"
-            }
-            // fullDate += d.getMonth() + 1 + "-"
-            if ((d.getDate()) < 10){
-              // fullDate += "0"
-            }
-            // fullDate += d.getDate()
-            // fullDate += "T00:00:00.000Z"
-            halfDate += d.getFullYear() + "-"
-            if ((d.getMonth() + 1) < 10){
-              halfDate += "0"
-            }
-            halfDate += d.getMonth() + 1 + "-"
-            if ((d.getDate) < 10){
-              halfDate += "0"
-            }
-            halfDate += d.getDate() 
+            let halfDate = moment.unix(Math.round(new Date().getTime() / 1000)).format("YYYY-MM-DD");
             this.timerFormatted("timerFormatted")
             clearInterval(this.countdownInterval)
             this.getCountDownNumber()
@@ -754,7 +693,6 @@ class TimerInterface extends Component {
             solveData["plustwo"] = this.state.twoFormatted
             solveData["millisecondstwo"]= String(endMS + 2000)
             solveData["session"] = this.props.sessions
-            // solveData["unix"] = new Date().getTime()
             solveData["unix"] = String(unix)
             solveData["puzzle"] = this.props.puzzleType
             solveData["sessionname"]=this.props.sessionName
@@ -785,7 +723,6 @@ class TimerInterface extends Component {
             finalSolve["milliseconds"] = String(this.state.endMS)
             finalSolve["isplustwo"] = false
             finalSolve["isdnf"] = false
-            // finalSolve["date"] = fullDate
             finalSolve["date"] = halfDate
             finalSolve["solveid"] = solveid
             finalSolve["plustwo"] = this.state.twoFormatted
@@ -817,8 +754,6 @@ class TimerInterface extends Component {
       isCountDownActivated: !this.state.isCountDownActivated
     })
   }
-
-
 
   countDownRunFunction = () => {
     if(!this.state.isDisableSpacebar){
@@ -1128,7 +1063,6 @@ class TimerInterface extends Component {
             }
           }
         }
-
       
       if (input==="Square-1"){
         let arrayTop = []
