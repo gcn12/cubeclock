@@ -9,6 +9,8 @@ class Register extends Component {
         isUserExist: false,
         key: "",
         id:"",
+        isNameLengthWrong: false,
+        isPassWordLengthWrong: false,
     }
 
     name = (event) => {
@@ -64,31 +66,52 @@ class Register extends Component {
                 key += characters[Math.round(Math.random()*17)]
             }
         }
-        if (this.state.name.length>2){
-            fetch("https://blooming-hollows-98248.herokuapp.com/register", {
-                method: "post",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    username: this.state.name,
-                    password: this.state.password,
-                    id: key,
+        if (this.state.name.length>2 && this.state.name.length<30){
+            this.setState({
+                isNameLengthWrong: false,
+            })
+            if(this.state.password.length>5){
+                this.setState({
+                    isPassWordLengthWrong: false,
                 })
-            })
-            .then(response => response.json())
-            .then (data => {
-                if (data === "user exists"){
-                    this.setState({
-                        isUserExist: true,
+                fetch("https://blooming-hollows-98248.herokuapp.com/register", {
+                    method: "post",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        username: this.state.name,
+                        password: this.state.password,
+                        id: key,
                     })
-                } else{
-                    this.props.signIn()
-                    this.props.signedIn()
-                    this.props.loadUser(data)
-                }
-            })
+                })
+                .then(response => response.json())
+                .then (data => {
+                    console.log(data)
+                    if (data === "user exists"){
+                        this.setState({
+                            isUserExist: true,
+                        })
+                    } else{
+                        this.props.signIn()
+                        this.props.signedIn()
+                        this.props.loadUser(data)
+                        fetch("https://blooming-hollows-98248.herokuapp.com/register2", {
+                            method: "post",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({
+                                id: key,
+                            })
+                        })
+                        .then(response => response.json())
+                    }
+                })
+            }else{
+                this.setState({
+                    isPassWordLengthWrong: true
+                })
+            }
         }else{
             this.setState({
-                isUserExist: true,
+                isNameLengthWrong: true,
             })
         }
     }
@@ -106,6 +129,16 @@ class Register extends Component {
                 <br></br>
                 {this.state.isUserExist ? 
                 <h4 style={{color: "red"}}>Username already in use</h4>
+                :
+                <h4> </h4>
+                }
+                {this.state.isNameLengthWrong ? 
+                <h4 style={{color: "red"}}>Username must be between 3 and 20 characters</h4>
+                :
+                <h4> </h4>
+                }
+                {this.state.isPassWordLengthWrong ? 
+                <h4 style={{color: "red"}}>Password must be longer than five characters</h4>
                 :
                 <h4> </h4>
                 }
