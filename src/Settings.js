@@ -19,6 +19,7 @@ class Settings extends Component{
         isImportFromFile: false,
         session: 1,
         aoNum: "",
+        aoNum2: "",
         isInvalidAoNum: false,
         isAoSubmitted: false,
         isInvalidAoNum2: false,
@@ -498,7 +499,7 @@ class Settings extends Component{
                     <div className="center">
                         <div >
                             {this.props.isBackgroundLight ? 
-                            <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum2}  onChange={this.aoNumInpu2t} type="number" min="4" max="1000"></input>
+                            <input className="test11 pa2 ba b--green bg-white form-input" style={{ color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum2}  onChange={this.aoNumInput2} type="number" min="4" max="1000"></input>
                             :
                             <input className="test11 pa2 ba b--green bg-black form-input" style={{ width: "100px", color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} placeholder={this.props.aoNum2}  onChange={this.aoNumInput2} type="number" min="4" max="1000"></input>
                             }
