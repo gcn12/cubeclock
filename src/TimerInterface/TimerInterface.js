@@ -920,11 +920,67 @@ class TimerInterface extends Component {
             if (pastScrambles.pastScramble !== null){
               let i = onefour.indexOf(pastScrambles.pastScramble)
               onefour.splice(i, 1)
+              //here
+            }
+            if (pastScrambles.pastScramble !== null){
+              let i
+              if (pastScrambles.pastScramble===0){
+                i = onefour.indexOf(1)
+                onefour.splice(i,1)
+              }
+              if (pastScrambles.pastScramble===1){
+                i = onefour.indexOf(0)
+                onefour.splice(i,1)
+              }
+              if (pastScrambles.pastScramble===2){
+                i = onefour.indexOf(3)
+                onefour.splice(i,1)
+              }
+              if (pastScrambles.pastScramble===3){
+                i = onefour.indexOf(2)
+                onefour.splice(i,1)
+              }
+              if (pastScrambles.pastScramble===4){
+                i = onefour.indexOf(5)
+                onefour.splice(i,1)
+              }
+              if (pastScrambles.pastScramble===5){
+                i = onefour.indexOf(4)
+                onefour.splice(i,1)
+              }
             }
             if (pastScrambles.pastScramble2 !== 7){
               let ind = onefour.indexOf(pastScrambles.pastScramble2)
-              onefour.splice(ind, 1)
+              if(onefour.includes(ind)){
+                onefour.splice(ind, 1)
+              }
             }
+
+            if (pastScrambles.pastScramble2 !== null){
+              let i
+              if (pastScrambles.pastScramble2===0){
+                i = onefour.indexOf(1)
+              }
+              if (pastScrambles.pastScramble2===1){
+                i = onefour.indexOf(0)
+              }
+              if (pastScrambles.pastScramble2===2){
+                i = onefour.indexOf(3)
+              }
+              if (pastScrambles.pastScramble2===3){
+                i = onefour.indexOf(2)
+              }
+              if (pastScrambles.pastScramble2===4){
+                i = onefour.indexOf(5)
+              }
+              if (pastScrambles.pastScramble2===5){
+                i = onefour.indexOf(4)
+              }
+              if(onefour.includes(i)){
+                onefour.splice(i,1)
+              }
+            }
+            console.log(onefour)
             first =  onefour[Math.floor(Math.random()*onefour.length)]
             scramble += twothree[first][second] 
             pastScrambles["pastScramble2"] = pastScrambles.pastScramble
