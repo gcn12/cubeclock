@@ -1846,11 +1846,11 @@ class TimerInterface extends Component {
             (
               this.state.isMobileGoing ?
           <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} onTouchEnd={this.stopMobileRoute} onMouseUp={this.stopMobileRoute} className="height-width">
-            {/* {this.props.isTimerDisabled ?  */}
+            {this.props.isTimerDisabled ? 
               <h1 className="absolute-center disable-timer-mobile" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> TAP TO STOP </h1>
-            {/* :
+            :
             <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
-            } */}
+            }
           </div>
           
           :
