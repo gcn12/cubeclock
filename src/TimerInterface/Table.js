@@ -152,8 +152,8 @@ const Body = (props) => {
         
         finalAverages2.push(finalAverage)
     }
-
-
+    
+    
     let solveNumber = props.solves.length 
     const rows = props.solves.sort(compare).map((row, index) => {
         solveNumber --

@@ -215,7 +215,6 @@ class TimerInterface extends Component {
   }
 
   begin = (e) => {
-    // if(e.keyCode === 32|| (e.keyCode === 91 && e.keyCode === 93)){
     if(e.keyCode === 32){
         this.getCountDownNumber()
       if(!this.state.isDisableSpacebar){
@@ -225,13 +224,6 @@ class TimerInterface extends Component {
               if(Number(this.state.countDown)===0){
                 this.beginFunction()
               }
-              // if(localStorage.countDown){
-              //   if (JSON.parse(localStorage.getItem("countDown")) === false){
-              //     this.beginFunction()
-              //   }
-              // }else{
-              //   this.beginFunction()
-              // }
             }    
           }
         }
@@ -263,35 +255,32 @@ class TimerInterface extends Component {
     })
   }
 
-   startTimerDuringCountDown = (e) => {
-    // startTimerDuringCountDown = () => {
-      //function runs if count down is activated 
-      //runs count down
-      // if(e.keyCode === 32||(this.state.keyPressTwo&&this.state.keyPressOne && (e.keyCode===93||e.keyCode===91||e.keyCode===17))){
-        if (this.state.countingDown) {
-          this.beginFunction()
-          this.setState({
-            isCountDownGoing: false,
-            countingDown: false,
-            keyPressOne: false,
-            keyPressTwo: false,
-          })
-          if(!this.state.disableCommand){
-            this.setState({
-              preventStartLoop: this.state.preventStartLoop + 1,
-            })
-          }
-          this.setState({
-            disableCommand: false,
-          })
-         
-          clearTimeout(this.countDownGoing)
-          clearInterval(this.countdownInterval)
-          clearTimeout(this.startTimer)
-          clearTimeout(this.disable)
-          clearTimeout(this.commandFalse)
-        }    
-      // }
+  startTimerDuringCountDown = (e) => {
+    //function runs if count down is activated 
+    //runs count down
+    if (this.state.countingDown) {
+      this.beginFunction()
+      this.setState({
+        isCountDownGoing: false,
+        countingDown: false,
+        keyPressOne: false,
+        keyPressTwo: false,
+      })
+      if(!this.state.disableCommand){
+        this.setState({
+          preventStartLoop: this.state.preventStartLoop + 1,
+        })
+      }
+      this.setState({
+        disableCommand: false,
+      })
+      
+      clearTimeout(this.countDownGoing)
+      clearInterval(this.countdownInterval)
+      clearTimeout(this.startTimer)
+      clearTimeout(this.disable)
+      clearTimeout(this.commandFalse)
+    }    
   } 
 
 
@@ -1305,7 +1294,10 @@ class TimerInterface extends Component {
     let xyz = []
     for (const solve of this.props.solvesInterface){
       let x = solve.isplustwo
-      if (solve.solveid === input && solve.temporary){
+      if (solve.solveid === input ){
+        solve["isplustwo"] = x
+      }
+      if (solve.solveid === input &&solve.temporary){
         solve["isplustwo"] = !x
       }
       xyz = [...xyz, solve]
@@ -1317,7 +1309,6 @@ class TimerInterface extends Component {
   toggleDNFInterface = (input) => {
     this.props.toggleDNF(input)
     let xyz = []
-    let offline = JSON.parse(localStorage.getItem("offline"))
     for (const solve of this.props.solvesInterface){
       if (solve.solveid === input){
         let x = !solve.isdnf
@@ -1325,17 +1316,6 @@ class TimerInterface extends Component {
         if (solve.temporary){
           let x = !solve.isdnf
           solve["isdnf"] = x
-        }
-        if(!offline){
-          fetch("https://blooming-hollows-98248.herokuapp.com/dnf", {
-            method: "post",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-              id: this.props.id,
-              isdnf: !x,
-              solveid: solve.solveid,
-            })
-          }).then(response=>response.json())
         }
       }
       xyz = [...xyz, solve]
@@ -1565,7 +1545,7 @@ class TimerInterface extends Component {
   }
 
   test = () => {
-    console.log(this.state.preventStartLoop)
+    console.log(this.props.solvesInterface)
   }
 
   render() {   
@@ -1620,6 +1600,7 @@ class TimerInterface extends Component {
             }
           </div>
           }
+          {/* <button onClick={this.test}>test</button> */}
           <div className=" display-linebreak">
             {this.state.isDisplayScrambleSmall ? 
             (this.state.isDisplayScrambleMedium ? 
