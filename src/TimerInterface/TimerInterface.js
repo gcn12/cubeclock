@@ -5,7 +5,13 @@ import Scroll from './Scroll';
 import Average from './Average';
 import CustomAverage from './CustomAverage';
 import Scramble from './Scramble';
+import CountDown from './CountDown';
 import moment from "moment"
+import MobileTimer from './MobileTimer';
+import HeaderContent from './HeaderContent';
+import Footer from './Footer';
+import ButtonTop from './ButtonTop';
+import ButtonBottom from './ButtonBottom';
 
 
 window.onkeydown = function(e) { 
@@ -1608,53 +1614,32 @@ class TimerInterface extends Component {
     return (
       <div>
         {
-          this.state.isCountDownGoing ? 
-          <div onTouchEnd={this.startTimerDuringCountDownMobile} onMouseUp={this.startTimerDuringCountDownMobile}  className="height-width">
-            <h5 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{this.state.countDown}</h5>
-          </div>
-            :
-            
-          (
-          this.state.isMobileGoing ?
-          <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} onTouchEnd={this.stopMobileRoute} onMouseUp={this.stopMobileRoute} className="height-width">
-            {this.props.isTimerDisabled ? 
-              <h1 className="absolute-center disable-timer-mobile" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> TAP TO STOP </h1>
-            :
-            <h1 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> {this.state.timerFormatted} </h1>
-            }
-          </div>
-          
-          :
-
+        this.state.isCountDownGoing ? 
+        <CountDown 
+        isBackgroundLight={this.props.isBackgroundLight}
+        startTimerDuringCountDownMobile={this.startTimerDuringCountDownMobile}
+        countDown={this.state.countDown}
+        />
+        :
+        (
+        this.state.isMobileGoing ?
+        <MobileTimer 
+        timerFormatted={this.state.timerFormatted}
+        isBackgroundLight={this.props.isBackgroundLight}
+        stopMobile={this.stopMobile}
+        stopMobileRoute={this.stopMobileRoute}
+        isTimerDisabled={this.props.isTimerDisabled}
+        />         
+        :
         <div style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
-          {this.state.isMobileGoing ? 
-          <h1> </h1>
-          :
-            <div>
-            {this.props.isSignedIn 
-            ? <div id="padRight">
-              <nav style={{display: 'flex', justifyContent: 'space-between', verticalAlign:"middle"}}>
-            {JSON.parse(localStorage.getItem("offline")) ? 
-                <div style={{ marginLeft:"4%",}}>
-                  <h1><button className="button-no-border" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>OFFLINE</button></h1>
-                </div>
-                :
-                <h1> </h1>
-                }
-                <div style={{ marginRight:"1%",}}>
-                  <h1><button onClick={this.props.dashboard} style={{ color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">{this.props.username} | DASHBOARD</button></h1>
-                </div>   
-              </nav>
-            </div>
-            :
-            <nav style={{display: 'flex', justifyContent: 'flex-end',}}>
-              <div style={{marginRight:"6%",}}>
-                <h1><button onClick={this.props.signIn} style={{ color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Sign In</button></h1>  
-              </div>
-            </nav>
-            }
-          </div>
-          }
+          <HeaderContent 
+          isMobileGoing={this.state.isMobileGoing}
+          isSignedIn={this.props.isSignedIn}
+          isBackgroundLight={this.props.isBackgroundLight}
+          dashboard={this.props.dashboard}
+          username={this.props.username}
+          signIn={this.props.signIn}
+          />
           <Scramble 
           isDisplayScrambleSmall={this.state.isDisplayScrambleSmall}
           isDisplayScrambleMedium={this.state.isDisplayScrambleMedium}
@@ -1667,67 +1652,47 @@ class TimerInterface extends Component {
           <div className="tc" >
             <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
           </div>
-          {
-          this.props.isMobileGoing ? 
-          <h1> </h1>
-          : 
-          (this.props.isMobile ? 
-          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
-            <h5 className="hide-button summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start button-no-select "></button></h5>
-          </div>
-          :
-          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
-            <h5 className="hide-button  timerButton summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
-          </div>
-          ) 
-          }
+
+          <ButtonTop 
+          isMobileGoing={this.props.isMobileGoing}
+          isMobile={this.props.isMobile}
+          beginMobile={this.beginMobile}
+          color={this.color}
+          isBackgroundLight={this.props.isBackgroundLight}
+          />
+
+
           {this.state.isMobileGoing ? 
-          <div></div>
-          :
-          <div style={{borderTop: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid",  borderBottom: this.props.isBackgroundLight ? "rgb(23, 23, 23) .1px solid" : "whitesmoke .1px solid"}}>
-            <Scroll isMobile={this.props.isMobile}>
-            <Table 
-            id={this.props.id}
-            aoNum2={this.props.aoNum2} 
-            aoNum={this.props.aoNum} 
-            toggleDNFInterface={this.toggleDNFInterface}
-            togglePlusTwo={this.togglePlusTwoInterface}
-            plusTwo={this.plusTwo} 
-            solves={this.props.solvesInterface} 
-            removeTime={this.removeTime} 
-            styles={this.props.isBackgroundLight}/>
+            <div></div>
+            :
+            <Scroll isBackgroundLight={this.props.isBackgroundLight} isMobile={this.props.isMobile}>
+              <Table 
+              id={this.props.id}
+              aoNum2={this.props.aoNum2} 
+              aoNum={this.props.aoNum} 
+              toggleDNFInterface={this.toggleDNFInterface}
+              togglePlusTwo={this.togglePlusTwoInterface}
+              plusTwo={this.plusTwo} 
+              solves={this.props.solvesInterface} 
+              removeTime={this.removeTime} 
+              styles={this.props.isBackgroundLight}/>
             </Scroll >
-          </div>
           }
-          {this.props.isMobile ? 
-          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
-            <h5 className="not-hide-button summary-center button-no-select"><button id="colorClick2"  style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
-          </div>
-          :
-          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
-            <h5 className="not-hide-button timerButton summary-center button-no-select"><button id="colorClick2"  style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
-          </div>
-          }
+          <ButtonBottom 
+          isMobileGoing={this.props.isMobileGoing}
+          isMobile={this.props.isMobile}
+          beginMobile={this.beginMobile}
+          color={this.color}
+          isBackgroundLight={this.props.isBackgroundLight}/> 
+          
           <div id="light">
-            {
-            this.props.isSessionName 
-            ?
-            (this.props.id
-            ? 
-            <div id="average">
-              <h2>Session: {this.props.sessionInterface} | {this.props.sessionName} | {this.props.puzzleType}</h2>
-            </div>
-            :
-            <h2> </h2>)
-            :
-            (this.props.id
-              ? 
-              <div id="average">
-              <h2>Session: {this.props.sessionInterface} | {this.props.puzzleType} </h2>
-              </div>
-              :
-              <h2> </h2>)
-            }
+            <Footer 
+            isSessionName={this.props.isSessionName}
+            id={this.props.id}
+            sessionInterface={this.props.sessionInterface}
+            sessionName={this.props.sessionName}
+            puzzleType={this.props.puzzleType}
+            />
             <Average 
             solves={this.props.solvesInterface} 
             /> 
@@ -1736,15 +1701,13 @@ class TimerInterface extends Component {
             solves={this.props.solvesInterface} 
             />
             {
-              this.props.id ? 
-              // <div className="light2">
-                <h1 ><button  onClick={this.newSession} style={{marginLeft:"1rem", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">New Session</button></h1>
-              // </div>
-              :
-              <h1> </h1>
+            this.props.id ? 
+              <h1 ><button  onClick={this.newSession} style={{marginLeft:"1rem", color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">New Session</button></h1>
+            :
+            <h1> </h1>
             }
           </div>
-        <br></br>
+          <br></br>
         </div>
         )
         }

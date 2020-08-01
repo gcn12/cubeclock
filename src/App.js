@@ -127,60 +127,6 @@ class App extends Component {
     }
   }
 
-  
-  getSolves = () => {
-    //gets all solves and sessions from database
-    if (this.state.user.id){
-      if(!this.state.isOffline){
-        fetch("https://blooming-hollows-98248.herokuapp.com/getsolves", {
-          method: "post",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            id: this.state.user.id
-          })
-        })
-        .then(response=>response.json())
-        .then(data=>{
-          this.setState({
-            solves: data
-          })
-          let sessions = data.map(solves => solves.session)
-          if (sessions.length === 0) {
-            this.setState({
-              uniqueSessionsDB: [1],
-              sessions: 1,
-              sessionInterface: 1,
-            })
-          } else if (data.length===0){
-            this.setState({
-              sessionInterface: 1,
-            })
-          }else{
-            this.setState({
-              uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-              sessions: Math.max.apply(Math,sessions),
-              sessionInterface: Array.from(new Set(sessions)).length,
-              solvesInterface: []
-            })
-            let allSolves = []
-            for (const solve of data){
-              if (Math.max.apply(Math,sessions) === solve.session){
-                allSolves = [solve, ...allSolves]
-                this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-                this.isSessionName(solve.sessionname)
-              }
-            }
-            this.setState({
-              solvesInterface: allSolves
-            })
-          }
-        })
-      }
-    }
-  }
-
-  
-
   getInterfaceSolves = (input) => {
     this.setState({
       solvesInterface: input
@@ -207,14 +153,13 @@ class App extends Component {
       localStorage.setItem("disabletimer", JSON.stringify(!this.state.isTimerDisabled))
     }else{
       fetch("https://blooming-hollows-98248.herokuapp.com/disabletimer", {
-        // fetch("http://localhost:3003/confirmsession", {
-          method: "post",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            id: this.state.user.id,
-            disabletimer: !this.state.isTimerDisabled,
-          })
-        }).then(response=>response.json())
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          disabletimer: !this.state.isTimerDisabled,
+        })
+      }).then(response=>response.json())
     }
     this.setState({
       isTimerDisabled: !this.state.isTimerDisabled
@@ -228,7 +173,6 @@ class App extends Component {
       localStorage.setItem("sessionconfirm", JSON.stringify(!this.state.isConfirmSessionDelete))
     }else{
       fetch("https://blooming-hollows-98248.herokuapp.com/confirmsession", {
-      // fetch("http://localhost:3003/confirmsession", {
         method: "post",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -253,7 +197,6 @@ class App extends Component {
       })
     }else{
       fetch("https://blooming-hollows-98248.herokuapp.com/mobile", {
-      // fetch("http://localhost:3003/confirmsolve", {
         method: "post",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -280,7 +223,6 @@ class App extends Component {
       })
     }
     fetch("https://blooming-hollows-98248.herokuapp.com/confirmsolve", {
-    // fetch("http://localhost:3003/confirmsolve", {
       method: "post",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -932,7 +874,6 @@ class App extends Component {
             randPrevent={this.state.randPrevent}
             getInterfaceSolves={this.getInterfaceSolves}
             solvesInterface={this.state.solvesInterface}
-            getSolves={this.getSolves}
             uniqueSessionsDB={this.state.uniqueSessionsDB}
             isNewSessionFunction={this.isNewSessionFunction}
             confettiLaunch={this.confettiLaunch}
@@ -1028,7 +969,6 @@ class App extends Component {
           />
           :
           <SignIn 
-          getSolves={this.getSolves} 
           user={this.state.user} 
           isBackgroundLight={this.state.isBackgroundLight}  
           signedIn={this.signedIn} 

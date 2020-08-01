@@ -255,21 +255,6 @@ class ImportSolves extends Component{
             session: Math.max(...this.props.uniqueSessionsDB)
         })
     }
-    
-    importResults = (input) => {
-        // sends each solve to db when called
-        let offline = JSON.parse(localStorage.getItem("offline"))
-        if(!offline){
-            fetch("https://blooming-hollows-98248.herokuapp.com/import",{
-            method: "post",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                input: input,
-            })
-            })
-            .then(response => response.json())
-        }
-    }
 
     componentDidMount() {
         setTimeout(()=>this.sessionNumber(),10)
