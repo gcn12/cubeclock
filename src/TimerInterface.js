@@ -838,7 +838,6 @@ class TimerInterface extends Component {
             finalSolve["puzzle"] = this.props.puzzleType
             finalSolve["sessionname"]=this.props.sessionName
             setTimeout(()=>this.props.getSolveFromInterface(finalSolve),10)
-            this.rand(this.props.puzzleType)
             if (this.state.final < allSolves[0] && this.state.endMS > minimumTime){
               if(allSolves.length>75){
                 this.props.confettiLaunch()
@@ -846,6 +845,7 @@ class TimerInterface extends Component {
             }
           }
         }
+        this.rand(this.props.puzzleType)
       }
     }
   }

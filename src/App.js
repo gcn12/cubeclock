@@ -28,8 +28,8 @@ class App extends Component {
     isCountDownGoing: false,
     isCountDownActivated: false,
     inspectionTime: 0,
-    // puzzleType: "3x3",
-    puzzleType: "",
+    puzzleType: "3x3",
+    // puzzleType: "",
     isCreateNewSession: false,
     sessionName: null,
     isSessionName: false,
@@ -303,7 +303,6 @@ class App extends Component {
     let offline = JSON.parse(localStorage.getItem("offline"))
     if(offline){
       localStorage.setItem("disabletimer", JSON.stringify(!this.state.isTimerDisabled))
-
     }else{
       fetch("https://blooming-hollows-98248.herokuapp.com/disabletimer", {
         // fetch("http://localhost:3003/confirmsession", {
