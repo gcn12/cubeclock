@@ -120,14 +120,10 @@ export default class Graph extends Component {
             data: 
             {
                 labels: this.props.dates[this.props.timePeriod][this.state.indexNumber],
-                // labels: ["2020-06-12T21:35:34.466Z", "2020-06-15T21:35:34.466Z", "2020-07-10T07:00:00.000Z"],
-                // labels: ["Fri, 12 Jun 2020 18:47:15 +0000", "Fri, 19 Jun 2020 18:47:15 +0000", "2020-06-21T18:56:07.457Z", "2020-06-29T07:00:00.000Z"],
     
                 datasets: [{
                     label: "Averages by Date",
-                    // data: [(Math.random() > 0.5 ? 1.0 : 0) * Math.round(Math.random() * 100)],
                     data: this.props.averages[this.props.timePeriod][this.state.indexNumber],
-                    // data: [5.55, 8.41, 9.99],
                     backgroundColor: this.props.isBackgroundLight ? "rgba(0,0,190,.1)" : "rgba(250,250,250,.8)" ,
                     borderColor: "light red"
     
@@ -175,11 +171,6 @@ export default class Graph extends Component {
                             userCallback: function(item) {
                                 return minutesToHours(item)
                             },
-                            // callback: function(label, index, labels) {
-                            //     return formatTime(label);
-                            //     },
-    
-    
                             maxTicksLimit: 20,
                             fontColor: this.props.isBackgroundLight ? "rgba(10,10,10,.8)" : "rgba(250,250,250,1)",
                         },   

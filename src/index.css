@@ -148,3 +148,7 @@ ul {
   display: inline-block;
   vertical-align: middle;
 }
+
+#max-width {
+  max-width: 600px;
+}

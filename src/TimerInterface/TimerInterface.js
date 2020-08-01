@@ -4,6 +4,7 @@ import Table from "./Table"
 import Scroll from './Scroll';
 import Average from './Average';
 import CustomAverage from './CustomAverage';
+import Scramble from './Scramble';
 import moment from "moment"
 
 
@@ -60,17 +61,17 @@ const skewb = [
   ["R", "R'"],
 ]
 
-const ScrambleTable = props => {
-  return(
-  <table >
-    <tbody >
-      <tr >
-        <td><h4 className="display-linebreak megaminx megaminxSmallInterfaceScramble" style={{color: props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{props.megaminxScramble}</h4></td>
-      </tr>
-    </tbody>
-  </table>
-  )
-}
+// const ScrambleTable = props => {
+//   return(
+//   <table >
+//     <tbody >
+//       <tr >
+//         <td><h4 className="display-linebreak megaminx megaminxSmallInterfaceScramble" style={{color: props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{props.megaminxScramble}</h4></td>
+//       </tr>
+//     </tbody>
+//   </table>
+//   )
+// }
 
 class TimerInterface extends Component {
   state = {
@@ -1552,15 +1553,14 @@ class TimerInterface extends Component {
     return (
       <div>
         {
-          
-            this.state.isCountDownGoing ? 
+          this.state.isCountDownGoing ? 
           <div onTouchEnd={this.startTimerDuringCountDownMobile} onMouseUp={this.startTimerDuringCountDownMobile}  className="height-width">
             <h5 className="absolute-center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>{this.state.countDown}</h5>
           </div>
             :
             
-            (
-              this.state.isMobileGoing ?
+          (
+          this.state.isMobileGoing ?
           <div onTouchStart={this.stopMobile} onMouseDown={this.stopMobile} onTouchEnd={this.stopMobileRoute} onMouseUp={this.stopMobileRoute} className="height-width">
             {this.props.isTimerDisabled ? 
               <h1 className="absolute-center disable-timer-mobile" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}> TAP TO STOP </h1>
@@ -1600,45 +1600,31 @@ class TimerInterface extends Component {
             }
           </div>
           }
-          {/* <button onClick={this.test}>test</button> */}
-          <div className=" display-linebreak">
-            {this.state.isDisplayScrambleSmall ? 
-            (this.state.isDisplayScrambleMedium ? 
-              <div className="tc medium-text">
-                {this.state.scramble}
-              </div>
-              :
-              <div className="tc small-text">
-              <h4 className="tc">{this.state.scramble}</h4> 
-              </div>
-              )
-            :
-            <h3 className="tc">{this.state.scramble}</h3>
-            }
-            <div className="summary-center">
-              <ScrambleTable 
-              isBackgroundLight={this.props.isBackgroundLight}
-              megaminxScramble={this.state.megaminxScramble}
-              />
-            </div>
-            <h4 className="display-linebreak tc">{this.state.multiBLDScramble}</h4>
-          </div>
+          <Scramble 
+          isDisplayScrambleSmall={this.state.isDisplayScrambleSmall}
+          isDisplayScrambleMedium={this.state.isDisplayScrambleMedium}
+          scramble={this.state.scramble}
+          isBackgroundLight={this.props.isBackgroundLight}
+          megaminxScramble={this.state.megaminxScramble}
+          multiBLDScramble={this.state.multiBLDScramble}
+          />
+          
           <div className="tc" >
             <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
           </div>
-            {
-            this.props.isMobileGoing ? 
-            <h1> </h1>
-            : 
-            (this.props.isMobile ? 
-            <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
-              <h5 className="hide-button summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start button-no-select "></button></h5>
-            </div>
-            :
-            <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
-              <h5 className="hide-button  timerButton summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
-            </div>
-            ) 
+          {
+          this.props.isMobileGoing ? 
+          <h1> </h1>
+          : 
+          (this.props.isMobile ? 
+          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer button-no-select ">
+            <h5 className="hide-button summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start button-no-select "></button></h5>
+          </div>
+          :
+          <div onClick={this.beginMobile} onTouchStart={()=>this.color()} onMouseDown={()=>this.color()} onTouchEnd={this.beginMobile}   className="pointer">
+            <h5 className="hide-button  timerButton summary-center button-no-select"><button id="colorClick" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="start-button timer-text-start"></button></h5>
+          </div>
+          ) 
           }
           {this.state.isMobileGoing ? 
           <div></div>

@@ -74,7 +74,7 @@ class Card extends Component {
         return(
             <div className="summary-center">
                 {/* <button onClick={this.test}>Card</button> */}
-                <div className={this.props.isBackgroundLight ? " bg-white dib br3 pa3 ma2 bw2 shadow-5" : " bg-black dib br3 pa3 ma2 bw2 shadow-5"}>
+                <div id="max-width" className={this.props.isBackgroundLight ? " bg-white dib br3 pa3 ma2 bw2 shadow-5" : " bg-black dib br3 pa3 ma2 bw2 shadow-5"}>
                     
                     
 

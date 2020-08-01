@@ -51,7 +51,6 @@ class SignIn extends Component {
                 this.props.loadUser(data)
                 this.props.signIn()
                 this.props.signedIn()
-                this.props.receive()
                 if(this.state.confirm){
                     localStorage.setItem("user", JSON.stringify(this.props.user))
                     localStorage.setItem("key", JSON.stringify(data.key))

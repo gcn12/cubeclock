@@ -978,8 +978,7 @@ class Dashboard extends Component{
                         <h1><button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Home</button></h1>
                         </div>
                     </nav>
-                
-                {/* <h1><nav style={{display: 'flex', justifyContent: "center"}}> */}
+            
                 <h1 className="summary-center" > <nav style={{display: 'flex'}}>
                 <button onClick={this.solvesRoute} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Solves</button> 
                 <button onClick={this.analytics} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Analytics</button> 
@@ -990,11 +989,7 @@ class Dashboard extends Component{
                 (this.state.isSolves ?
                 <div  style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
                     {this.props.uniqueSessionsDB.length > 4 ? 
-                    (this.props.isBackgroundLight ? 
-                        <select style={{color: "black"}} className="summary-center pa1 ba b--green bg-white" onChange={this.cardSortValue} id="cardSelect"></select>
-                        :
-                        <select style={{color: "white"}}  className="summary-center pa1 ba b--green bg-black" onChange={this.cardSortValue} id="cardSelect"></select>
-                        )
+                    <select style={{color: this.props.isBackgroundLight ?  "black" : "white"}} className={this.props.isBackgroundLight ? "summary-center pa1 ba b--green bg-white" : "summary-center pa1 ba b--green bg-black"} onChange={this.cardSortValue} id="cardSelect"></select>
                     :
                     <h1> </h1>
                     }

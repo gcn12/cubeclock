@@ -127,103 +127,6 @@ class App extends Component {
     }
   }
 
-  receive = () => {
-    //testing storing all solves in one cell
-    let offline = false
-    if (localStorage.offline){
-      offline = JSON.parse(localStorage.getItem("offline"))
-    }
-    if(this.state.user.id.length>0){
-      if(!offline){
-        fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
-          method: "post",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            id: this.state.user.id,
-          })
-        }).then(response=>response.json())
-        .then(data=>{
-          let parsedData = []
-          if(data[0].solves){
-            parsedData = JSON.parse(data[0].solves).allsolves
-          }
-          this.setState({
-            solves: parsedData
-          })
-          let sessions = []
-          if(parsedData.length>0){
-            sessions = parsedData.map(solves => solves.session)
-          }
-            if (sessions.length === 0) {
-              this.setState({
-                uniqueSessionsDB: [1],
-                sessions: 1,
-                sessionInterface: 1,
-              })
-            } else if (parsedData.length===0){
-              this.setState({
-                sessionInterface: 1,
-              })
-            }else{
-              this.setState({
-                uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-                sessions: Math.max.apply(Math,sessions),
-                sessionInterface: Array.from(new Set(sessions)).length,
-                solvesInterface: []
-              })
-              let allSolves = []
-              for (const solve of parsedData){
-                if (Math.max.apply(Math,sessions) === solve.session){
-                  allSolves = [solve, ...allSolves]
-                  this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-                  this.isSessionName(solve.sessionname)
-                }
-              }
-              this.setState({
-                solvesInterface: allSolves
-              })
-            }
-        })
-      }else{
-        let solves = localStorage.getItem("offlinesolves")
-        solves = JSON.parse(solves).solves
-        this.setState({
-          solves: solves
-        })
-        let sessions = solves.map(solves => solves.session)
-        if (sessions.length === 0) {
-          this.setState({
-            uniqueSessionsDB: [1],
-            sessions: 1,
-            sessionInterface: 1,
-          })
-        } else if (solves.length===0){
-          this.setState({
-            sessionInterface: 1,
-          })
-        }else{
-          this.setState({
-            uniqueSessionsDB: Array.from(new Set(sessions)).reverse(),
-            sessions: Math.max.apply(Math,sessions),
-            sessionInterface: Array.from(new Set(sessions)).length,
-            solvesInterface: []
-          })
-          let allSolves = []
-          for (const solve of solves){
-            if (Math.max.apply(Math,sessions) === solve.session){
-              allSolves = [solve, ...allSolves]
-              this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
-              this.isSessionName(solve.sessionname)
-            }
-          }
-          this.setState({
-            solvesInterface: allSolves
-          })
-        }
-      }
-    }
-  }
-
   
   getSolves = () => {
     //gets all solves and sessions from database
@@ -431,14 +334,6 @@ class App extends Component {
       )
     }
   }
-
-//   manageSolveData = () => {
-//     const doAll = async () => {
-//       await this.getSolves()
-//       await this.loadPastSessionSolveData(this.state.sessions)
-//     };
-//     doAll();
-// };
 
   isSessionName = (input) => {
     //updates state so that timer interface know whether 
@@ -865,12 +760,7 @@ class App extends Component {
   componentDidMount() {
     // console.log(Object.keys(localStorage))
     // console.log(localStorage)
-    // setTimeout(()=>this.getSolves(),3)
-    // setTimeout(()=>this.receive(),3)
     setTimeout(()=>this.getUserInfo(),10)
-    // setTimeout(()=>this.manageSolveData,10)
-    // this.aoLocalStorage()
-    // this.setScrambleLength()
     if (localStorage.user){
       let y = JSON.parse(localStorage.getItem("user"))
       this.setState({
@@ -959,33 +849,8 @@ class App extends Component {
     localStorage.setItem("user", JSON.stringify(this.state.user))
   }
 
-  send2 = () => {
-    //add id to solve data table
-    fetch("https://blooming-hollows-98248.herokuapp.com/test2",{
-      method: "post",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: 'n5b5658a@(4D^',
-      })
-    }).then(response=>response.json())
-  }
-
   test = () => {
-    // let solves = localStorage.getItem("offlinesolves")
-    // solves = JSON.parse(solves).solves
     console.log(this.state.uniqueSessionsDB)
-  }
-
-  test2 = () => {
-    if(localStorage.offlinesolves){
-      let solves = localStorage.getItem("offlinesolves")
-      solves = JSON.parse(solves).solves
-      console.log(solves)
-    }
-  }
-
-  test3 = () => {
-    console.log(this.state.solves)
   }
 
   setStateOffline = (input) => {
@@ -995,13 +860,11 @@ class App extends Component {
   }
 
   offline = () => {
-    //Toggles timer disable in database
     let isOffline = !this.state.isOffline
     this.setState({
       isOffline: isOffline
     })
     fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
-    // fetch("http://localhost:3003/confirmsession", {
       method: "post",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -1014,8 +877,6 @@ class App extends Component {
     }else if(!isOffline){
       if(localStorage.offlinesolves){
         let solves = localStorage.getItem("offlinesolves")
-        // this.send(JSON.parse(solves).solves)
-        // localStorage.removeItem("offlinesolves")
         fetch("https://blooming-hollows-98248.herokuapp.com/sendonline",{
         method: "put",
         headers: {"Content-Type": "application/json"},
@@ -1037,10 +898,6 @@ class App extends Component {
       return (
       <div> 
         {/* <button onClick={this.test}>removeitem</button>  */}
-        {/* <button onClick={this.test2}>log local storage</button>
-        <button onClick={this.test3}>log state solves</button> */}
-        {/* <button onClick={this.send}>send</button> */}
-        {/* <button onClick={this.receive}>receive</button> */}
         { this.state.isHome 
         ? 
         (this.state.isCreateNewSession ? 
@@ -1171,7 +1028,6 @@ class App extends Component {
           />
           :
           <SignIn 
-          receive={this.receive}
           getSolves={this.getSolves} 
           user={this.state.user} 
           isBackgroundLight={this.state.isBackgroundLight}  
