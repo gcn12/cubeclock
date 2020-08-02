@@ -1651,19 +1651,20 @@ class TimerInterface extends Component {
           username={this.props.username}
           signIn={this.props.signIn}
           />
-          <Scramble 
-          isDisplayScrambleSmall={this.state.isDisplayScrambleSmall}
-          isDisplayScrambleMedium={this.state.isDisplayScrambleMedium}
-          scramble={this.state.scramble}
-          isBackgroundLight={this.props.isBackgroundLight}
-          megaminxScramble={this.state.megaminxScramble}
-          multiBLDScramble={this.state.multiBLDScramble}
-          />
-          
-          <div className="tc" >
-            <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
+          <div style={{ position:"relative"}}>
+            <Scramble 
+            isDisplayScrambleSmall={this.state.isDisplayScrambleSmall}
+            isDisplayScrambleMedium={this.state.isDisplayScrambleMedium}
+            scramble={this.state.scramble}
+            isBackgroundLight={this.props.isBackgroundLight}
+            megaminxScramble={this.state.megaminxScramble}
+            multiBLDScramble={this.state.multiBLDScramble}
+            />
+            
+            <div className="tc" >
+              <h1 className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
+            </div>
           </div>
-
           <ButtonTop 
           isMobileGoing={this.props.isMobileGoing}
           isMobile={this.props.isMobile}
