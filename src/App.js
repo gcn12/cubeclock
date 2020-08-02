@@ -763,6 +763,12 @@ class App extends Component {
     })
   }
 
+  clearSessionInterfaceSolves = () => {
+    this.setState({
+      solvesInterface: []
+    })
+  }
+
   disableTimer = () => {
     //Toggles timer disable in database
     let offline = JSON.parse(localStorage.getItem("offline"))
@@ -1492,6 +1498,7 @@ class App extends Component {
         ? 
         (this.state.isCreateNewSession ? 
           <NewSessionOptions 
+          clearSessionInterfaceSolves={this.clearSessionInterfaceSolves}
           clearScramble={this.clearScramble}
           rand={this.rand}
           solves={this.state.solves}

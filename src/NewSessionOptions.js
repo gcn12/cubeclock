@@ -14,6 +14,7 @@ class NewSessionOptions extends Component{
         if (y.length>0){
             this.props.createNewSession(y)
         } 
+        this.props.clearSessionInterfaceSolves()
         this.props.sessionNameOnChange(this.state.sessionName)
         this.props.isSessionName(this.state.sessionName)
         if(this.props.solves.length===0){
