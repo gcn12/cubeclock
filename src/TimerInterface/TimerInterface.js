@@ -112,6 +112,7 @@ class TimerInterface extends Component {
     isDisplayScrambleSmall: false,
     isDisplayScrambleMedium: false,
     disableCommand: false,
+    beginAfterDelayMobile: false,
   }
 
   timerStart = () => {
@@ -329,7 +330,8 @@ class TimerInterface extends Component {
         this.preventStartLoopMobile()
         let endMS = Date.now() - this.state.start
         this.setState({
-          endMS: endMS
+          endMS: endMS,
+          beginAfterDelayMobile: false,
         })
         if (this.state.isDisableSpacebar){
           this.isDisableSpacebar()
@@ -496,37 +498,40 @@ class TimerInterface extends Component {
   }
 
   beginMobile = () => {
+    clearTimeout(this.changeColor)
     this.getCountDownNumber()
     this.preventStartLoopMobile()
     if(this.props.inspectionTime===0){
       if (!this.state.going) {
         if(this.state.preventStartLoopMobile % 2===0){
-          if(this.props.isBackgroundLight){
-            document.getElementById("colorClick").style.backgroundColor="whitesmoke";
-            document.getElementById("colorClick2").style.backgroundColor="whitesmoke";
-          }else{
-            document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
-            document.getElementById("colorClick2").style.backgroundColor="rgb(23, 23, 23)";
+          if(this.state.beginAfterDelayMobile){
+            if(this.props.isBackgroundLight){
+              document.getElementById("colorClick").style.backgroundColor="whitesmoke";
+              document.getElementById("colorClick2").style.backgroundColor="whitesmoke";
+            }else{
+              document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
+              document.getElementById("colorClick2").style.backgroundColor="rgb(23, 23, 23)";
+            }
+            this.props.isNewSessionFunction(false)
+            this.setState({
+              final: 0,
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+              milliseconds: 0,
+              start: Date.now(),
+              going: true,
+              isDisableSpacebar: true,
+            })
+            this.interval4 = setInterval(()=>this.time(), 1)
+            this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
+            if (!this.props.isTimerDisabled){
+              this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+            }
+            this.setState({
+              isMobileGoing: true
+            })
           }
-          this.props.isNewSessionFunction(false)
-          this.setState({
-            final: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-            milliseconds: 0,
-            start: Date.now(),
-            going: true,
-            isDisableSpacebar: true,
-          })
-          this.interval4 = setInterval(()=>this.time(), 1)
-          this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
-          if (!this.props.isTimerDisabled){
-            this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
-          }
-          this.setState({
-            isMobileGoing: true
-          })
         }
       }
     }else{
@@ -1400,13 +1405,19 @@ class TimerInterface extends Component {
   }
 
   color = () => {
-    if(this.props.isBackgroundLight){
-      document.getElementById("colorClick").style.backgroundColor="rgb(224, 84, 74)";
-      document.getElementById("colorClick2").style.backgroundColor="rgb(224, 84, 74)";
-    }else{
-      document.getElementById("colorClick").style.backgroundColor="rgb(135, 47, 41)";
-      document.getElementById("colorClick2").style.backgroundColor="rgb(135, 47, 41)";
+    const colorChange = () => {
+      if(this.props.isBackgroundLight){
+        document.getElementById("colorClick").style.backgroundColor="rgb(224, 84, 74)";
+        document.getElementById("colorClick2").style.backgroundColor="rgb(224, 84, 74)";
+      }else{
+        document.getElementById("colorClick").style.backgroundColor="rgb(135, 47, 41)";
+        document.getElementById("colorClick2").style.backgroundColor="rgb(135, 47, 41)";
+      }
+      this.setState({
+        beginAfterDelayMobile: true,
+      })
     }
+    this.changeColor = setTimeout(()=>colorChange(), 150)
   }
 
   colorRegular = () => {
@@ -1509,10 +1520,10 @@ class TimerInterface extends Component {
         if (this.state.keyPressOne && this.state.keyPressTwo){
           if(this.state.preventStartLoop % 2===0){
             if(Number(this.state.countDown)===0){
-            this.setState({
-              preventStartLoop: this.state.preventStartLoop+1,
-            })
-            this.beginFunction()
+              this.setState({
+                preventStartLoop: this.state.preventStartLoop+1,
+              })
+              this.beginFunction()
             }else{
               this.countDownRunFunction()
               this.setState({
@@ -1684,7 +1695,7 @@ class TimerInterface extends Component {
           beginMobile={this.beginMobile}
           color={this.color}
           isBackgroundLight={this.props.isBackgroundLight}/> 
-          
+
           <div id="light">
             <Footer 
             isSessionName={this.props.isSessionName}
