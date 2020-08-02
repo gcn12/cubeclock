@@ -115,8 +115,10 @@ class App extends Component {
           }).then(response=>response.json())
           .then(data=>{
             let parsedData = []
-            if(data[0].solves){
-              parsedData = JSON.parse(data[0].solves).allsolves
+            if(data){
+              if(data[0].solves){
+                parsedData = JSON.parse(data[0].solves).allsolves
+              }
             }
             this.getSolvesOnMountPrevent()
               this.getAllSolves(parsedData)

@@ -399,11 +399,11 @@ class TimerInterface extends Component {
       solveData["id"] = this.props.id
       solveData["solve"] = this.state.displayTimeFormatted
       if (this.props.puzzleType==="Megaminx"){
-        solveData["scramble"] = this.state.megaminxScramble 
+        solveData["scramble"] = this.props.megaminxScramble 
       }else if (this.props.puzzleType==="Multi-BLD"){
-        solveData["scramble"] = this.state.multiBLDScramble
+        solveData["scramble"] = this.props.multiBLDScramble
       }else{
-        solveData["scramble"] = this.state.scramble
+        solveData["scramble"] = this.props.scramble
       }
       solveData["milliseconds"] = String(this.state.endMS)
       solveData["isplustwo"] = false
@@ -427,11 +427,11 @@ class TimerInterface extends Component {
       finalSolve["id"] = this.props.id
       finalSolve["solve"] = this.state.displayTimeFormatted
       if (this.props.puzzleType==="Megaminx"){
-        finalSolve["scramble"] = this.state.megaminxScramble
+        finalSolve["scramble"] = this.props.megaminxScramble
       }else if (this.props.puzzleType==="Multi-BLD"){
-        finalSolve["scramble"] = this.state.multiBLDScramble
+        finalSolve["scramble"] = this.props.multiBLDScramble
       }else{
-        finalSolve["scramble"] = this.state.scramble
+        finalSolve["scramble"] = this.props.scramble
       }
       finalSolve["milliseconds"] = String(this.state.endMS)
       finalSolve["isplustwo"] = false
@@ -680,11 +680,11 @@ class TimerInterface extends Component {
             solveData["id"] = this.props.id
             solveData["solve"] = this.state.displayTimeFormatted
             if (this.props.puzzleType==="Megaminx"){
-              solveData["scramble"] = this.state.megaminxScramble 
+              solveData["scramble"] = this.props.megaminxScramble 
             }else if (this.props.puzzleType==="Multi-BLD"){
-              solveData["scramble"] = this.state.multiBLDScramble
+              solveData["scramble"] = this.props.multiBLDScramble
             }else{
-              solveData["scramble"] = this.state.scramble
+              solveData["scramble"] = this.props.scramble
             }
             solveData["milliseconds"] = String(endMS)
             solveData["isplustwo"] = false
@@ -715,11 +715,11 @@ class TimerInterface extends Component {
             finalSolve["id"] = this.props.id
             finalSolve["solve"] = this.state.displayTimeFormatted
             if (this.props.puzzleType==="Megaminx"){
-              finalSolve["scramble"] = this.state.megaminxScramble
+              finalSolve["scramble"] = this.props.megaminxScramble
             }else if (this.props.puzzleType==="Multi-BLD"){
-              finalSolve["scramble"] = this.state.multiBLDScramble
+              finalSolve["scramble"] = this.props.multiBLDScramble
             }else{
-              finalSolve["scramble"] = this.state.scramble
+              finalSolve["scramble"] = this.props.scramble
             }
             finalSolve["milliseconds"] = String(this.state.endMS)
             finalSolve["isplustwo"] = false
