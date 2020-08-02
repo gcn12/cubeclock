@@ -85,7 +85,6 @@ class Register extends Component {
                 })
                 .then(response => response.json())
                 .then (data => {
-                    console.log(data)
                     if (data === "user exists"){
                         this.setState({
                             isUserExist: true,

@@ -703,12 +703,7 @@ class TimerInterface extends Component {
               going: false,
               endMS: endMS,
             })
-            let sendToDB = [...this.props.solves, solveData]
-            this.send(sendToDB)
             let offline = JSON.parse(localStorage.getItem("offline"))
-            if(offline){
-              localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...sendToDB]}))
-            }
             this.props.getInterfaceSolvesSingle(solveData)
   
             const finalSolve = {}
@@ -732,6 +727,11 @@ class TimerInterface extends Component {
             finalSolve["unix"] = String(unix)
             finalSolve["puzzle"] = this.props.puzzleType
             finalSolve["sessionname"]=this.props.sessionName
+            let sendToDB = [...this.props.solves, finalSolve]
+            this.send(sendToDB)
+            if(offline){
+              localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...sendToDB]}))
+            }
             setTimeout(()=>this.props.getSolveFromInterface(finalSolve),10)
             if (this.state.final < allSolves[0] && this.state.endMS > minimumTime){
               if(allSolves.length>75){

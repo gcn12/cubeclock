@@ -197,12 +197,33 @@ class Settings extends Component{
         if(localStorage.offline) {
             let x = JSON.parse(localStorage.getItem("offline"))
             if(x){
-                let confirmation = window.confirm("You are now going online. To reconnect, be sure to have a wifi connection.")
+                let solves = localStorage.getItem("offlinesolves")
+                let offlineCount = localStorage.getItem("offlinecount")
+                let offlineDifference = Number(JSON.parse(solves).solves.length)-Number(offlineCount)
+                let summary = ""
+                if(JSON.parse(solves).solves.length===0){
+                    summary+= "DELETING ALL SOLVES"
+                }else if(offlineDifference > -1){
+                    summary+= `adding ${offlineDifference} `
+                    if (offlineDifference===1){
+                        summary+="solve"
+                    }else{
+                        summary+="solves"
+                    }
+                }else{
+                    offlineDifference = offlineDifference * -1
+                    summary+= `deleting ${offlineDifference} `
+                    if (offlineDifference===1){
+                        summary+="solve"
+                    }else{
+                        summary+="solves"
+                    }
+                }
+                let confirmation = window.confirm(`You are now going online. To reconnect, be sure to have a wifi connection. \n \n You will be ${summary}.`)
                 if (confirmation) {
                     if(localStorage.offlinesolves){
                         let online = navigator.onLine;
                         if(online){
-                            let solves = localStorage.getItem("offlinesolves")
                             fetch("https://blooming-hollows-98248.herokuapp.com/sendonline",{
                             method: "put",
                             headers: {"Content-Type": "application/json"},
@@ -240,13 +261,16 @@ class Settings extends Component{
                                     offline: !x,
                                 })
                                 }).then(response=>response.json())
-                                document.getElementById("offline").checked=!x
-                                localStorage.setItem("offline", JSON.stringify(!x))
-                                localStorage.removeItem("offlinesolves")
-                                this.setState({
-                                    didOnlineSyncWork: true,
-                                    didOfflineSyncWork: false,
-                                    isSyncUnsuccessful: false,
+                                .then(data=> {
+                                    document.getElementById("offline").checked=!x
+                                    localStorage.setItem("offline", JSON.stringify(!x))
+                                    localStorage.removeItem("offlinesolves")
+                                    localStorage.removeItem("offlinecount")
+                                    this.setState({
+                                        didOnlineSyncWork: true,
+                                        didOfflineSyncWork: false,
+                                        isSyncUnsuccessful: false,
+                                    })
                                 })
                               }
                             })
@@ -271,14 +295,31 @@ class Settings extends Component{
                         offline: !x,
                     })
                     }).then(response=>response.json())
-                    this.setState({
-                        didOfflineSyncWork: true,
-                        didOnlineSyncWork: false,
-                        isSyncUnsuccessful: false,
+                    .then(data=> {
+                        document.getElementById("offline").checked=!x
+                        localStorage.setItem("offline", JSON.stringify(!x))
+                        fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+                            method: "post",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({
+                                id: this.props.id,
+                            })
+                        }).then(response=>response.json())
+                        .then(data=>{
+                            if(data){
+                                if(data[0].solves){
+                                    let solvesOffline = JSON.parse(data[0].solves).allsolves
+                                    localStorage.setItem("offlinecount", JSON.stringify(solvesOffline.length))
+                                    localStorage.setItem("offlinesolves", JSON.stringify({"solves": solvesOffline}))
+                                }
+                            }
+                            this.setState({
+                                didOfflineSyncWork: true,
+                                didOnlineSyncWork: false,
+                                isSyncUnsuccessful: false,
+                            })
+                        })
                     })
-                    document.getElementById("offline").checked=!x
-                    localStorage.setItem("offline", JSON.stringify(!x))
-                    localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...this.props.solvesApp]}))
                 }else{
                     document.getElementById("offline").checked=x
                     localStorage.setItem("offline", JSON.stringify(x))

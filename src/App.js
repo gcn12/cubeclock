@@ -115,7 +115,7 @@ class App extends Component {
           }).then(response=>response.json())
           .then(data=>{
             let parsedData = []
-            if(data){
+            if(data.length>0){
               if(data[0].solves){
                 parsedData = JSON.parse(data[0].solves).allsolves
               }
@@ -721,12 +721,12 @@ class App extends Component {
             }
             localStorage.setItem("theme", JSON.stringify(data.theme))
           }
-          this.receive()
         })
       }else{
         this.rand("3x3")
       }
     }
+    this.receive()
   }
 
   send = (input) => {
