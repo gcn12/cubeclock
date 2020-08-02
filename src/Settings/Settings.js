@@ -295,44 +295,51 @@ class Settings extends Component{
             }else{
                 let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. You must remain signed in. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
                 if (confirmation) {
-                    fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
-                    method: "post",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        id: this.props.id,
-                        offline: !x,
-                    })
-                    }).then(response=>response.json())
-                    .then(data=> {
-                        this.setState({
-                            didOnlineSyncWork:false,
-                            isDownloading:true,
+                    let online = navigator.onLine;
+                    if(online){
+                        fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
+                        method: "post",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            id: this.props.id,
+                            offline: !x,
                         })
-                        document.getElementById("offline").checked=!x
-                        localStorage.setItem("offline", JSON.stringify(!x))
-                        fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
-                            method: "post",
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({
-                                id: this.props.id,
-                            })
                         }).then(response=>response.json())
-                        .then(data=>{
-                            if(data){
-                                if(data[0].solves){
-                                    let solvesOffline = JSON.parse(data[0].solves).allsolves
-                                    localStorage.setItem("offlinecount", JSON.stringify(solvesOffline.length))
-                                    localStorage.setItem("offlinesolves", JSON.stringify({"solves": solvesOffline}))
-                                }
-                            }
+                        .then(data=> {
                             this.setState({
-                                didOfflineSyncWork: true,
-                                didOnlineSyncWork: false,
-                                isSyncUnsuccessful: false,
-                                isDownloading: false,
+                                didOnlineSyncWork:false,
+                                isDownloading:true,
+                            })
+                            document.getElementById("offline").checked=!x
+                            localStorage.setItem("offline", JSON.stringify(!x))
+                            fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+                                method: "post",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({
+                                    id: this.props.id,
+                                })
+                            }).then(response=>response.json())
+                            .then(data=>{
+                                if(data){
+                                    if(data[0].solves){
+                                        let solvesOffline = JSON.parse(data[0].solves).allsolves
+                                        localStorage.setItem("offlinecount", JSON.stringify(solvesOffline.length))
+                                        localStorage.setItem("offlinesolves", JSON.stringify({"solves": solvesOffline}))
+                                    }
+                                }
+                                this.setState({
+                                    didOfflineSyncWork: true,
+                                    didOnlineSyncWork: false,
+                                    isSyncUnsuccessful: false,
+                                    isDownloading: false,
+                                })
                             })
                         })
-                    })
+                    }else{
+                        alert("You must be online to activate offline mode.")
+                        document.getElementById("offline").checked=x
+                        localStorage.setItem("offline", JSON.stringify(x))
+                    }
                 }else{
                     document.getElementById("offline").checked=x
                     localStorage.setItem("offline", JSON.stringify(x))
