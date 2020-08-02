@@ -36,6 +36,8 @@ class Settings extends Component{
         isInvalidInspection: false,
         didOnlineSyncWork: false,
         isSyncUnsuccessful: false,
+        isDownloading: false,
+        isUploading: false,
     }
 
     aoNumInput = (e) => {
@@ -224,6 +226,10 @@ class Settings extends Component{
                     if(localStorage.offlinesolves){
                         let online = navigator.onLine;
                         if(online){
+                            this.setState({
+                                isUploading: true,
+                                didOfflineSyncWork: false,
+                            })
                             fetch("https://blooming-hollows-98248.herokuapp.com/sendonline",{
                             method: "put",
                             headers: {"Content-Type": "application/json"},
@@ -251,6 +257,7 @@ class Settings extends Component{
                                     isSyncUnsuccessful: true,
                                     didOnlineSyncWork: false,
                                     didOfflineSyncWork: false,
+                                    isUploading: false,
                                 })
                               }else{
                                 fetch("https://blooming-hollows-98248.herokuapp.com/offline", {
@@ -270,6 +277,7 @@ class Settings extends Component{
                                         didOnlineSyncWork: true,
                                         didOfflineSyncWork: false,
                                         isSyncUnsuccessful: false,
+                                        isUploading: false,
                                     })
                                 })
                               }
@@ -296,6 +304,10 @@ class Settings extends Component{
                     })
                     }).then(response=>response.json())
                     .then(data=> {
+                        this.setState({
+                            didOnlineSyncWork:false,
+                            isDownloading:true,
+                        })
                         document.getElementById("offline").checked=!x
                         localStorage.setItem("offline", JSON.stringify(!x))
                         fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
@@ -317,6 +329,7 @@ class Settings extends Component{
                                 didOfflineSyncWork: true,
                                 didOnlineSyncWork: false,
                                 isSyncUnsuccessful: false,
+                                isDownloading: false,
                             })
                         })
                     })
@@ -495,6 +508,8 @@ class Settings extends Component{
                 />
 
                 <Toggles 
+                isDownloading={this.state.isDownloading}
+                isUploading={this.state.isUploading}
                 isMobile={this.isMobile}
                 isConfirmSolve={this.isConfirmSolve}
                 isConfirmSession={this.isConfirmSession}

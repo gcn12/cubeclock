@@ -55,6 +55,20 @@ const Toggles = props => {
                 :
                 <h4> </h4>
                 }
+                {props.isUploading ? 
+                <label className="label1">
+                    <h4>Syncing...</h4>
+                </label>
+                :
+                <h4> </h4>
+                }
+                {props.isDownloading ? 
+                <label className="label1">
+                    <h4>Downloading...</h4>
+                </label>
+                :
+                <h4> </h4>
+                }
             </li>
             <br></br>
         </ul>
