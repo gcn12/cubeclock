@@ -221,7 +221,7 @@ class Settings extends Component{
                         summary+="solves"
                     }
                 }
-                let confirmation = window.confirm(`You are now going online. To reconnect, be sure to have a wifi connection. \n \n You will be ${summary}.`)
+                let confirmation = window.confirm(`You are now going online. To reconnect, be sure to have a wifi connection. Backing up (downloading solves) prior to going online is recommended. \n \n You will be ${summary}.`)
                 if (confirmation) {
                     if(localStorage.offlinesolves){
                         let online = navigator.onLine;
