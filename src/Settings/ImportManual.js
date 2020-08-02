@@ -228,11 +228,12 @@ class ImportManual extends Component{
                     this.setState(prevState=>({
                         count: prevState.count + 1
                     }))
-                    setTimeout(()=>this.props.getSolves(),100)
-                    setTimeout(()=>this.props.manageSolveData(), 100)
-                    setTimeout(()=>this.props.addToUniqueSessionsDB(this.state.session), 50)
-                    setTimeout(()=>this.props.getSessionNumber(this.state.session), 100)
-                    setTimeout(()=>this.props.getInterfaceSession(this.props.uniqueSessionsDB.length), 100)
+                    setTimeout(()=>this.props.getSolves(),10)
+                    setTimeout(()=>this.props.manageSolveData(), 10)
+                    setTimeout(()=>this.props.addToUniqueSessionsDB(this.state.session), 10)
+                    setTimeout(()=>this.props.loadPastSessionSolveDataDeleteSession(this.state.session, this.props.uniqueSessionsDB.length),10)
+                    // setTimeout(()=>this.props.getSessionNumber(this.state.session), 100)
+                    // setTimeout(()=>this.props.getInterfaceSession(this.props.uniqueSessionsDB.length), 100)
                 }else{
                     this.setState({
                         isDateWrong: true,
@@ -273,7 +274,7 @@ class ImportManual extends Component{
                     <input id="importManualName" rows="1" cols="10" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}} className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.handleImportManualNameChange} type="text"></input>
                     <h4>Puzzle:</h4>
 
-                    <select className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.getPuzzleType} id="puzzle" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}}>
+                    <select className={this.props.isBackgroundLight ? "pa2 ba b--green bg-white form-input": "pa2 ba b--green bg-black form-input"} onChange={this.props.getPuzzleType} id="puzzle" style={{color: this.props.isBackgroundLight ? "rgb(25, 25, 25)" : "white"}}>
                         <option value="3x3">3x3</option>
                         <option value="2x2">2x2</option>
                         <option value="4x4">4x4</option>

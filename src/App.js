@@ -1471,8 +1471,7 @@ class App extends Component {
   }
 
   test = () => {
-    console.log(this.state.uniqueSessionsDB)
-    console.log(this.state.sessions)
+    console.log(this.state.solves)
   }
 
   setStateOffline = (input) => {

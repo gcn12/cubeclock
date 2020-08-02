@@ -545,6 +545,7 @@ class Settings extends Component{
                 <h1 className="center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>Import Solves</h1>
                 
                 <ImportManual 
+                loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
                 getPuzzleType={this.getPuzzleType}
                 handleImportManualNameChange={this.handleImportManualNameChange}
                 handleImportManualDateChange={this.handleImportManualDateChange}
@@ -571,6 +572,7 @@ class Settings extends Component{
                 time={this.state.importManualTextAreaTime}/>
                     
                 <ImportSolves 
+                loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
                 handleButtonClick={this.props.handleButtonClick}
                 handleImportSolvesChange={this.handleImportSolvesChange}
                 addToUniqueSessionsDB={this.props.addToUniqueSessionsDB}

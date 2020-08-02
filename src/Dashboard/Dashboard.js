@@ -1053,6 +1053,7 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
+                loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
                 solvesApp={this.props.solves}
                 setStateOffline={this.props.setStateOffline}
                 offlineState={this.props.offlineState}

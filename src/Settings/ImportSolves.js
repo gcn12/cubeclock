@@ -232,8 +232,9 @@ class ImportSolves extends Component{
             this.props.getSolvesFromImport(solvesArray)
             this.props.addToUniqueSessionsDB(sessionArray)
             setTimeout(()=>this.props.manageSolveData(),100)
-            setTimeout(()=>this.props.getInterfaceSession(sessionArray.length),100)
-            setTimeout(()=>this.props.getSessionNumber(session),100)
+            setTimeout(()=>this.props.loadPastSessionSolveDataDeleteSession(session, sessionArray.length),100)
+            // setTimeout(()=>this.props.getInterfaceSession(sessionArray.length),100)
+            // setTimeout(()=>this.props.getSessionNumber(session),100)
         }else{
             this.setState({
                 isIncorrectFormat: true,
