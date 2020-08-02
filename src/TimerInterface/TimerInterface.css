@@ -320,3 +320,21 @@ h3{
     font-size: 1.3rem;
   }
 }
+
+/* @media only screen and (min-width: 1200px) {
+  .padding-top-most-of-interface {
+    padding-top: 2rem;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .padding-top-most-of-interface {
+    padding-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .padding-top-most-of-interface {
+    padding-top: 0rem;
+  }
+} */

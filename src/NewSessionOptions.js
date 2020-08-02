@@ -6,6 +6,7 @@ class NewSessionOptions extends Component{
     }
 
     newSession = () => {
+        this.props.clearScramble()
         const x = document.getElementById("puzzle")
         const y = x.options[x.selectedIndex].value
         const newSession = Math.max(...this.props.uniqueSessionsDB)
@@ -26,7 +27,7 @@ class NewSessionOptions extends Component{
                 this.props.getInterfaceSession(sessionLength + 1)
             }
         }
-
+        this.props.rand(y)
         this.props.isNewSessionFunction(true)
     }
     

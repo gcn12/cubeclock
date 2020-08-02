@@ -799,6 +799,7 @@ class Dashboard extends Component{
                 this.setState({
                     isWrongPassword2: false,
                 })
+                this.props.rand("3x3")
             }
         })
     }

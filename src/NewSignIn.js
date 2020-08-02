@@ -48,6 +48,7 @@ class SignIn extends Component {
                 })
                 clearTimeout(this.timeout)
             } else{
+                this.props.clearScramble()
                 this.props.loadUser(data)
                 this.props.signIn()
                 this.props.signedIn()
