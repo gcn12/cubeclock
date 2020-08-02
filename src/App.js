@@ -1086,6 +1086,11 @@ class App extends Component {
       isConfirmSessionDelete: data.confirmsession,
       isOffline: data.offline
     })
+    if(data.theme){
+      document.body.style.backgroundColor = "whitesmoke"
+    }else{
+      document.body.style.backgroundColor = "rgb(23,23,23)"
+    }
     this.receive()
     localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
