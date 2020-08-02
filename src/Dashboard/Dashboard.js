@@ -995,6 +995,8 @@ class Dashboard extends Component{
                     <h1> </h1>
                     }
                     <CardList 
+                    loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
+                    removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                     solves={this.props.solves}
                     send={this.props.send}
                     puzzleBest={this.state.puzzleBest}

@@ -340,6 +340,8 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
+                        removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                         send={this.props.send}
                         ao5BestAndWorst={ao5BestAndWorst}
                         ao12BestAndWorst={ao12BestAndWorst}

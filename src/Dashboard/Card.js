@@ -14,17 +14,19 @@ class Card extends Component {
         if(offline){
             localStorage.setItem("offlinesolves", JSON.stringify({"solves": [...solvesToDB]}))
         }
+        this.props.removeFromSolvesInterface(this.props.uniqueSession)
         this.props.removeFromSolves(this.props.uniqueSession)
         let x = this.props.uniqueSessionsDB
-            x.splice(x.indexOf(this.props.uniqueSession), 1)
+        x.splice(x.indexOf(this.props.uniqueSession), 1)
         if (x.length===0){
             this.props.getSessionNumber(1)
             this.props.getInterfaceSession(1)
             this.props.getSessionNameOnLoad(null, "3x3")
         }else if (this.props.uniqueSession===this.props.sessions) {
             let c = x.length 
-            this.props.getSessionNumber(Math.max(...x))
-            this.props.getInterfaceSession(c)
+            // this.props.getSessionNumber(Math.max(...x))
+            // this.props.getInterfaceSession(c)
+            this.props.loadPastSessionSolveDataDeleteSession(Math.max(...x), c)
         } else {
             let a = [...x].sort(this.compare).indexOf(this.props.sessions)
             this.props.getInterfaceSession(a+1)

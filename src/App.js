@@ -184,10 +184,6 @@ class App extends Component {
         }
       }
     }
-    // else{
-    //   console.log("here")
-    //   this.rand("3x3")
-    // }
   }
 
   rand = (input) => {
@@ -869,6 +865,15 @@ class App extends Component {
     })
   }
 
+  removeFromSolvesInterface = (session) => {
+    //Removes solves based on session parameter
+    this.setState({
+      solvesInterface: [...this.state.solvesInterface].filter(solve=>{
+        return solve.session !== session
+      })
+    })
+  }
+
   getAllSolves = (input) => {
     this.setState({
       solves: input
@@ -976,6 +981,10 @@ class App extends Component {
     }else if (input.length===1){
       this.setState({
         uniqueSessionsDB: [...this.state.uniqueSessionsDB,input]
+      })
+    }else{
+      this.setState({
+        uniqueSessionsDB: [1]
       })
     }
   }
@@ -1182,6 +1191,25 @@ class App extends Component {
     this.setState({
       isHome: true,
       isDashboard: false,
+      sessions: session,
+      sessionInterface: index,
+    })
+    let allSolves = []
+      for (const solve of this.state.solves){
+        if (session === solve.session){
+          allSolves = [solve, ...allSolves]
+          this.getSessionNameOnLoad(solve.sessionname, solve.puzzle)
+          this.isSessionName(solve.sessionname)
+          this.rand(solve.puzzle)
+        }
+      }
+      this.getInterfaceSolves(allSolves)
+  }
+
+  loadPastSessionSolveDataDeleteSession = (session, index) => {
+    //resumes session from saved solves list when clicked
+    this.clearScramble()
+    this.setState({
       sessions: session,
       sessionInterface: index,
     })
@@ -1439,6 +1467,7 @@ class App extends Component {
 
   test = () => {
     console.log(this.state.uniqueSessionsDB)
+    console.log(this.state.sessions)
   }
 
   setStateOffline = (input) => {
@@ -1493,7 +1522,7 @@ class App extends Component {
     render() {   
       return (
       <div> 
-        {/* <button onClick={this.test}>removeitem</button>  */}
+        {/* <button onClick={this.test}>uniqueSessionsDB</button>  */}
         { this.state.isHome 
         ? 
         (this.state.isCreateNewSession ? 
@@ -1573,6 +1602,8 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          loadPastSessionSolveDataDeleteSession={this.loadPastSessionSolveDataDeleteSession}
+          removeFromSolvesInterface={this.removeFromSolvesInterface}
           rand={this.rand}
           setStateOffline={this.setStateOffline}
           offlineState={this.state.offline}
