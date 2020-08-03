@@ -55,6 +55,7 @@ class TimerInterface extends Component {
     beginAfterDelay: false,
     // isRed: false,
     isGreen: false,
+    preventCommand:false,
   }
 
   timerStart = () => {
@@ -831,6 +832,7 @@ class TimerInterface extends Component {
         }))
       }
     }
+
     if((e.keyCode===91||e.keyCode===93||e.keyCode===17)&&(!this.state.keyPressOne&&!this.state.keyPressTwo)){
       if(!this.state.countingDown){
         if(!this.state.going){
@@ -911,8 +913,12 @@ class TimerInterface extends Component {
           :
           document.getElementById("timer-color-change").style.color="RGB(49, 163, 68)"
         }
+        // const red = () => {
+        //   document.getElementById("timer-color-change").style.color="RGB(255, 20, 20)"
+        // }
         this.delayTimeout = setTimeout(()=> delay(), 300)
         this.greenTimeout = setTimeout(()=> green(), 300)
+        // red()
       }
     }
   }
@@ -941,20 +947,23 @@ class TimerInterface extends Component {
       if (!this.state.going){
         if (this.state.keyPressOne && this.state.keyPressTwo){
           if(this.state.preventStartLoop % 2===0){
-            if(Number(this.state.countDown)===0){
-              this.setState({
-                preventStartLoop: this.state.preventStartLoop+1,
-              })
-              this.beginFunction()
-            }else{
-              this.countDownRunFunction()
-              this.setState({
-                disableCommand: true,
-                keyPressOne: false,
-                keyPressTwo: false,
-              })
-              setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
-              this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
+            if(!this.state.preventCommand){
+              if(Number(this.state.countDown)===0){
+                this.setState({
+                  preventStartLoop: this.state.preventStartLoop+1,
+                  preventCommand: true
+                })
+                this.beginFunction()
+              }else{
+                this.countDownRunFunction()
+                this.setState({
+                  disableCommand: true,
+                  keyPressOne: false,
+                  keyPressTwo: false,
+                })
+                setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
+                this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
+              }
             }
           }
         }
@@ -1022,8 +1031,14 @@ class TimerInterface extends Component {
   }
 
   keyPressStop = (e) => {
+    const preventCommand1 = () => {
+      this.setState({
+        preventCommand: false,
+      })
+    }
     if (this.state.going){
       if (e.keyCode===91 || e.keyCode===93){
+        setTimeout(()=>preventCommand1(),350)
         if (!this.state.keyPressOne || !this.state.keyPressTwo){
           this.setState({
             isDisableSpacebar: false
@@ -1032,6 +1047,7 @@ class TimerInterface extends Component {
         }
       }
       if (e.keyCode===17){
+        setTimeout(()=>preventCommand1(),350)
         if (!this.state.keyPressOne || !this.state.keyPressTwo){
           this.stop(e)
         }
