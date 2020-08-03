@@ -898,7 +898,7 @@ class TimerInterface extends Component {
   }
   
   beginAfterDelay = (e) => {
-    if(e.keyCode===32){
+    if(e.keyCode===32||(this.state.keyPressOne && this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))){
       if(this.state.preventStartLoop%2===0){
         const delay = () => {
           this.setState({
