@@ -283,7 +283,7 @@ class Settings extends Component{
                     localStorage.setItem("offline", JSON.stringify(x))
                 }
             }else{
-                let confirmation = window.confirm("You are now entering offline mode. Backing up solves is highly recommended. You must remain signed in. Solve data will no longer be updated to the data base. To reconnect, be sure to have a wifi connection before turning off offline mode.")
+                let confirmation = window.confirm("You are now entering offline mode. \n-Wifi is required to activate. \n-Only use if wifi will not be available; e.g. on an airplane. \n -Backing up solves is highly recommended. \n -You must remain signed in. \n -Solve data will no longer be updated to the database. \n -To reconnect, be sure to have a wifi connection before turning off offline mode.")
                 if (confirmation) {
                     let online = navigator.onLine;
                     if(online){
