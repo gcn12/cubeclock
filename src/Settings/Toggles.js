@@ -4,7 +4,7 @@ const Toggles = props => {
     return(
         <ul className="summary-center">      
             <li>
-                <label htmlFor="mobile" className="label1"><h4>Touch start/stop</h4></label>
+                <label htmlFor="mobile" className="label1"><h4>Touch start/stop (for large mobile devices)</h4></label>
                 <input type="checkbox" id="mobile" className="checkbox input1" onClick={props.isMobile} />  
                 <label htmlFor="mobile" className="switch"></label>
             </li>  

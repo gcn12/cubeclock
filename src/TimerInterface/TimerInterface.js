@@ -927,9 +927,9 @@ class TimerInterface extends Component {
         })
       }
       this.props.isBackgroundLight ? 
-      setTimeout(()=>document.getElementById("timer-color-change").style.color="black",200)
+      setTimeout(()=>document.getElementById("timer-color-change").style.color="black",250)
       :
-      setTimeout(()=>document.getElementById("timer-color-change").style.color="white",200)
+      setTimeout(()=>document.getElementById("timer-color-change").style.color="white",250)
     }
   }
 
