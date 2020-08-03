@@ -799,7 +799,7 @@ class Dashboard extends Component{
                 this.setState({
                     isWrongPassword2: false,
                 })
-                this.props.rand("3x3")
+                this.props.scramble("3x3")
             }
         })
     }
@@ -995,7 +995,6 @@ class Dashboard extends Component{
                     <h1> </h1>
                     }
                     <CardList 
-                    loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
                     removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                     solves={this.props.solves}
                     send={this.props.send}
@@ -1053,11 +1052,9 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
-                loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
+                loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                 solvesApp={this.props.solves}
-                setStateOffline={this.props.setStateOffline}
                 offlineState={this.props.offlineState}
-                offline={this.props.offline}
                 changeInspectionTime={this.props.changeInspectionTime}
                 aoNum2={this.props.aoNum2} 
                 aoNumChange2={this.props.aoNumChange2}

@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Scramble from './Scramble';
 import * as serviceWorker from './serviceWorker';
 import "tachyons";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Scramble />
   </React.StrictMode>,
   document.getElementById('root')
 );

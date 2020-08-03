@@ -340,7 +340,7 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
-                        loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
+                        loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                         removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                         send={this.props.send}
                         ao5BestAndWorst={ao5BestAndWorst}
@@ -381,7 +381,6 @@ class CardList extends Component {
                         removeFromUniqueSessionsDB={this.props.removeFromUniqueSessionsDB}
                         uniqueSessionsDB={this.props.uniqueSessionsDB} 
                         uniqueSession={uniqueSessions}
-                        loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                         date={date}
                         sessionDisplayName={sessionDisplayName}
                         removeSessionFromState={this.props.removeSessionFromState}

@@ -26,7 +26,7 @@ class Card extends Component {
             let c = x.length 
             // this.props.getSessionNumber(Math.max(...x))
             // this.props.getInterfaceSession(c)
-            this.props.loadPastSessionSolveDataDeleteSession(Math.max(...x), c)
+            this.props.loadPastSessionSolveData(Math.max(...x), c,false)
         } else {
             let a = [...x].sort(this.compare).indexOf(this.props.sessions)
             this.props.getInterfaceSession(a+1)
@@ -396,7 +396,7 @@ class Card extends Component {
                         :
                         <table></table>
                         }
-                        <h1><button className="button2" onClick={()=>this.props.loadPastSessionSolveData(this.props.uniqueSession, this.props.ind)} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Resume Session</button></h1>
+                        <h1><button className="button2" onClick={()=>this.props.loadPastSessionSolveData(this.props.uniqueSession, this.props.ind, true)} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Resume Session</button></h1>
                         <button className="button2" onClick={this.deleteFunc} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "white" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Session</button>
                     </div>
                 </div>

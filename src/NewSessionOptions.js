@@ -28,7 +28,7 @@ class NewSessionOptions extends Component{
                 this.props.getInterfaceSession(sessionLength + 1)
             }
         }
-        this.props.rand(y)
+        this.props.scramble(y)
         this.props.isNewSessionFunction(true)
     }
     

@@ -178,16 +178,6 @@ class Settings extends Component{
         }
     }
 
-    offline = () => {
-        this.props.offline()
-        if(document.getElementById("offline").checked===true){
-            localStorage.setItem("offline", JSON.stringify(true))
-        }
-        if(document.getElementById("offline").checked===false){
-            localStorage.setItem("offline", JSON.stringify(false))
-        }
-    }
-
     getOffline= () => {
         if(localStorage.offline) {
             let x = JSON.parse(localStorage.getItem("offline"))
@@ -422,9 +412,6 @@ class Settings extends Component{
         if (this.state.importManualTextAreaScramble) {
             document.getElementById("importManualScramble").value=" "
         }
-        // if (this.state.importManualTextAreaDate) {
-        //     document.getElementById("importManualDate").value=" "
-        // }
     }
 
     isManual = () => {
@@ -545,7 +532,7 @@ class Settings extends Component{
                 <h1 className="center" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)"}}>Import Solves</h1>
                 
                 <ImportManual 
-                loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
+                loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                 getPuzzleType={this.getPuzzleType}
                 handleImportManualNameChange={this.handleImportManualNameChange}
                 handleImportManualDateChange={this.handleImportManualDateChange}
@@ -570,9 +557,9 @@ class Settings extends Component{
                 id={this.props.id} 
                 uniqueSessionsDB={this.props.uniqueSessionsDB} 
                 time={this.state.importManualTextAreaTime}/>
-                    
+                     
                 <ImportSolves 
-                loadPastSessionSolveDataDeleteSession={this.props.loadPastSessionSolveDataDeleteSession}
+                loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                 handleButtonClick={this.props.handleButtonClick}
                 handleImportSolvesChange={this.handleImportSolvesChange}
                 addToUniqueSessionsDB={this.props.addToUniqueSessionsDB}

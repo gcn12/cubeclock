@@ -18,15 +18,15 @@ const Scramble = props => {
             {props.isDisplayScrambleSmall ? 
             (props.isDisplayScrambleMedium ? 
               <div className="tc medium-text">
-                {props.scramble}
+                {props.scrambleRegular}
               </div>
               :
               <div className="tc small-text">
-              <h4 className="tc">{props.scramble}</h4> 
+              <h4 className="tc">{props.scrambleRegular}</h4> 
               </div>
-              )
+            )
             :
-            <h3 className="tc">{props.scramble}</h3>
+            <h3 className="tc">{props.scrambleRegular}</h3>
             }
             <div className="summary-center">
               <ScrambleTable 

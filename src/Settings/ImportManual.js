@@ -164,7 +164,6 @@ class ImportManual extends Component{
                     
                     let unix = null
                     if (this.props.date){
-                        // unix = new Date(this.props.date).getTime() / 1000
                         unix = moment(this.props.date, "YYYY-MM-DD").unix();
                     }
                     
@@ -231,9 +230,7 @@ class ImportManual extends Component{
                     setTimeout(()=>this.props.getSolves(),10)
                     setTimeout(()=>this.props.manageSolveData(), 10)
                     setTimeout(()=>this.props.addToUniqueSessionsDB(this.state.session), 10)
-                    setTimeout(()=>this.props.loadPastSessionSolveDataDeleteSession(this.state.session, this.props.uniqueSessionsDB.length),10)
-                    // setTimeout(()=>this.props.getSessionNumber(this.state.session), 100)
-                    // setTimeout(()=>this.props.getInterfaceSession(this.props.uniqueSessionsDB.length), 100)
+                    setTimeout(()=>this.props.loadPastSessionSolveData(this.state.session, this.props.uniqueSessionsDB.length, false),10)
                 }else{
                     this.setState({
                         isDateWrong: true,

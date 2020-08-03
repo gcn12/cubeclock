@@ -152,3 +152,17 @@ ul {
 #max-width {
   max-width: 600px;
 }
+
+@media only screen and (min-width: 800px) {
+  .small-text {
+    font-size: 1.2rem;
+    margin-left: 17%;
+    margin-right: 17%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .small-text {
+    font-size: 1rem;
+  }
+}
