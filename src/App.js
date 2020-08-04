@@ -645,8 +645,10 @@ class App extends Component {
       solvesInterface: [],
       isMobile: false,
       isGetSolvesOnMount: false,
+      isManualEnter: false,
     })
     document.body.style.backgroundColor = "whitesmoke"
+    localStorage.removeItem("manualenter")
     localStorage.removeItem("mobile")
     localStorage.removeItem("sessionconfirm")
     localStorage.removeItem("theme")
