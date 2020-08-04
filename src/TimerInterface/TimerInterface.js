@@ -12,6 +12,7 @@ import HeaderContent from './HeaderContent';
 import Footer from './Footer';
 import ButtonTop from './ButtonTop';
 import ButtonBottom from './ButtonBottom';
+import TimerClock from "./TimerClock"
 
 
 window.onkeydown = function(e) { 
@@ -395,7 +396,7 @@ class TimerInterface extends Component {
     }
   }
 
-  converter(input, isFormat) {
+  converter = (input, isFormat) => {
     const hours = Math.floor(input / 3600000)
     const minutes = Math.floor((input / 60000)%60)
     const seconds = Math.floor((input / 1000)%60)
@@ -462,6 +463,12 @@ class TimerInterface extends Component {
         twoFormatted: time,
       })
     }
+  }
+
+  sendToSolves = (input) => {
+    this.setState({
+      solves: input
+    })
   }
 
   isCountDownGoing = () => {
@@ -900,25 +907,29 @@ class TimerInterface extends Component {
   }
   
   beginAfterDelay = (e) => {
-    if(e.keyCode===32||(this.state.keyPressOne && this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))){
-      if(this.state.preventStartLoop%2===0){
-        const delay = () => {
-          this.setState({
-            beginAfterDelay: true,
-          })
+    if(!this.props.isManualEnter){
+      if(e.keyCode===32||(this.state.keyPressOne && this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))){
+        if(this.state.preventStartLoop%2===0){
+          const delay = () => {
+            this.setState({
+              beginAfterDelay: true,
+            })
+          }
+          const green = () => {
+            if(!this.props.isManualEnter){
+              this.props.isBackgroundLight ? 
+              document.getElementById("timer-color-change").style.color="RGB(58, 199, 81)"
+              :
+              document.getElementById("timer-color-change").style.color="RGB(49, 163, 68)"
+            }
+          }
+          // const red = () => {
+          //   document.getElementById("timer-color-change").style.color="RGB(255, 20, 20)"
+          // }
+          this.delayTimeout = setTimeout(()=> delay(), 300)
+          this.greenTimeout = setTimeout(()=> green(), 300)
+          // red()
         }
-        const green = () => {
-          this.props.isBackgroundLight ? 
-          document.getElementById("timer-color-change").style.color="RGB(58, 199, 81)"
-          :
-          document.getElementById("timer-color-change").style.color="RGB(49, 163, 68)"
-        }
-        // const red = () => {
-        //   document.getElementById("timer-color-change").style.color="RGB(255, 20, 20)"
-        // }
-        this.delayTimeout = setTimeout(()=> delay(), 300)
-        this.greenTimeout = setTimeout(()=> green(), 300)
-        // red()
       }
     }
   }
@@ -932,37 +943,41 @@ class TimerInterface extends Component {
           preventStartLoop: this.state.preventStartLoop-1
         })
       }
-      this.props.isBackgroundLight ? 
-      setTimeout(()=>document.getElementById("timer-color-change").style.color="black",250)
-      :
-      setTimeout(()=>document.getElementById("timer-color-change").style.color="white",250)
+      if(!this.props.isManualEnter){
+        this.props.isBackgroundLight ? 
+        setTimeout(()=>document.getElementById("timer-color-change").style.color="black",250)
+        :
+        setTimeout(()=>document.getElementById("timer-color-change").style.color="white",250)
+      }
     }
   }
 
   keyPressStart = (e) => {
-    if(e.keyCode===93||e.keyCode===91||e.keyCode===17){
-      if(this.state.countingDown){
-        this.startTimerDuringCountDown()
-      }
-      if (!this.state.going){
-        if (this.state.keyPressOne && this.state.keyPressTwo){
-          if(this.state.preventStartLoop % 2===0){
-            if(!this.state.preventCommand){
-              if(Number(this.state.countDown)===0){
-                this.setState({
-                  preventStartLoop: this.state.preventStartLoop+1,
-                  preventCommand: true
-                })
-                this.beginFunction()
-              }else{
-                this.countDownRunFunction()
-                this.setState({
-                  disableCommand: true,
-                  keyPressOne: false,
-                  keyPressTwo: false,
-                })
-                setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
-                this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
+    if(!this.props.isManualEnter){
+      if(e.keyCode===93||e.keyCode===91||e.keyCode===17){
+        if(this.state.countingDown){
+          this.startTimerDuringCountDown()
+        }
+        if (!this.state.going){
+          if (this.state.keyPressOne && this.state.keyPressTwo){
+            if(this.state.preventStartLoop % 2===0){
+              if(!this.state.preventCommand){
+                if(Number(this.state.countDown)===0){
+                  this.setState({
+                    preventStartLoop: this.state.preventStartLoop+1,
+                    preventCommand: true
+                  })
+                  this.beginFunction()
+                }else{
+                  this.countDownRunFunction()
+                  this.setState({
+                    disableCommand: true,
+                    keyPressOne: false,
+                    keyPressTwo: false,
+                  })
+                  setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
+                  this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
+                }
               }
             }
           }
@@ -1099,12 +1114,39 @@ class TimerInterface extends Component {
             megaminxScramble={this.props.megaminxScramble}
             multiBLDScramble={this.props.multiBLDScramble}
             />
-            
-          <div className="tc padding-top-most-of-interface">
-              <h1 id="timer-color-change" className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
-            </div>
+            <TimerClock 
+            id={this.props.id}
+            solvesApp={this.props.solves}
+            send={this.props.send}
+            getSolveFromInterface={this.props.getSolveFromInterface}
+            getInterfaceSolvesSingle={this.props.getInterfaceSolvesSingle}
+            solves={this.state.solves}
+            sendToSolves={this.sendToSolves}
+            sessionName={this.props.sessionName}
+            sessions={this.props.sessions}
+            twoFormatted={this.state.twoFormatted}
+            megaminxScramble={this.props.megaminxScramble}
+            scrambleRegular={this.props.scrambleRegular}
+            scramble={this.props.scramble}
+            multiBLDScramble={this.props.multiBLDScramble}
+            puzzleType={this.props.puzzleType}
+            displayTimeFormatted={this.state.displayTimeFormatted}
+            converter={this.converter}
+            isManualEnter={this.props.isManualEnter}
+            timerFormatted={this.state.timerFormatted}
+            />
+            {/* {this.props.isManualEnter ? 
+              <div className="tc padding-top-most-of-interface" style={{paddingBottom:"10px"}}>
+                <input type="text" style={{background:"RGB(23,23,23)", outline:"none", color:"white", height:"120px", width:"300px", fontSize:"100px"}}></input>
+              </div>
+            :
+              <div className="tc padding-top-most-of-interface">
+                  <h1 id="timer-color-change" className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.state.timerFormatted}</h1>
+              </div>
+            } */}
           </div>
           <ButtonTop 
+          isManualEnter={this.props.isManualEnter}
           isMobileGoing={this.props.isMobileGoing}
           isMobile={this.props.isMobile}
           beginMobile={this.beginMobile}
@@ -1130,6 +1172,7 @@ class TimerInterface extends Component {
             </Scroll >
           }
           <ButtonBottom 
+          isManualEnter={this.props.isManualEnter}
           isMobileGoing={this.props.isMobileGoing}
           isMobile={this.props.isMobile}
           beginMobile={this.beginMobile}

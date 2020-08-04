@@ -1052,6 +1052,7 @@ class Dashboard extends Component{
                 )
                 :
                 <Settings 
+                manualEnter={this.props.manualEnter}
                 loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                 solvesApp={this.props.solves}
                 offlineState={this.props.offlineState}

@@ -45,6 +45,7 @@ class App extends Component {
     megaminxScramble: "",
     isDisplayScrambleMedium: false,
     isDisplayScrambleSmall: false,
+    isManualEnter: false,
   }
 
   receive = () => {
@@ -170,7 +171,9 @@ class App extends Component {
             aoNum2: data.aonumber2, 
             isTimerDisabled: data.disabletimer,
             isOffline: data.offline,
+            isManualEnter: data.manualenter,
           })
+          localStorage.setItem("manualenter", JSON.stringify(data.manualenter))
           localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
           localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
           localStorage.setItem("countDown", JSON.stringify(data.inspection))
@@ -259,6 +262,26 @@ class App extends Component {
     }
     this.setState({
       isTimerDisabled: !this.state.isTimerDisabled
+    })
+  }
+
+  manualEnter = () => {
+    //Toggles session delete confirm in database
+    let offline = JSON.parse(localStorage.getItem("offline"))
+    if(offline){
+      localStorage.setItem("manualenter", JSON.stringify(!this.state.isManualEnter))
+    }else{
+      fetch("https://blooming-hollows-98248.herokuapp.com/manualenter", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          id: this.state.user.id,
+          manualenter: !this.state.isManualEnter,
+        })
+      }).then(response=>response.json())
+    }
+    this.setState({
+      isManualEnter: !this.state.isManualEnter
     })
   }
 
@@ -561,7 +584,8 @@ class App extends Component {
       isTimerDisabled: data.disabletimer,
       isConfirmSolveDelete: data.confirmsolve,
       isConfirmSessionDelete: data.confirmsession,
-      isOffline: data.offline
+      isOffline: data.offline,
+      isManualEnter: data.manualenter,
     })
     if(data.theme){
       document.body.style.backgroundColor = "whitesmoke"
@@ -569,6 +593,7 @@ class App extends Component {
       document.body.style.backgroundColor = "rgb(23,23,23)"
     }
     this.receive()
+    localStorage.setItem("manualenter", JSON.stringify(data.manualenter))
     localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
     localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
     localStorage.setItem("countDown", JSON.stringify(data.inspection))
@@ -950,6 +975,7 @@ class App extends Component {
           :
           <div>
             <TimerInterface 
+            isManualEnter={this.state.isManualEnter}
             clearScramble={this.clearScramble}
             isDisplayScrambleMedium={this.props.isDisplayScrambleMedium}
             isDisplayScrambleSmall={this.props.isDisplayScrambleSmall}
@@ -1005,6 +1031,7 @@ class App extends Component {
         :
         this.state.isDashboard ?
           <Dashboard 
+          manualEnter={this.manualEnter}
           removeFromSolvesInterface={this.removeFromSolvesInterface}
           scramble={this.props.scramble}
           offlineState={this.state.offline}

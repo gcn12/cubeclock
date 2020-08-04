@@ -22,6 +22,12 @@ const Toggles = props => {
             </li>
             <br></br>
             <li>
+                <label htmlFor="manualenter" className="label1"><h4>Manually enter times (when using StackMat)</h4></label>
+                <input type="checkbox" id="manualenter" className="checkbox input1" onClick={props.isManualEnter} />  
+                <label htmlFor="manualenter" className="switch"></label>
+            </li>
+            <br></br>
+            <li>
                 <label htmlFor="disabletimer" className="label1"><h4>Deactivate timer during solve</h4></label>
                 <input type="checkbox" id="disabletimer" className="checkbox input1" onClick={props.isDisableTimer} />  
                 <label htmlFor="disabletimer" className="switch"></label>

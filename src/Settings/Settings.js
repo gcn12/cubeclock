@@ -158,6 +158,17 @@ class Settings extends Component{
         }
     }
 
+    isManualEnter = () => {
+        // toggleIsManualEnter
+        this.props.manualEnter()
+        if(document.getElementById("manualenter").checked===true){
+            localStorage.setItem("manualenter", JSON.stringify(true))
+        }
+        if(document.getElementById("manualenter").checked===false){
+            localStorage.setItem("manualenter", JSON.stringify(false))
+        }
+    }
+
     isConfirmSession = () => {
         this.props.confirmSessionDelete()
         if(document.getElementById("sessionconfirm").checked===true){
@@ -338,6 +349,13 @@ class Settings extends Component{
         }
     }
 
+    getManualEnterOnMount = () => {
+        if(localStorage.manualenter) {
+            let x = JSON.parse(localStorage.getItem("manualenter"))
+            document.getElementById("manualenter").checked=x
+        }
+    }
+
     getMobileOnMount = () => {
         if(localStorage.mobile) {
             let x = JSON.parse(localStorage.getItem("mobile"))
@@ -433,6 +451,7 @@ class Settings extends Component{
     }
 
     componentDidMount() {
+        this.getManualEnterOnMount()
         this.getOffline()
         this.getConfirmSolveOnMount()
         this.getConfirmSessionOnMount()
@@ -502,6 +521,7 @@ class Settings extends Component{
                 />
 
                 <Toggles 
+                isManualEnter={this.isManualEnter}
                 isDownloading={this.state.isDownloading}
                 isUploading={this.state.isUploading}
                 isMobile={this.isMobile}
