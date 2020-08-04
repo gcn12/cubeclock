@@ -168,7 +168,7 @@ class TimerClock extends Component{
           return(
               this.props.isManualEnter ? 
               <div className="tc padding-top-most-of-interface" style={{paddingBottom:"10px"}}>
-                <input autoComplete="off"  onChange={this.timeInput} className="tc" autoFocus="autofocus"  id="manualInput" type="text" style={{background:"RGB(23,23,23)", outline:"none", color:"white", height:"120px", width:"300px", fontSize:"100px"}}></input>
+                <input autoComplete="off"  onChange={this.timeInput} className="tc" autoFocus="autofocus"  id="manualInput" type="tel" style={{background:"RGB(23,23,23)", outline:"none", color:"white", height:"120px", width:"300px", fontSize:"100px"}}></input>
             </div>
               :
               <div className="tc padding-top-most-of-interface">
