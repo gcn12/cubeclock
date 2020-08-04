@@ -1115,6 +1115,7 @@ class TimerInterface extends Component {
             multiBLDScramble={this.props.multiBLDScramble}
             />
             <TimerClock 
+            isBackgroundLight={this.props.isBackgroundLight}
             id={this.props.id}
             solvesApp={this.props.solves}
             send={this.props.send}
