@@ -173,6 +173,7 @@ class App extends Component {
             isOffline: data.offline,
             isManualEnter: data.manualenter,
           })
+          let theme = JSON.parse(localStorage.getItem("theme"))
           localStorage.setItem("manualenter", JSON.stringify(data.manualenter))
           localStorage.setItem("disabletimer", JSON.stringify(data.disabletimer))
           localStorage.setItem("inspectionTime", JSON.stringify(data.inspectiontime))
@@ -185,7 +186,6 @@ class App extends Component {
           localStorage.setItem("sessionconfirm", JSON.stringify(data.confirmsession))
           localStorage.setItem("mobile", JSON.stringify(data.mobile))
           localStorage.setItem("offline", JSON.stringify(data.offline))
-          let theme = JSON.parse(localStorage.getItem("theme"))
           if (data.theme !== theme){
             this.setState({
               isBackgroundLight: data.theme,
