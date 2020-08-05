@@ -380,7 +380,7 @@ class TimerInterface extends Component {
   }
 
   beginAfterDelaySafety = (e) => {
-    if (e.keyCode===32||(this.state.keyPressOne && this.state.keyPressTwo && (e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
+    if (e.keyCode===32||((e.keyCode===91||e.keyCode===93||e.keyCode===17))) {
       clearTimeout(this.delayTimeout)
       clearTimeout(this.greenTimeout)
       if(!this.state.preventStartLoop){
@@ -986,6 +986,11 @@ class TimerInterface extends Component {
         preventStartLoop: false
       })
     }
+    const stopDelay = () => {
+      this.setState({
+        beginAfterDelay: false,
+      })
+    }
     if(!this.props.isManualEnter){
       if(e.keyCode===93||e.keyCode===91||e.keyCode===17){
         if(this.state.preventStartLoop){
@@ -1000,23 +1005,28 @@ class TimerInterface extends Component {
           if (this.state.keyPressOne && this.state.keyPressTwo){
             if(!this.state.preventStartLoop){
               if(!this.state.preventCommand){
-                if(Number(this.state.countDown)===0){
-                  this.setState({
-                    //here
-                    preventStartLoop: true,
-                    preventCommand: true
-                  })
-                  this.beginFunction()
+                if(this.state.beginAfterDelay){
+
+                  if(Number(this.state.countDown)===0){
+                    this.setState({
+                      //here
+                      preventStartLoop: true,
+                      preventCommand: true
+                    })
+                    this.beginFunction() 
+                  }else{
+                    this.countDownRunFunction()
+                    this.setState({
+                      preventStartLoop: true,
+                      disableCommand: true,
+                      keyPressOne: false,
+                      keyPressTwo: false,
+                    })
+                    setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
+                    this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
+                  }
                 }else{
-                  this.countDownRunFunction()
-                  this.setState({
-                    preventStartLoop: true,
-                    disableCommand: true,
-                    keyPressOne: false,
-                    keyPressTwo: false,
-                  })
-                  setTimeout(()=>this.keyPressTrue(), this.props.inspectionTime*1000)
-                  this.commandFalse = setTimeout(()=>this.disableCommandFalse(), this.props.inspectionTime*1000)
+                  setTimeout(()=>clearTimeout(stopDelay()),301)
                 }
               }
             }
@@ -1111,13 +1121,13 @@ class TimerInterface extends Component {
   }
 
   test = () => {
-    console.log(this.state.preventStartLoop)
+    console.log(this.state.beginAfterDelay)
   }
 
   render() {   
     return (
       <div>
-        {/* <button onClick={this.test}>test</button> */}
+        <button onClick={this.test}>test</button>
         {
         this.state.isCountDownGoing ? 
         <CountDown 
