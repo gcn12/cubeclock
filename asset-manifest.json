@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/cubeclock/static/css/main.32976b6c.chunk.css",
+    "main.js": "/cubeclock/static/js/main.de36ce1a.chunk.js",
+    "main.js.map": "/cubeclock/static/js/main.de36ce1a.chunk.js.map",
+    "runtime-main.js": "/cubeclock/static/js/runtime-main.c4d6d9f6.js",
+    "runtime-main.js.map": "/cubeclock/static/js/runtime-main.c4d6d9f6.js.map",
+    "static/css/2.1192a77d.chunk.css": "/cubeclock/static/css/2.1192a77d.chunk.css",
+    "static/js/2.ded9bde3.chunk.js": "/cubeclock/static/js/2.ded9bde3.chunk.js",
+    "static/js/2.ded9bde3.chunk.js.map": "/cubeclock/static/js/2.ded9bde3.chunk.js.map",
+    "index.html": "/cubeclock/index.html",
+    "precache-manifest.d97b1e7c55ed30887222c0e8570a8670.js": "/cubeclock/precache-manifest.d97b1e7c55ed30887222c0e8570a8670.js",
+    "service-worker.js": "/cubeclock/service-worker.js",
+    "static/css/2.1192a77d.chunk.css.map": "/cubeclock/static/css/2.1192a77d.chunk.css.map",
+    "static/css/main.32976b6c.chunk.css.map": "/cubeclock/static/css/main.32976b6c.chunk.css.map",
+    "static/js/2.ded9bde3.chunk.js.LICENSE.txt": "/cubeclock/static/js/2.ded9bde3.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c4d6d9f6.js",
+    "static/css/2.1192a77d.chunk.css",
+    "static/js/2.ded9bde3.chunk.js",
+    "static/css/main.32976b6c.chunk.css",
+    "static/js/main.de36ce1a.chunk.js"
+  ]
+}
