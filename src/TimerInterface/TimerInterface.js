@@ -1127,7 +1127,7 @@ class TimerInterface extends Component {
   render() {   
     return (
       <div>
-        <button onClick={this.test}>test</button>
+        {/* <button onClick={this.test}>test</button> */}
         {
         this.state.isCountDownGoing ? 
         <CountDown 
