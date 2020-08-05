@@ -309,12 +309,14 @@ class TimerInterface extends Component {
     if(e.keyCode === 32){
       if(this.state.countDown>0){
         if(!this.state.test){
-          this.countDownRunFunction()
-          if(this.state.going){
-            this.setState({
-              test: true,
-              
-            })
+          if(this.state.beginAfterDelay){
+            this.countDownRunFunction()
+            if(this.state.going){
+              this.setState({
+                test: true,
+                
+              })
+            }
           }
         }else{
           this.startTimerDuringCountDown()
@@ -391,10 +393,12 @@ class TimerInterface extends Component {
       }
       if(document.getElementById("timer-color-change")){
         if(!this.props.isManualEnter){
-          this.props.isBackgroundLight ? 
-          setTimeout(()=>document.getElementById("timer-color-change").style.color="black",250)
-          :
-          setTimeout(()=>document.getElementById("timer-color-change").style.color="white",250)
+          if(!this.state.countingDown){
+            this.props.isBackgroundLight ? 
+            setTimeout(()=>document.getElementById("timer-color-change").style.color="black",250)
+            :
+            setTimeout(()=>document.getElementById("timer-color-change").style.color="white",250)
+          }
         }
       }
     }
