@@ -905,6 +905,7 @@ class TimerInterface extends Component {
         beginAfterDelayMobile: true,
       })
     }
+    // this.delayMobile = setTimeout(()=> beginAfterDelayMobile(),275)
     this.changeColor = setTimeout(()=>colorChange(), 275)
   }
 
@@ -1125,7 +1126,7 @@ class TimerInterface extends Component {
   }
 
   test = () => {
-    console.log(this.state.beginAfterDelay)
+    console.log(this.state.beginAfterDelayMobile)
   }
 
   render() {   
