@@ -623,10 +623,10 @@ class TimerInterface extends Component {
     clearTimeout(this.changeColor)
     this.getCountDownNumber()
     this.preventStartLoopMobile()
-    if(this.props.inspectionTime===0){
-      if (!this.state.going) {
-        if(this.state.preventStartLoopMobile % 2===0){
-          if(this.state.beginAfterDelayMobile){
+    if(this.state.beginAfterDelayMobile){
+      if(this.props.inspectionTime===0){
+        if (!this.state.going) {
+          if(this.state.preventStartLoopMobile % 2===0){
             if(this.props.isBackgroundLight){
               document.getElementById("colorClick").style.backgroundColor="whitesmoke";
               document.getElementById("colorClick2").style.backgroundColor="whitesmoke";
@@ -655,9 +655,9 @@ class TimerInterface extends Component {
             })
           }
         }
+      }else{
+        this.countDownRunMobile()
       }
-    }else{
-      this.countDownRunMobile()
     }
   }
 
