@@ -57,6 +57,9 @@ class App extends Component {
     if(this.state.user.id.length>0){
       if(!this.isGetSolvesOnMount){
         if(!offline){
+          this.setState({
+            solves: "loading..."
+          })
           fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
             method: "post",
             headers: {"Content-Type": "application/json"},

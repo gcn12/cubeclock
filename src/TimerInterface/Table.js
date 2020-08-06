@@ -228,12 +228,27 @@ const Body = (props) => {
             </tr>
         )
     })
+
+
+    // console.log(props.solvesApp)
+    // if(props.solvesApp){
+    //     if(props.solvesApp==="loading..."){
+    //         return <h1><tbody>Loading...</tbody></h1>
+    //     }else{
+    //         return <tbody>{rows}</tbody>
+    //     }
+    // }
+
     return <tbody>{rows}</tbody>
+
 }
 
 const Table = props => {
     const {solves, removeTime, plusTwo} = props
     return(
+    props.solvesApp==="loading..." ? 
+    <h1 className="light">Loading...</h1>
+    :
         <table id="hello" className="light">
             <thead>
                 <tr>
@@ -269,6 +284,7 @@ const Table = props => {
                     </tr>
             </thead>
             <Body 
+            solvesApp={props.solvesApp}
             id={props.id}
             aoNum={props.aoNum}
             aoNum2={props.aoNum2}

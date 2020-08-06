@@ -1210,6 +1210,7 @@ class TimerInterface extends Component {
             :
             <Scroll isBackgroundLight={this.props.isBackgroundLight} isMobile={this.props.isMobile}>
               <Table 
+              solvesApp={this.props.solves}
               id={this.props.id}
               aoNum2={this.props.aoNum2} 
               aoNum={this.props.aoNum} 
