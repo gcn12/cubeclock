@@ -897,20 +897,22 @@ class TimerInterface extends Component {
   }
 
   color = () => {
-    const colorChange = () => {
-      if(this.props.isBackgroundLight){
-        document.getElementById("colorClick").style.backgroundColor="rgb(224, 84, 74)";
-        document.getElementById("colorClick2").style.backgroundColor="rgb(224, 84, 74)";
-      }else{
-        document.getElementById("colorClick").style.backgroundColor="rgb(135, 47, 41)";
-        document.getElementById("colorClick2").style.backgroundColor="rgb(135, 47, 41)";
+    if(this.props.solves!=="loading..."){
+      const colorChange = () => {
+        if(this.props.isBackgroundLight){
+          document.getElementById("colorClick").style.backgroundColor="rgb(224, 84, 74)";
+          document.getElementById("colorClick2").style.backgroundColor="rgb(224, 84, 74)";
+        }else{
+          document.getElementById("colorClick").style.backgroundColor="rgb(135, 47, 41)";
+          document.getElementById("colorClick2").style.backgroundColor="rgb(135, 47, 41)";
+        }
+        this.setState({
+          beginAfterDelayMobile: true,
+        })
       }
-      this.setState({
-        beginAfterDelayMobile: true,
-      })
+      // this.delayMobile = setTimeout(()=> beginAfterDelayMobile(),275)
+      this.changeColor = setTimeout(()=>colorChange(), 275)
     }
-    // this.delayMobile = setTimeout(()=> beginAfterDelayMobile(),275)
-    this.changeColor = setTimeout(()=>colorChange(), 275)
   }
 
   colorRegular = () => {
