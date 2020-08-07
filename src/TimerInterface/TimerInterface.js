@@ -103,20 +103,22 @@ class TimerInterface extends Component {
   }
 
   beginFunction = () => {
-    this.props.isNewSessionFunction(false)
-    this.setState({
-        final: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-        milliseconds: 0,
-        start: Date.now(),
-        going: true,
-    })
-    this.interval = setInterval(()=>this.time(), 1)
-    this.interval2 = setInterval(()=>this.converter(this.state.final) ,1)
-    if (!this.props.isTimerDisabled){
-      this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+    if(this.props.solves!=="loading..."){
+      this.props.isNewSessionFunction(false)
+      this.setState({
+          final: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          milliseconds: 0,
+          start: Date.now(),
+          going: true,
+      })
+      this.interval = setInterval(()=>this.time(), 1)
+      this.interval2 = setInterval(()=>this.converter(this.state.final) ,1)
+      if (!this.props.isTimerDisabled){
+        this.interval3 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+      }
     }
   }
 
@@ -620,43 +622,45 @@ class TimerInterface extends Component {
   }
 
   beginMobile = () => {
-    clearTimeout(this.changeColor)
-    this.getCountDownNumber()
-    this.preventStartLoopMobile()
-    if(this.state.beginAfterDelayMobile){
-      if(this.props.inspectionTime===0){
-        if (!this.state.going) {
-          if(this.state.preventStartLoopMobile % 2===0){
-            if(this.props.isBackgroundLight){
-              document.getElementById("colorClick").style.backgroundColor="whitesmoke";
-              document.getElementById("colorClick2").style.backgroundColor="whitesmoke";
-            }else{
-              document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
-              document.getElementById("colorClick2").style.backgroundColor="rgb(23, 23, 23)";
+    if(this.props.solves!=="loading..."){
+      clearTimeout(this.changeColor)
+      this.getCountDownNumber()
+      this.preventStartLoopMobile()
+      if(this.state.beginAfterDelayMobile){
+        if(this.props.inspectionTime===0){
+          if (!this.state.going) {
+            if(this.state.preventStartLoopMobile % 2===0){
+              if(this.props.isBackgroundLight){
+                document.getElementById("colorClick").style.backgroundColor="whitesmoke";
+                document.getElementById("colorClick2").style.backgroundColor="whitesmoke";
+              }else{
+                document.getElementById("colorClick").style.backgroundColor="rgb(23, 23, 23)";
+                document.getElementById("colorClick2").style.backgroundColor="rgb(23, 23, 23)";
+              }
+              this.props.isNewSessionFunction(false)
+              this.setState({
+                final: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
+                milliseconds: 0,
+                start: Date.now(),
+                going: true,
+                isDisableSpacebar: true,
+              })
+              this.interval4 = setInterval(()=>this.time(), 1)
+              this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
+              if (!this.props.isTimerDisabled){
+                this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
+              }
+              this.setState({
+                isMobileGoing: true
+              })
             }
-            this.props.isNewSessionFunction(false)
-            this.setState({
-              final: 0,
-              hours: 0,
-              minutes: 0,
-              seconds: 0,
-              milliseconds: 0,
-              start: Date.now(),
-              going: true,
-              isDisableSpacebar: true,
-            })
-            this.interval4 = setInterval(()=>this.time(), 1)
-            this.interval5 = setInterval(()=>this.converter(this.state.final) ,1)
-            if (!this.props.isTimerDisabled){
-              this.interval6 = setInterval(()=>this.timerFormatted("timerFormatted") ,1)
-            }
-            this.setState({
-              isMobileGoing: true
-            })
           }
+        }else{
+          this.countDownRunMobile()
         }
-      }else{
-        this.countDownRunMobile()
       }
     }
   }
