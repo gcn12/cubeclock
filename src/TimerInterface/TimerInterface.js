@@ -623,10 +623,11 @@ class TimerInterface extends Component {
 
   beginMobile = () => {
     if(this.props.solves!=="loading..."){
+      
       clearTimeout(this.changeColor)
       this.getCountDownNumber()
-      this.preventStartLoopMobile()
       if(this.state.beginAfterDelayMobile){
+        this.preventStartLoopMobile()
         if(this.props.inspectionTime===0){
           if (!this.state.going) {
             if(this.state.preventStartLoopMobile % 2===0){
