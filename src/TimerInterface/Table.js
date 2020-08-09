@@ -170,7 +170,8 @@ const Body = (props) => {
                     <button style={{color: props.styles ? "rgb(23, 23, 23)" : "whitesmoke", 
                     backgroundColor: props.styles ? "whitesmoke" : "rgb(23, 23, 23)", 
                     borderColor: props.styles ?  "rgb(23, 23, 23)" : "whitesmoke"}} 
-                    className="button2 remove" onClick={()=>props.removeTime(index, row.solveid, row.milliseconds, row.solve, (props.solves.length - index) +  ".")}>Remove</button>
+                    className="button2 remove" onClick={row.isplustwo ? ()=>props.removeTime(index, row.solveid, row.milliseconds, row.plustwo, (props.solves.length - index) +  ".") : ()=>props.removeTime(index, row.solveid, row.milliseconds, row.solve, (props.solves.length - index) +  ".")}>Remove</button>
+                
                 </h2></td>
                 <td><h2>
                     <button type="button" style={{color: 
