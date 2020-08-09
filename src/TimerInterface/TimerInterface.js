@@ -363,7 +363,6 @@ class TimerInterface extends Component {
           }
           const green = () => {
             if(document.getElementById("timer-color-change")){
-              
               if(!this.props.isManualEnter){
                 this.props.isBackgroundLight ? 
                 document.getElementById("timer-color-change").style.color="RGB(58, 199, 81)"

@@ -164,21 +164,21 @@ class TimerClock extends Component{
       }
 
       
-      render(){
-          return(
-              this.props.isManualEnter ? 
-              <div className="tc padding-top-most-of-interface" style={{paddingBottom:"10px"}}>
+    render(){
+        return(
+            this.props.isManualEnter ? 
+            <div className="tc padding-top-most-of-interface" style={{paddingBottom:"10px"}}>
                 <input autoComplete="off"  onChange={this.timeInput} className="tc" autoFocus="autofocus"  id="manualInput" type="number" style={{color: this.props.isBackgroundLight ? "black" : "white",background: this.props.isBackgroundLight ? "whitesmoke" : "RGB(23,23,23)", outline:"none", height:"120px", width:"300px", fontSize:"100px"}}></input>
             </div>
-              :
-              <div className="tc padding-top-most-of-interface">
+            :
+            <div className="tc padding-top-most-of-interface" style={{color: this.props.isBackgroundLight ?  "black" : "white"}}>
                 <h1 id="timer-color-change" className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.props.timerFormatted}</h1>
             </div>
-    )
-}
-        componentDidMount() {
-          document.addEventListener("keydown", this.submit)
-        }
+        )
+    }
+    componentDidMount() {
+        document.addEventListener("keydown", this.submit)
+    }
 }
 
 export default TimerClock
