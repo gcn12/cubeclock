@@ -828,10 +828,10 @@ class TimerInterface extends Component {
     })
   }
 
-  removeTime = (index, solveid, milliseconds) => {
+  removeTime = (index, solveid, milliseconds, solve, solveNumber) => {
     //removes time from interface only
     if (this.props.isConfirmSolveDelete) {
-      let confirm = window.confirm("Are you sure you would like to remove this solve? Action cannot be undone.")
+      let confirm = window.confirm(`Solve ${solveNumber} \n${solve} \nAre you sure you would like to remove this solve? Action cannot be undone.`)
       if (confirm){
         this.props.removeSolveFromState(solveid, milliseconds)
       }

@@ -33,17 +33,6 @@ class Card extends Component {
         }
     }
 
-    deleteSessionWithConfirm = () =>{
-        if (this.props.isConfirmSessionDelete){
-            let confirm = window.confirm("Are you sure you would like to remove this session? Action cannot be undone.")
-            if (confirm) {
-                this.deleteSession()
-            }
-        }else{
-            this.deleteSession()
-        }
-    }
-
     removeSessionDB = () =>{
         this.props.removeFromUniqueSessionsDB(this.props.uniqueSession) 
     }
@@ -55,9 +44,10 @@ class Card extends Component {
             await this.props.getSolves()
         };
         if (this.props.isConfirmSessionDelete){
-            let confirm = window.confirm("Are you sure you would like to remove this session? Action cannot be undone.")
+            let confirm = window.confirm(`Are you sure you would like to remove session ${this.props.sessionDisplayName}? Action cannot be undone.`)
             if (confirm) {
                 runDelete()
+                // this.props.cardSortValue()
             }
         }else{
             runDelete()

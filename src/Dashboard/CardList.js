@@ -340,6 +340,7 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        cardSortValue={this.props.cardSortValue}
                         loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                         removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                         send={this.props.send}
