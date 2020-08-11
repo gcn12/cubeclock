@@ -1118,6 +1118,7 @@ class App extends Component {
         :
         (this.state.isRegistered ?
           <Register  
+          addToUniqueSessionsDB={this.addToUniqueSessionsDB}
           clearSolvesState={this.clearSolvesState}
           isBackgroundLight={this.state.isBackgroundLight} 
           signedIn={this.signedIn} 
