@@ -70,6 +70,8 @@ class App extends Component {
           .then(data=>{
             let parsedData = []
             if(data.length>0){
+              // console.log((data[0].solves))
+              // console.log(JSON.parse("{\"solves\":\"{\\\"allsolves\\\":[{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"0.369\\\",\\\"scramble\\\":\\\"R U2 L2 U2 F R U L B2 D B2 R2 D2 F' R' U L2 U2 B' D2 F L U2 \\\",\\\"milliseconds\\\":\\\"369\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-08\\\",\\\"solveid\\\":\\\"1596938498865\\\",\\\"plustwo\\\":\\\"2.369\\\",\\\"millisecondstwo\\\":\\\"2369\\\",\\\"session\\\":1,\\\"unix\\\":\\\"1596938499\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"0.303\\\",\\\"scramble\\\":\\\"B U2 L U' B2 R' U' B L U2 B' L2 D B2 R U' B R U L' U2 B2 R2 \\\",\\\"milliseconds\\\":\\\"303\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-08\\\",\\\"solveid\\\":\\\"1596938563803\\\",\\\"plustwo\\\":\\\"2.303\\\",\\\"millisecondstwo\\\":\\\"2303\\\",\\\"session\\\":1,\\\"unix\\\":\\\"1596938564\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"18.831\\\",\\\"scramble\\\":\\\"B' L U2 F L U2 B' L D2 B2 L' D' F' L' D2 B2 R D B L' D2 F' L2 \\\",\\\"milliseconds\\\":\\\"18831\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-10\\\",\\\"solveid\\\":\\\"1597110976183\\\",\\\"plustwo\\\":\\\"20.831\\\",\\\"millisecondstwo\\\":\\\"20831\\\",\\\"session\\\":2,\\\"unix\\\":\\\"1597110976\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"22.060\\\",\\\"scramble\\\":\\\"D2 L2 F2 U F' L' U B' R D2 F' R D L2 D2 F2 L' U B D2 L2 D B \\\",\\\"milliseconds\\\":\\\"22060\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-10\\\",\\\"solveid\\\":\\\"1597111029899\\\",\\\"plustwo\\\":\\\"24.060\\\",\\\"millisecondstwo\\\":\\\"24060\\\",\\\"session\\\":2,\\\"unix\\\":\\\"1597111030\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"18.222\\\",\\\"scramble\\\":\\\"B U2 L' D' B' R2 D' L2 D2 F L U' F D2 L U2 F2 R2 D' L' F D2 B \\\",\\\"milliseconds\\\":\\\"18222\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-10\\\",\\\"solveid\\\":\\\"1597111085706\\\",\\\"plustwo\\\":\\\"20.222\\\",\\\"millisecondstwo\\\":\\\"20222\\\",\\\"session\\\":2,\\\"unix\\\":\\\"1597111086\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"24.099\\\",\\\"scramble\\\":\\\"L' B' D' L U2 B L U B D' L2 B D2 R2 U F' D B R U2 B L U2 \\\",\\\"milliseconds\\\":\\\"24099\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-10\\\",\\\"solveid\\\":\\\"1597111142679\\\",\\\"plustwo\\\":\\\"26.099\\\",\\\"millisecondstwo\\\":\\\"26099\\\",\\\"session\\\":2,\\\"unix\\\":\\\"1597111143\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"27.765\\\",\\\"scramble\\\":\\\"F2 U B D F R D F2 R D2 B R' U2 F2 R' D' B L' D2 F R' U2 L2 \\\",\\\"milliseconds\\\":\\\"27765\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":true,\\\"date\\\":\\\"2020-08-10\\\",\\\"solveid\\\":\\\"1597111197697\\\",\\\"plustwo\\\":\\\"29.765\\\",\\\"millisecondstwo\\\":\\\"29765\\\",\\\"session\\\":2,\\\"unix\\\":\\\"1597111198\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null},{\\\"id\\\":\\\")c#|=23U63b$7^\\\",\\\"solve\\\":\\\"26.828\\\",\\\"scramble\\\":\\\"F U R U B' R2 U2 F L2 U' B' R U2 B' D2 F R2 D' B L2 D' F2 L \\\",\\\"milliseconds\\\":\\\"26828\\\",\\\"isplustwo\\\":false,\\\"isdnf\\\":false,\\\"date\\\":\\\"2020-08-10\\\",\\\"solveid\\\":\\\"1597111347463\\\",\\\"plustwo\\\":\\\"28.828\\\",\\\"millisecondstwo\\\":\\\"28828\\\",\\\"session\\\":2,\\\"unix\\\":\\\"1597111347\\\",\\\"puzzle\\\":\\\"3x3\\\",\\\"sessionname\\\":null}]}\"}"))
               if(data[0].solves){
                 parsedData = JSON.parse(data[0].solves).allsolves
               }
@@ -951,13 +953,42 @@ class App extends Component {
   }
   
   test = () => {
-    console.log(this.state.solves)
+    console.log(this.state.tempSolves[0].solves)
+    // console.log(this.state.user.id)
+  }
+
+  get = () => {
+    fetch("https://blooming-hollows-98248.herokuapp.com/receive",{
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.usertemp,
+      })
+    }).then(response=>response.json())
+    .then(data=>{
+      this.setState({
+        tempSolves: data
+      })
+    })
+  }
+
+  send = () => {
+    fetch("https://blooming-hollows-98248.herokuapp.com/sendtemp",{
+      method: "put",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        id: this.state.usertemp,
+        solves: [this.state.tempSolvesSend]
+      })
+    }).then(response=>response.json())
   }
 
     render() {   
       return (
       <div> 
-        {/* <button onClick={this.test}>uniqueSessionsDB</button>  */}
+        {/* <button onClick={this.get}>get</button> 
+        <button onClick={this.send}>send</button> 
+        <button onClick={this.test}>test</button> */}
         { this.state.isHome 
         ? 
         (this.state.isCreateNewSession ? 

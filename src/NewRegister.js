@@ -94,14 +94,14 @@ class Register extends Component {
                         this.props.signIn()
                         this.props.signedIn()
                         this.props.loadUser(data)
-                        fetch("https://blooming-hollows-98248.herokuapp.com/register2", {
-                            method: "post",
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({
-                                id: key,
-                            })
-                        })
-                        .then(response => response.json())
+                        // fetch("https://blooming-hollows-98248.herokuapp.com/register2", {
+                        //     method: "post",
+                        //     headers: {"Content-Type": "application/json"},
+                        //     body: JSON.stringify({
+                        //         id: key,
+                        //     })
+                        // })
+                        // .then(response => response.json())
                     }
                 })
             }else{
