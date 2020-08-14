@@ -172,7 +172,7 @@ class TimerClock extends Component{
             </div>
             :
             <div className="tc padding-top-most-of-interface" style={{color: this.props.isBackgroundLight ?  "black" : "white"}}>
-                <h1 id="timer-color-change" className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.props.timerFormatted}</h1>
+                <h1 style={{color: this.props.isBackgroundLight ?  "black" : "white"}} id="timer-color-change" className="br3 ba mv4 w-50 w-25-1 mw5 center">{this.props.timerFormatted}</h1>
             </div>
         )
     }
