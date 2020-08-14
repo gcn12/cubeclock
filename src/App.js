@@ -972,16 +972,16 @@ class App extends Component {
     })
   }
 
-  send = () => {
-    fetch("https://blooming-hollows-98248.herokuapp.com/sendtemp",{
-      method: "put",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        id: this.state.usertemp,
-        solves: [this.state.tempSolvesSend]
-      })
-    }).then(response=>response.json())
-  }
+  // send = () => {
+  //   fetch("https://blooming-hollows-98248.herokuapp.com/sendtemp",{
+  //     method: "put",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       id: this.state.usertemp,
+  //       solves: [this.state.tempSolvesSend]
+  //     })
+  //   }).then(response=>response.json())
+  // }
 
     render() {   
       return (
