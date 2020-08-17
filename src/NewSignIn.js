@@ -29,6 +29,12 @@ class SignIn extends Component {
         })
     }
 
+    submitWithEnter = (e) => {
+        if(e.keyCode===13&&this.state.username&&this.state.password){
+            this.submit()
+        }
+    }
+
     submit = () => {
         this.timeout = setTimeout(()=> this.isSigningIn(), 1000)
         fetch("https://blooming-hollows-98248.herokuapp.com/signin", {
@@ -105,6 +111,10 @@ class SignIn extends Component {
             </div>
         )
     }
+    componentDidMount(){
+        document.addEventListener("keydown", this.submitWithEnter)
+    }
 }
+
 
 export default SignIn
