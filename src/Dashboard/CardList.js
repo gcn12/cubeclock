@@ -138,7 +138,6 @@ class CardList extends Component {
  
     render() {
         let sessionDisplayName = (this.props.solvesSorted.length+1)
-        console.log(sessionDisplayName)
         return(
             <div>
                 {
@@ -204,11 +203,6 @@ class CardList extends Component {
                         ao10000 = this.average(solve, 10000)
                         ao10000BestAndWorst = this.bestWorstAverage(solve,10000)
                     }
-                    // console.log(sessionDisplayName-2)
-                    // let puzzleBest = [...this.props.puzzleBest].reverse()[sessionDisplayName-2]
-                    // let puzzleBest = this.props.puzzleBest[i]
-                    // console.log(this.props.puzzleBest)
-                    // let puzzleWorst = this.props.puzzleWorst[i]
                     let session = -1
                     let date = ""
                     let rawDate2 = ""
