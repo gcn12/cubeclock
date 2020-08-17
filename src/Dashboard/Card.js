@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 
-
-
-
 class Card extends Component {
     deleteSession=()=>{
         this.props.removeSessionFromState(this.props.session)
@@ -47,7 +44,6 @@ class Card extends Component {
             let confirm = window.confirm(`Are you sure you would like to remove session ${this.props.sessionDisplayName}? Action cannot be undone.`)
             if (confirm) {
                 runDelete()
-                // this.props.cardSortValue()
             }
         }else{
             runDelete()
@@ -68,8 +64,6 @@ class Card extends Component {
                 {/* <button onClick={this.test}>Card</button> */}
                 <div id="max-width" className={this.props.isBackgroundLight ? " bg-white dib br3 pa3 ma2 bw2 shadow-5" : " bg-black dib br3 pa3 ma2 bw2 shadow-5"}>
                     
-                    
-
                     {this.props.puzzle ? 
                     <h2 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Session: {this.props.sessionDisplayName} | {this.props.puzzle}</h2>
                     :
@@ -88,8 +82,8 @@ class Card extends Component {
                     }
                     <h4 className="display-linebreak" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>{this.props.row}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Average: {this.props.average}</h4>
-                    <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best single: {this.props.puzzleBest}</h4>
-                    <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst single: {this.props.puzzleWorst}</h4>
+                    <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best single: {this.props.puzzleBest[this.props.sessionDisplayName-1]}</h4>
+                    <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst single: {this.props.puzzleWorst[this.props.sessionDisplayName-1]}</h4>
                     <div className="tc">
                     {
                         this.props.ao5 ? 

@@ -74,7 +74,7 @@ class CardList extends Component {
             let divisor = 0
             let totalMS = 0
             let solvesArray = []
-            let averageMS = 0
+            let averageMS = 0 
             let dnfCount = 0
             for (let i = 0; i < ao; i++){
                 divisor++
@@ -138,6 +138,7 @@ class CardList extends Component {
  
     render() {
         let sessionDisplayName = (this.props.solvesSorted.length+1)
+        console.log(sessionDisplayName)
         return(
             <div>
                 {
@@ -203,8 +204,11 @@ class CardList extends Component {
                         ao10000 = this.average(solve, 10000)
                         ao10000BestAndWorst = this.bestWorstAverage(solve,10000)
                     }
-                    let puzzleBest = this.props.puzzleBest[i]
-                    let puzzleWorst = this.props.puzzleWorst[i]
+                    // console.log(sessionDisplayName-2)
+                    // let puzzleBest = [...this.props.puzzleBest].reverse()[sessionDisplayName-2]
+                    // let puzzleBest = this.props.puzzleBest[i]
+                    // console.log(this.props.puzzleBest)
+                    // let puzzleWorst = this.props.puzzleWorst[i]
                     let session = -1
                     let date = ""
                     let rawDate2 = ""
@@ -340,7 +344,6 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
-                        cardSortValue={this.props.cardSortValue}
                         loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                         removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                         send={this.props.send}
@@ -364,8 +367,8 @@ class CardList extends Component {
                         ao1000={ao1000}
                         ao5000={ao5000}
                         ao10000={ao10000}
-                        puzzleBest={puzzleBest}
-                        puzzleWorst={puzzleWorst}
+                        puzzleBest={[...this.props.puzzleBest].reverse()}
+                        puzzleWorst={[...this.props.puzzleWorst].reverse()}
                         getSessionNameOnLoad={this.props.getSessionNameOnLoad}
                         isConfirmSessionDelete={this.props.isConfirmSessionDelete}
                         isConfirmSolveDelete={this.props.isConfirmSolveDelete}
