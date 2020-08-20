@@ -18,7 +18,7 @@ const DeleteAccount = props => {
             }
             <h1><button onClick={props.deleteAccountConfirm} className="button2" style={{color: props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>Delete Account</button></h1>
             <br></br>
-            <br></br>
+            {/* <br></br> */}
         </div>
     )
 }

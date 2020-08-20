@@ -626,6 +626,8 @@ class Settings extends Component{
                 isWrongPassword2={this.props.isWrongPassword2}
                 deleteAccountConfirm={this.deleteAccountConfirm}
                 />
+            <div className="no-select" style={{textAlign: "center"}}>Comments, criticisms, or bugs? Send a message to:</div>
+            <div style={{textAlign: "center", paddingBottom: "40px"}}>contactcubeclock@gmail.com</div>
             </div>
         )
     }
