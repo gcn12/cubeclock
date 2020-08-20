@@ -502,9 +502,11 @@ class App extends Component {
 
   newSessionApp = () => {
     //changes route
-    this.setState({
-      isCreateNewSession: true
-    })
+    if(this.state.solves!=="loading..."){
+      this.setState({
+        isCreateNewSession: true
+      })
+    }
   }
 
   createNewSession = (input) => {
