@@ -534,10 +534,12 @@ class App extends Component {
 
   dashboard = () => {
     // route switch
-    this.setState({
-      isDashboard: !this.state.isDashboard,
-      isHome: !this.state.isHome,
-    })
+    if(this.state.solves!=="loading..."){
+      this.setState({
+        isDashboard: !this.state.isDashboard,
+        isHome: !this.state.isHome,
+      })
+    }
   }
 
   signedIn = () => {
