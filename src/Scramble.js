@@ -1,54 +1,60 @@
 import React, { Component } from "react"
 import App from "./App";
 
+const twotwo = [
+  ["R", "R'", "R2"], 
+  ["U", "U'", "U2"], 
+  ["F", "F'", "F2"],
+]
+
 const twothree = [
-    ["R", "R'", "R2"], 
-    ["L", "L'", "L2"], 
-    ["U", "U'", "U2"], 
-    ["D", "D'", "D2"],
-    ["B", "B'", "B2"], 
-    ["F", "F'", "F2"],
-  ]
+  ["R", "R'", "R2"], 
+  ["L", "L'", "L2"], 
+  ["U", "U'", "U2"], 
+  ["D", "D'", "D2"],
+  ["B", "B'", "B2"], 
+  ["F", "F'", "F2"],
+]
+
+const fourfive = [
+  ["R", "R'", "R2", "Rw", "Rw'", "Rw2"],
+  ["L", "L'", "L2", "Lw", "Lw'", "Lw2"], 
+  ["U", "U'", "U2", "Uw", "Uw'", "Uw2"], 
+  ["D", "D'", "D2", "Dw", "Dw'", "Dw2"],
+  ["B", "B'", "B2", "Bw", "Bw'", "Bw2"], 
+  ["F", "F'", "F2", "Fw", "Fw'", "Fw2"],
+]
   
-  const fourfive = [
-    ["R", "R'", "R2", "Rw", "Rw'", "Rw2"],
-    ["L", "L'", "L2", "Lw", "Lw'", "Lw2"], 
-    ["U", "U'", "U2", "Uw", "Uw'", "Uw2"], 
-    ["D", "D'", "D2", "Dw", "Dw'", "Dw2"],
-    ["B", "B'", "B2", "Bw", "Bw'", "Bw2"], 
-    ["F", "F'", "F2", "Fw", "Fw'", "Fw2"],
-  ]
+const sixseven = [
+  ["R", "R'", "R2", "Rw", "Rw'", "Rw2", "3Rw", "3Rw'", "3Rw2"],
+  ["L", "L'", "L2", "Lw", "Lw'", "Lw2", "3Lw", "3Lw'", "3Lw2"], 
+  ["U", "U'", "U2", "Uw", "Uw'", "Uw2", "3Uw", "3Uw'", "3Uw2"],  
+  ["D", "D'", "D2", "Dw", "Dw'", "Dw2", "3Dw", "3Dw'", "3Dw2"],
+  ["B", "B'", "B2", "Bw", "Bw'", "Bw2", "3Bw", "3Bw'", "3Bw2"], 
+  ["F", "F'", "F2", "Fw", "Fw'", "Fw2", "3Fw", "3Fw'", "3Fw2"],
+]
   
-  const sixseven = [
-    ["R", "R'", "R2", "Rw", "Rw'", "Rw2", "3Rw", "3Rw'", "3Rw2"],
-    ["L", "L'", "L2", "Lw", "Lw'", "Lw2", "3Lw", "3Lw'", "3Lw2"], 
-    ["U", "U'", "U2", "Uw", "Uw'", "Uw2", "3Uw", "3Uw'", "3Uw2"],  
-    ["D", "D'", "D2", "Dw", "Dw'", "Dw2", "3Dw", "3Dw'", "3Dw2"],
-    ["B", "B'", "B2", "Bw", "Bw'", "Bw2", "3Bw", "3Bw'", "3Bw2"], 
-    ["F", "F'", "F2", "Fw", "Fw'", "Fw2", "3Fw", "3Fw'", "3Fw2"],
-  ]
+const pyraminxNotation = [
+  ["U", "U'"],
+  ["L", "L'"],
+  ["R", "R'"],
+  ["B", "B'"]
+]
+
+const pyraminxNotationEnd = [
+  ["u", "u'"],
+  ["l", "l'"],
+  ["r", "r'"],
+  ["b", "b'"]
+]
   
-  const pyraminxNotation = [
-    ["U", "U'"],
-    ["L", "L'"],
-    ["R", "R'"],
-    ["B", "B'"]
-  ]
-  
-  const pyraminxNotationEnd = [
-    ["u", "u'"],
-    ["l", "l'"],
-    ["r", "r'"],
-    ["b", "b'"]
-  ]
-  
-  const skewb = [
-    ["U", "U'"],
-    // ["F", "F'"],
-    ["B", "B'"],
-    ["L", "L'"],
-    ["R", "R'"],
-  ]
+const skewb = [
+  ["U", "U'"],
+  // ["F", "F'"],
+  ["B", "B'"],
+  ["L", "L'"],
+  ["R", "R'"],
+]
 
 class Scramble extends Component{
 
@@ -155,12 +161,83 @@ class Scramble extends Component{
               pastScrambles["pastScramble"] = first2
             }
           while (scrambleLength > 0) {
+            const twofour = [0,1,2]
               const onefour = [0,1,2,3,4,5]
               const fourfour = [0,1,2,3]
               scrambleLength--
-              let first =  onefour[Math.floor(Math.random()*onefour.length)]
               let second = Math.floor(Math.random()*3)
-              if (input==="2x2"||input==="3x3" || input==="3x3 BLD" ||input==="3x3 OH"){
+              let first =  twofour[Math.floor(Math.random()*twofour.length)]
+              if(input==="2x2"){
+                if (pastScrambles.pastScramble !== null){
+                  let i = twofour.indexOf(pastScrambles.pastScramble)
+                  twofour.splice(i, 1)
+                  first =  twofour[Math.floor(Math.random()*twofour.length)]
+                }
+                // if (pastScrambles.pastScramble !== null){
+                //   let i
+                //   if (pastScrambles.pastScramble===0){
+                //     i = twofour.indexOf(1)
+                //     twofour.splice(i,1)
+                //   }
+                //   if (pastScrambles.pastScramble===1){
+                //     i = twofour.indexOf(0)
+                //     twofour.splice(i,1)
+                //   }
+                //   if (pastScrambles.pastScramble===2){
+                //     i = twofour.indexOf(3)
+                //     twofour.splice(i,1)
+                //   }
+                //   if (pastScrambles.pastScramble===3){
+                //     i = twofour.indexOf(2)
+                //     twofour.splice(i,1)
+                //   }
+                //   if (pastScrambles.pastScramble===4){
+                //     i = twofour.indexOf(5)
+                //     twofour.splice(i,1)
+                //   }
+                //   if (pastScrambles.pastScramble===5){
+                //     i = twofour.indexOf(4)
+                //     twofour.splice(i,1)
+                //   }
+                // }
+                // if (pastScrambles.pastScramble2 !== 7){
+                //   let ind = twofour.indexOf(pastScrambles.pastScramble2)
+                //   if(twofour.includes(ind)){
+                //     twofour.splice(ind, 1)
+                //   }
+                // }
+    
+                // if (pastScrambles.pastScramble2 !== null){
+                //   let i
+                //   if (pastScrambles.pastScramble2===0){
+                //     i = twofour.indexOf(1)
+                //   }
+                //   if (pastScrambles.pastScramble2===1){
+                //     i = twofour.indexOf(0)
+                //   }
+                //   if (pastScrambles.pastScramble2===2){
+                //     i = twofour.indexOf(3)
+                //   }
+                //   if (pastScrambles.pastScramble2===3){
+                //     i = twofour.indexOf(2)
+                //   }
+                //   if (pastScrambles.pastScramble2===4){
+                //     i = twofour.indexOf(5)
+                //   }
+                //   if (pastScrambles.pastScramble2===5){
+                //     i = twofour.indexOf(4)
+                //   }
+                //   if(twofour.includes(i)){
+                //     twofour.splice(i,1)
+                //   }
+                // }
+                // first =  twofour[Math.floor(Math.random()*twofour.length)]
+                console.log(first, second)
+                scramble += twotwo[first][second] 
+                // pastScrambles["pastScramble2"] = pastScrambles.pastScramble
+                pastScrambles["pastScramble"] = first
+              }
+              if (input==="3x3" || input==="3x3 BLD" ||input==="3x3 OH"){
                 if (pastScrambles.pastScramble !== null){
                   let i = onefour.indexOf(pastScrambles.pastScramble)
                   onefour.splice(i, 1)
