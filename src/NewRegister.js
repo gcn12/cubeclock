@@ -90,7 +90,7 @@ class Register extends Component {
                             isUserExist: true,
                         })
                     } else{
-                        this.addToUniqueSessionsDB()
+                        this.props.addToUniqueSessionsDB(1)
                         this.props.clearSolvesState()
                         this.props.signIn()
                         this.props.signedIn()

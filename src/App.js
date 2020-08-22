@@ -49,7 +49,6 @@ class App extends Component {
   }
 
   receive = () => {
-    //testing storing all solves in one cell
     let offline = false
     if (localStorage.offline){
       offline = JSON.parse(localStorage.getItem("offline"))
@@ -976,23 +975,10 @@ class App extends Component {
     })
   }
 
-  // send = () => {
-  //   fetch("https://blooming-hollows-98248.herokuapp.com/sendtemp",{
-  //     method: "put",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify({
-  //       id: this.state.usertemp,
-  //       solves: [this.state.tempSolvesSend]
-  //     })
-  //   }).then(response=>response.json())
-  // }
-
     render() {   
       return (
       <div> 
-        {/* <button onClick={this.get}>get</button> 
-        <button onClick={this.send}>send</button> 
-        <button onClick={this.test}>test</button> */}
+        {/* <button onClick={this.test}>test</button> */}
         { this.state.isHome 
         ? 
         (this.state.isCreateNewSession ? 
