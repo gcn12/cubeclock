@@ -1,51 +1,77 @@
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
-    background-color: rgba(198, 198, 198, 0.25);
-    border-radius: 20px;
-    transition: all 0.3s;
-  }
-  .switch::after {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-radius:50%;
-    background-color: white;
-    top: 1px;
-    left: 1px;
-    transition: all 0.3s;
-  }
-  
-  .checkbox:checked + .switch::after {
-    left : 20px;
-  }
-  .checkbox:checked + .switch {
-    background-color: #7983ff;
-  }
-  .checkbox {
-    display : none;
-  }
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: rgba(198, 198, 198, 0.25);
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius:50%;
+  background-color: white;
+  top: 1px;
+  left: 1px;
+  transition: all 0.3s;
+}
 
-  .test11{
-    display: inline-block;
-    vertical-align: middle;
-    /* margin: 10px 0; */
-  }
+.checkbox:checked + .switch::after {
+  left : 20px;
+}
+.checkbox:checked + .switch {
+  background-color: #7983ff;
+}
+.checkbox {
+  display : none;
+}
 
-  .test22{
-    /* padding-bottom: 6px;
-    padding-left: 5px; */
-    padding-bottom: .5rem;
-    padding-left: .5rem;
-  } 
+.test11{
+  display: inline-block;
+  vertical-align: middle;
+  /* margin: 10px 0; */
+}
 
-  .no-select {
-    -moz-user-select: none;
-   -khtml-user-select: none;
-   -webkit-user-select: none;
-   -ms-user-select: none;
-   user-select: none;
-  }
+.test22{
+  /* padding-bottom: 6px;
+  padding-left: 5px; */
+  padding-bottom: .5rem;
+  padding-left: .5rem;
+} 
+
+.no-select {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+
+.label2 {  
+  /* width: 120px; */
+  position: relative;
+  left: -20px;
+  display: inline-block;
+  vertical-align: middle;
+  list-style: none;
+}
+
+.input2 {
+  /* width: 20px; */
+  position: relative;
+  /* left: 200px; */
+  vertical-align: middle;
+}
+
+/* .compact-switch {
+  margin-top: 100px;
+} */
+
+.compact-container {
+  list-style-type: none;
+}

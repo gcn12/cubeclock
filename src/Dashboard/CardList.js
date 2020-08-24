@@ -338,6 +338,7 @@ class CardList extends Component {
                     )
                 }) 
                     return(<Card
+                        isCompact={this.props.isCompact}
                         loadPastSessionSolveData={this.props.loadPastSessionSolveData}
                         removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                         send={this.props.send}

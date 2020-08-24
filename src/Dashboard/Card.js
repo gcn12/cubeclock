@@ -80,7 +80,12 @@ class Card extends Component {
                     :
                     <h4> </h4>
                     }
+                    {
+                    this.props.isCompact ? 
+                    null
+                    :
                     <h4 className="display-linebreak" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>{this.props.row}</h4>
+                    }
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Average: {this.props.average}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Best single: {this.props.puzzleBest[this.props.sessionDisplayName-1]}</h4>
                     <h4 className="tc" style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke"}}>Worst single: {this.props.puzzleWorst[this.props.sessionDisplayName-1]}</h4>

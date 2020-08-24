@@ -56,6 +56,7 @@ class Dashboard extends Component{
         solvesSortedCardList: [],
         puzzleWorst: [],
         puzzleBest: [],
+        isCompact: false,
     }
 
     manageSolveData = () => {
@@ -964,6 +965,12 @@ class Dashboard extends Component{
         })
     }
 
+    compact = () => {
+        this.setState({
+            isCompact: !this.state.isCompact
+        })
+    }
+
 
     test = () => {
         // console.log(this.state.cardSortValue)
@@ -990,11 +997,22 @@ class Dashboard extends Component{
                 (this.state.isSolves ?
                 <div  style={{backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", color: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}}>
                     {this.props.uniqueSessionsDB.length > 4 ? 
-                    <select style={{color: this.props.isBackgroundLight ?  "black" : "white"}} className={this.props.isBackgroundLight ? "summary-center pa1 ba b--green bg-white" : "summary-center pa1 ba b--green bg-black"} onChange={this.cardSortValue} id="cardSelect"></select>
+                    <div className="compact-container">
+                        <select style={{color: this.props.isBackgroundLight ?  "black" : "white"}} className={this.props.isBackgroundLight ? "summary-center pa1 ba b--green bg-white" : "summary-center pa1 ba b--green bg-black"} onChange={this.cardSortValue} id="cardSelect"></select>
+                        <br></br>
+                        <ul className="summary-center">
+                            <li>
+                                <label htmlFor="sessionconfirm" className="label2"><h4>Compact view:</h4></label>
+                                <input type="checkbox" id="sessionconfirm" className=" input2" onClick={this.compact} />  
+                                {/* <label htmlFor="sessionconfirm" className="switch compact-switch"></label> */}
+                            </li>
+                        </ul>
+                    </div>
                     :
                     <h1> </h1>
                     }
                     <CardList 
+                    isCompact={this.state.isCompact}
                     removeFromSolvesInterface={this.props.removeFromSolvesInterface}
                     solves={this.props.solves}
                     send={this.props.send}
