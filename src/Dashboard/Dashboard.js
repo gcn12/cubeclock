@@ -980,7 +980,6 @@ class Dashboard extends Component{
         return(
             <div>
                 {/* <button onClick={this.test}>push</button> */}
-                
                     <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
                         <div style={{marginRight: "6%"}}>
                         <h1><button onClick={this.props.signIn} style={{color: this.props.isBackgroundLight ? "rgb(23, 23, 23)" : "whitesmoke", backgroundColor: this.props.isBackgroundLight ? "whitesmoke" : "rgb(23, 23, 23)", borderColor: this.props.isBackgroundLight ?  "rgb(23, 23, 23)" : "whitesmoke"}} className="button2">Home</button></h1>
