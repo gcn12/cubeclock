@@ -1,6 +1,4 @@
-import React from "react" 
-
-
+import React, { Component } from "react" 
 
 const compare = (a, b) => {
     if (a.solveid > b.solveid){
@@ -15,9 +13,6 @@ const compare = (a, b) => {
 const compare2 = (a,b) => {
     return a-b
 }
-
-
-
 
 const Body = (props) => {
     let id 
@@ -229,76 +224,168 @@ const Body = (props) => {
             </tr>
         )
     })
-
-
-    // console.log(props.solvesApp)
-    // if(props.solvesApp){
-    //     if(props.solvesApp==="loading..."){
-    //         return <h1><tbody>Loading...</tbody></h1>
-    //     }else{
-    //         return <tbody>{rows}</tbody>
-    //     }
-    // }
-
     return <tbody>{rows}</tbody>
-
 }
 
-const Table = props => {
-    const {solves, removeTime, plusTwo} = props
-    return(
-    props.solvesApp==="loading..." ? 
-    <h1 className="light">Loading...</h1>
-    :
-        <table id="hello" className="light">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    {props.id.length>2 ? 
-                    (
-                    props.solves.length > props.aoNum-1 ? 
-                    <th>
-                        <h2>ao{props.aoNum}</h2>
-                    </th>
-                    :
-                    <th></th>
-                    )
-                    :
-                    <th></th>
-                    }
-                    {props.id.length ? 
-                    (
-                    props.solves.length>props.aoNum2-1 ? 
-                    <th>
-                        <h2>ao{props.aoNum2}</h2>
-                    </th>
-                    :
-                    <th></th>
-                    )
-                    :
-                    <th></th>
-                    }
-                    </tr>
-            </thead>
-            <Body 
-            solvesApp={props.solvesApp}
-            id={props.id}
-            aoNum={props.aoNum}
-            aoNum2={props.aoNum2}
-            toggleDNFInterface={props.toggleDNFInterface}
-            togglePlusTwo={props.togglePlusTwo}
-            plusTwo={plusTwo} 
-            solves={solves} 
-            removeTime={removeTime} 
-            styles={props.styles}
-            />
-        </table>
-    )
+class Table extends Component {
+
+    state = {
+        loadingText: "Loading"
+    }
+
+    loadingAnimated = () => {
+        if (this.state.loadingText==="Loading"){
+            this.setState({
+                loadingText: "Loading."
+            })
+        }
+        this.loadingAnimatedTimeout = setTimeout(()=> this.loadingAnimated2(), 600)
+    }
+
+    loadingAnimated2 = () => {
+        if (this.state.loadingText==="Loading."){
+            this.setState({
+                loadingText: "Loading.."
+            })
+        }
+        this.loadingAnimatedTimeout2 = setTimeout(()=> this.loadingAnimated3(), 600)
+    }
+
+    loadingAnimated3 = () => {
+        if (this.state.loadingText==="Loading.."){
+            this.setState({
+                loadingText:"Loading..."
+            })
+        }
+        this.loadingAnimatedTimeout3 = setTimeout(()=> this.loadingAnimated4(), 600)
+    }
+
+    loadingAnimated4 = () => {
+        if(this.props.solvesApp==="loading..."){
+            if (this.state.loadingText==="Loading..."){
+                this.setState({
+                    loadingText: "Loading"
+                })
+            }
+            this.loadingAnimatedTimeout4 = setTimeout(()=> this.loadingAnimated(), 600)
+        }
+    }
+ 
+    componentDidMount() {
+        this.loadingAnimated()
+    }
+
+    render(){
+        return(
+        this.props.solvesApp==="loading..." ? 
+        <h1 className="light">{this.state.loadingText}</h1>
+        :
+            <table id="hello" className="light">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        {this.props.id.length>2 ? 
+                        (
+                        this.props.solves.length > this.props.aoNum-1 ? 
+                        <th>
+                            <h2>ao{this.props.aoNum}</h2>
+                        </th>
+                        :
+                        <th></th>
+                        )
+                        :
+                        <th></th>
+                        }
+                        {this.props.id.length ? 
+                        (
+                        this.props.solves.length>this.props.aoNum2-1 ? 
+                        <th>
+                            <h2>ao{this.props.aoNum2}</h2>
+                        </th>
+                        :
+                        <th></th>
+                        )
+                        :
+                        <th></th>
+                        }
+                        </tr>
+                </thead>
+                <Body 
+                solvesApp={this.props.solvesApp}
+                id={this.props.id}
+                aoNum={this.props.aoNum}
+                aoNum2={this.props.aoNum2}
+                toggleDNFInterface={this.props.toggleDNFInterface}
+                togglePlusTwo={this.props.togglePlusTwo}
+                plusTwo={this.props.plusTwo} 
+                solves={this.props.solves} 
+                removeTime={this.props.removeTime} 
+                styles={this.props.styles}
+                />
+            </table>
+        )
+    }
 }
+
+// const Table = props => {
+//     const {solves, removeTime, plusTwo} = props
+//     return(
+//     props.solvesApp==="loading..." ? 
+//     <h1 className="light">Loading...</h1>
+//     :
+//         <table id="hello" className="light">
+//             <thead>
+//                 <tr>
+//                     <th></th>
+//                     <th></th>
+//                     <th></th>
+//                     <th></th>
+//                     <th></th>
+//                     {props.id.length>2 ? 
+//                     (
+//                     props.solves.length > props.aoNum-1 ? 
+//                     <th>
+//                         <h2>ao{props.aoNum}</h2>
+//                     </th>
+//                     :
+//                     <th></th>
+//                     )
+//                     :
+//                     <th></th>
+//                     }
+//                     {props.id.length ? 
+//                     (
+//                     props.solves.length>props.aoNum2-1 ? 
+//                     <th>
+//                         <h2>ao{props.aoNum2}</h2>
+//                     </th>
+//                     :
+//                     <th></th>
+//                     )
+//                     :
+//                     <th></th>
+//                     }
+//                     </tr>
+//             </thead>
+//             <Body 
+//             solvesApp={props.solvesApp}
+//             id={props.id}
+//             aoNum={props.aoNum}
+//             aoNum2={props.aoNum2}
+//             toggleDNFInterface={props.toggleDNFInterface}
+//             togglePlusTwo={props.togglePlusTwo}
+//             plusTwo={plusTwo} 
+//             solves={solves} 
+//             removeTime={removeTime} 
+//             styles={props.styles}
+//             />
+//         </table>
+//     )
+// }
 
 
 export default Table
