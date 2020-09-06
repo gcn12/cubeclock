@@ -102,7 +102,7 @@ class Settings extends Component{
 
     aoNumChange2 = (input) => {
         if (input>3 && input<1001){
-            console.log(input)
+            // console.log(input)
             let offline = JSON.parse(localStorage.getItem("offline"))
             if(!offline){
                 fetch("https://blooming-hollows-98248.herokuapp.com/ao2", {
