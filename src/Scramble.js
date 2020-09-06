@@ -16,6 +16,15 @@ const twothree = [
   ["F", "F'", "F2"],
 ]
 
+const fourbyfour = [
+  ["R", "R'", "R2", "Rw", "Rw'", "Rw2"],
+  ["F", "F'", "F2", "Fw", "Fw'", "Fw2"],
+  ["U", "U'", "U2", "Uw", "Uw'", "Uw2"], 
+  ["L", "L'", "L2"], 
+  ["D", "D'", "D2"],
+  ["B", "B'", "B2"], 
+]
+
 const fourfive = [
   ["R", "R'", "R2", "Rw", "Rw'", "Rw2"],
   ["L", "L'", "L2", "Lw", "Lw'", "Lw2"], 
@@ -173,68 +182,7 @@ class Scramble extends Component{
                   twofour.splice(i, 1)
                   first =  twofour[Math.floor(Math.random()*twofour.length)]
                 }
-                // if (pastScrambles.pastScramble !== null){
-                //   let i
-                //   if (pastScrambles.pastScramble===0){
-                //     i = twofour.indexOf(1)
-                //     twofour.splice(i,1)
-                //   }
-                //   if (pastScrambles.pastScramble===1){
-                //     i = twofour.indexOf(0)
-                //     twofour.splice(i,1)
-                //   }
-                //   if (pastScrambles.pastScramble===2){
-                //     i = twofour.indexOf(3)
-                //     twofour.splice(i,1)
-                //   }
-                //   if (pastScrambles.pastScramble===3){
-                //     i = twofour.indexOf(2)
-                //     twofour.splice(i,1)
-                //   }
-                //   if (pastScrambles.pastScramble===4){
-                //     i = twofour.indexOf(5)
-                //     twofour.splice(i,1)
-                //   }
-                //   if (pastScrambles.pastScramble===5){
-                //     i = twofour.indexOf(4)
-                //     twofour.splice(i,1)
-                //   }
-                // }
-                // if (pastScrambles.pastScramble2 !== 7){
-                //   let ind = twofour.indexOf(pastScrambles.pastScramble2)
-                //   if(twofour.includes(ind)){
-                //     twofour.splice(ind, 1)
-                //   }
-                // }
-    
-                // if (pastScrambles.pastScramble2 !== null){
-                //   let i
-                //   if (pastScrambles.pastScramble2===0){
-                //     i = twofour.indexOf(1)
-                //   }
-                //   if (pastScrambles.pastScramble2===1){
-                //     i = twofour.indexOf(0)
-                //   }
-                //   if (pastScrambles.pastScramble2===2){
-                //     i = twofour.indexOf(3)
-                //   }
-                //   if (pastScrambles.pastScramble2===3){
-                //     i = twofour.indexOf(2)
-                //   }
-                //   if (pastScrambles.pastScramble2===4){
-                //     i = twofour.indexOf(5)
-                //   }
-                //   if (pastScrambles.pastScramble2===5){
-                //     i = twofour.indexOf(4)
-                //   }
-                //   if(twofour.includes(i)){
-                //     twofour.splice(i,1)
-                //   }
-                // }
-                // first =  twofour[Math.floor(Math.random()*twofour.length)]
-                console.log(first, second)
                 scramble += twotwo[first][second] 
-                // pastScrambles["pastScramble2"] = pastScrambles.pastScramble
                 pastScrambles["pastScramble"] = first
               }
               if (input==="3x3" || input==="3x3 BLD" ||input==="3x3 OH"){
@@ -305,7 +253,30 @@ class Scramble extends Component{
                 pastScrambles["pastScramble2"] = pastScrambles.pastScramble
                 pastScrambles["pastScramble"] = first
               }
-              if (input==="4x4" || input==="4x4 BLD"||input==="5x5" || input==="5x5 BLD"){
+
+
+              
+              if (input==="4x4" || input==="4x4 BLD"){
+                if (pastScrambles.pastScramble !== null){
+                  let a = onefour.indexOf(pastScrambles.pastScramble)
+                  onefour.splice(a, 1)
+                }
+                if (pastScrambles.pastScramble2 !== 7){
+                  let b = onefour.indexOf(pastScrambles.pastScramble2)
+                  onefour.splice(b, 1)
+                }
+                first =  onefour[Math.floor(Math.random()*onefour.length)]
+                if(first === 0||first === 1||first === 2){
+                  second = Math.floor(Math.random()*6)
+                }else{
+                  second = Math.floor(Math.random()*3)
+                }
+                scramble += fourbyfour[first][second]
+                scramble += " "
+                pastScrambles["pastScramble2"] = pastScrambles.pastScramble
+                pastScrambles["pastScramble"] = first
+              }
+              if (input==="5x5" || input==="5x5 BLD"){
                 if (pastScrambles.pastScramble !== null){
                   let a = onefour.indexOf(pastScrambles.pastScramble)
                   onefour.splice(a, 1)
