@@ -6,6 +6,17 @@ class CardList extends Component {
         return b - a
     } 
 
+    checkIsCompact = () => {
+        if (this.props.isCompact) {
+            document.getElementById('sessionconfirm').checked = true
+        }
+    }
+
+    componentDidMount() {
+        this.checkIsCompact()
+        console.log('hello')
+    }
+
     average = (solve, ao) => {
         let timesMS = []
         let divisor = 0
